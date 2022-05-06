@@ -26,15 +26,15 @@ import lombok.NoArgsConstructor;
 public class Member {
 	@Id // primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long memId;
+	private Long id;
 	
 	@Column(nullable = false, unique = true)
-	private String memEmail; 
-	private String memPassword;
-	private String memBirth;
+	private String email;
+	private String password;
+	private String birth;
 	@Column(unique = true)
-	private String memNickname;
-	private String memRole; //ROLE_USER, ROLE_ADMIN
+	private String nickname;
+	private String role; //ROLE_USER, ROLE_ADMIN
 	// OAuth를 위해 구성한 추가 필드 2개
 //	private String provider;
 //	private String providerId;
@@ -42,7 +42,7 @@ public class Member {
 	private Timestamp createDate;
 	
 	public void encodePassword(PasswordEncoder passwordEncoder) {
-		this.memPassword = passwordEncoder.encode(this.memPassword);
+		this.password = passwordEncoder.encode(this.password);
 	}
 
 }

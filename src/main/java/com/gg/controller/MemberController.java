@@ -1,10 +1,12 @@
-package com.gg.member;
+package com.gg.controller;
 
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.gg.domain.Member;
+import com.gg.repository.MemberRepository;
+import com.gg.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

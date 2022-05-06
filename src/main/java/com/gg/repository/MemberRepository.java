@@ -1,4 +1,4 @@
-package com.gg.member;
+package com.gg.repository;
 
 
 import com.gg.domain.Member;

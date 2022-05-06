@@ -1,7 +1,8 @@
-package com.gg.diary;
+package com.gg.controller;
 
 import com.gg.domain.Diary;
 import com.gg.domain.Member;
+import com.gg.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,7 @@ public class DiaryController {
 
     @GetMapping("")
     public String findMyDiary(Member member, Model model){
-        List<Diary> diary = diaryService.findByMemberId(member.getMemId());
+        List<Diary> diary = diaryService.findByMemberId(member.getId());
         model.addAttribute("diaries",diary);
         return "";
     }
@@ -49,7 +50,7 @@ public class DiaryController {
     @GetMapping("")
     public String deleteDiary(Long diaryId, Member member, Model model){
         diaryService.deleteDiary(diaryId);
-        List<Diary> diaries = diaryService.findByMemberId(member.getMemId());
+        List<Diary> diaries = diaryService.findByMemberId(member.getId());
         model.addAttribute("diaries", diaries);
         return "";
     }

@@ -1,4 +1,4 @@
-package com.gg.member;
+package com.gg.handler;
 
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;

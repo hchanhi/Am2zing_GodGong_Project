@@ -1,8 +1,8 @@
 package com.gg.config;
 
-import com.gg.member.MemberLoginFail;
-import com.gg.member.MemberLoginSuccess;
-import com.gg.member.PrincipalDetailsService;
+import com.gg.handler.MemberLoginFail;
+import com.gg.handler.MemberLoginSuccess;
+import com.gg.service.PrincipalDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

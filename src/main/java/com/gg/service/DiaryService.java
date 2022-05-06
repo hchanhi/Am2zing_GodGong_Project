@@ -1,7 +1,8 @@
-package com.gg.diary;
+package com.gg.service;
 
 import com.gg.domain.Diary;
 import com.gg.domain.Member;
+import com.gg.repository.DiaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

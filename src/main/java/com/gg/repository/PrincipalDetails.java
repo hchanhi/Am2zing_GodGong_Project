@@ -1,4 +1,4 @@
-package com.gg.member;
+package com.gg.repository;
 
 import java.util.ArrayList;
 import java.util.Collection;

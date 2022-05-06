@@ -15,13 +15,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// ORM - Object Relation Mapping
 
 @Builder
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+
 
 public class Member {
 	@Id // primary key
@@ -44,4 +44,5 @@ public class Member {
 	public void encodePassword(PasswordEncoder passwordEncoder) {
 		this.memPassword = passwordEncoder.encode(this.memPassword);
 	}
+
 }

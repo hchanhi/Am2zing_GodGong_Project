@@ -19,8 +19,13 @@ public class DiaryController {
     DiaryService diaryService;
 
     @GetMapping("")
+<<<<<<< Updated upstream:src/main/java/com/gg/controller/DiaryController.java
     public String findMyDiary(Long memberId, Model model){
         List<Diary> diary = diaryService.findByMemberId(memberId);
+=======
+    public String findMyDiary(Member member, Model model){
+        List<Diary> diary = diaryService.findByMemberId(member.getId());
+>>>>>>> Stashed changes:src/main/java/com/gg/diary/DiaryController.java
         model.addAttribute("diaries",diary);
         return "";
     }
@@ -47,5 +52,16 @@ public class DiaryController {
         return "";
     }
 
+<<<<<<< Updated upstream:src/main/java/com/gg/controller/DiaryController.java
 
 }
+=======
+    @GetMapping("")
+    public String deleteDiary(Long diaryId, Member member, Model model){
+        diaryService.deleteDiary(diaryId);
+        List<Diary> diaries = diaryService.findByMemberId(member.getId());
+        model.addAttribute("diaries", diaries);
+        return "";
+    }
+}
+>>>>>>> Stashed changes:src/main/java/com/gg/diary/DiaryController.java

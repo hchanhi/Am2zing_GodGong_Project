@@ -1,6 +1,7 @@
 package com.gg.diary;
 
 import com.gg.domain.Diary;
+import com.gg.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,8 +30,8 @@ public class DiaryController {
     }
 
     @PostMapping("")
-    public String postDiary(String content, Long memberId, String sentiment){
-        diaryService.postDiary(content,memberId,sentiment);
+    public String postDiary(String content, Member member, String sentiment){
+        diaryService.postDiary(content,member,sentiment);
         return "";
     }
 

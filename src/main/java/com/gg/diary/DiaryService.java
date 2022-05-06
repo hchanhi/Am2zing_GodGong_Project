@@ -1,6 +1,7 @@
 package com.gg.diary;
 
 import com.gg.domain.Diary;
+import com.gg.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,10 @@ public class DiaryService {
         return diary;
     }
 
-    public void postDiary(String content, Long memberId, String sentiment){
+    public void postDiary(String content, Member member, String sentiment){
         Diary diary = new Diary();
         diary.setDiaryContent(content);
-        diary.setMemberId(memberId);
+        diary.setMember(member);
         diary.setDiarySentiment(sentiment);
         diaryRepository.save(diary);
     }

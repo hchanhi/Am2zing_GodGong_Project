@@ -10,17 +10,17 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member, Long> {
 	// SELECT * FROM user WHERE username = ?1
 	
-	Optional<Member> findByMemEmail(String memEmail);
+	Optional<Member> findByEmail(String email);
 	
 //	// SELECT * FROM user WHERE provider = ?1 and providerId = ?2
 //	Optional<Member> findByProviderAndProviderId(String provider, String providerId);
 	
 	//중복 검사 
-    boolean existsByMemEmail(String memEmail);
-    boolean existsByMemNickname(String memNickname);
+    boolean existsByEmail(String email);
+    boolean existsByNickname(String nickname);
 
-	Member findByMemNickname(String memNickname);
-	Member findByMemId(Long memId);
+	Member findByNickname(String nickname);
+	Optional<Member> findById(Long id);
 
 //	Member updateMemPassword(Member memPassword);
 

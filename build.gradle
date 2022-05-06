@@ -34,34 +34,31 @@ dependencies {
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    implementation 'com.querydsl:querydsl-jpa'
 
     // Querydsl 추가
     implementation 'com.querydsl:querydsl-jpa'
     // Querydsl 추가 끝
 }
-
-/** QueryDSL Class Generate Script */
-def generatedJavaSrcDir = 'src/main/generated'
-def queryDslOutput = file(generatedJavaSrcDir)
-def querydslDir = '$buildDir/generated/querydsl'
+//querydsl 추가
+def querydslDir = "$buildDir/generated/querydsl" //QClass 생성 위치
 
 querydsl {
+    library = "com.querydsl:querydsl-apt"
     jpa = true
-    querydslSourceDir = querydslDir
+    querydslSourcesDir = querydslDir
 }
-
 sourceSets {
     main.java.srcDir querydslDir
 }
-
 configurations {
     querydsl.extendsFrom compileClasspath
 }
-
 compileQuerydsl {
     options.annotationProcessorPath = configurations.querydsl
 }
+// 끝
+
+
 
 tasks.named('test') {
     useJUnitPlatform()

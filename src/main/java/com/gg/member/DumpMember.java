@@ -25,19 +25,19 @@ public class DumpMember implements CommandLineRunner{
     	String encPassword = bCryptPasswordEncoder.encode("admin");
 
                   Member member1 = memberRepository.save(Member.builder()
-                    .memEmail("admin@admin.com")
-                    .memNickname("admin")
-                    .memPassword(encPassword)
-                    .memRole("ROLE_ADMIN")
+                    .email("admin@admin.com")
+                    .nickname("admin")
+                    .password(encPassword)
+                    .role("ROLE_ADMIN")
                     .build());
                     
         String encPassword1 = bCryptPasswordEncoder.encode("aaaa");
         Member member2 = memberRepository.save(Member.builder()
-                .memEmail("aaaa@aaaa.com")
-                .memNickname("aaaa")
-                .memPassword(encPassword1)
-                .memBirth("1995-01-17")
-                .memRole("ROLE_MEMBER")
+                .email("aaaa@aaaa.com")
+                .nickname("aaaa")
+                .password(encPassword1)
+                .birth("1995-01-17")
+                .role("ROLE_MEMBER")
                 .build());
                 }
            }

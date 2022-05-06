@@ -88,10 +88,10 @@ public class MemberController {
 	@PostMapping("/joinProc")
 	public String joinProc(Member member) {
 		
-		String rawPassword = member.getMemPassword();
+		String rawPassword = member.getPassword();
 		String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-		member.setMemPassword(encPassword);
-		member.setMemRole("ROLE_MEMBER");
+		member.setPassword(encPassword);
+		member.setRole("ROLE_MEMBER");
 		memberRepository.save(member);
 		return "member/member_loginForm";
 	}
@@ -139,7 +139,7 @@ public class MemberController {
     //패스워드 변경
     @PostMapping("/member/pwdEdit")
     public String pwdUpdate(Authentication authentication,Member member) {
-        member.setMemEmail(authentication.getName());
+        member.setEmail(authentication.getName());
         memberService.passwordUpdate(member);
         return "redirect:/logout";
     }
@@ -149,7 +149,7 @@ public class MemberController {
     @PostMapping("/memeber/withdrawal")
     public String withdrawalMember(Member member, HttpSession session) {
 
-    	memberService.deleteMember(member.getMemId());
+    	memberService.deleteMember(member.getId());
         session.invalidate();
         return "redirect:/";
     }

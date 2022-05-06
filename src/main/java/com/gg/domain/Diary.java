@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Builder
 @Entity
+@Data
 public class Diary {
 
     @Id

@@ -49,10 +49,10 @@ import org.springframework.stereotype.Service;
 	        Member member = memberService.memberInfo(authentication.getName());
 
 	        HttpSession session = request.getSession(false);
-	        session.setAttribute("memId", member.getMemId());
-	        session.setAttribute("memEmail", member.getMemEmail());
-	        session.setAttribute("memNickname", member.getMemNickname());
-	        session.setAttribute("memRole", member.getMemRole());
+	        session.setAttribute("memId", member.getId());
+	        session.setAttribute("memEmail", member.getEmail());
+	        session.setAttribute("memNickname", member.getNickname());
+	        session.setAttribute("memRole", member.getRole());
 
 	        response.sendRedirect(url);
 	    }

@@ -30,12 +30,12 @@ public class PrincipalDetails implements UserDetails {// , OAuth2User{
 
 	@Override
 	public String getPassword() {
-		return member.getMemPassword();
+		return member.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		return member.getMemEmail();
+		return member.getEmail();
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class PrincipalDetails implements UserDetails {// , OAuth2User{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> collet = new ArrayList<GrantedAuthority>();
-		collet.add(()->{ return member.getMemRole();});
+		collet.add(()->{ return member.getRole();});
 		return collet;
 	}
 

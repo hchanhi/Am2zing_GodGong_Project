@@ -18,8 +18,8 @@ public class DiaryController {
     DiaryService diaryService;
 
     @GetMapping("")
-    public String findMyDiary(Long memberId, Model model){
-        List<Diary> diary = diaryService.findByMemberId(memberId);
+    public String findMyDiary(Member member, Model model){
+        List<Diary> diary = diaryService.findByMemberId(member.getMemId());
         model.addAttribute("diaries",diary);
         return "";
     }
@@ -46,5 +46,11 @@ public class DiaryController {
         return "";
     }
 
-
+    @GetMapping("")
+    public String deleteDiary(Long diaryId, Member member, Model model){
+        diaryService.deleteDiary(diaryId);
+        List<Diary> diaries = diaryService.findByMemberId(member.getMemId());
+        model.addAttribute("diaries", diaries);
+        return "";
+    }
 }

@@ -1,10 +1,12 @@
-package com.gg.member;
+package com.gg.service;
 
 import java.util.HashMap;
 import java.util.List;
 
 
 import com.gg.domain.Member;
+import com.gg.repository.MemberCustomRepository;
+import com.gg.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.Authentication;

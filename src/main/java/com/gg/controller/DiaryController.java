@@ -1,5 +1,6 @@
-package com.gg.diary;
+package com.gg.controller;
 
+import com.gg.service.DiaryService;
 import com.gg.domain.Diary;
 import com.gg.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;

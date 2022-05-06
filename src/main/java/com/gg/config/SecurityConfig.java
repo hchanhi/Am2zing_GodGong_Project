@@ -1,8 +1,8 @@
 package com.gg.config;
 
-import com.gg.member.MemberLoginFail;
-import com.gg.member.MemberLoginSuccess;
-import com.gg.member.PrincipalDetailsService;
+import com.gg.handler.MemberLoginFail;
+import com.gg.handler.MemberLoginSuccess;
+import com.gg.service.PrincipalDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-
-
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -78,16 +75,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     		
     .and()
 			.csrf()
-			.ignoringAntMatchers("/upload")
-		    .ignoringAntMatchers("/placeList/*")
-		    .ignoringAntMatchers("/deleteList/*")
-		    .ignoringAntMatchers("/deletePlace/*")
-		    .ignoringAntMatchers("/commentList/*")
-		    .ignoringAntMatchers("/commentList02/*")
-		    .ignoringAntMatchers("/deleteComment/*")
-		    .ignoringAntMatchers("/boardBookmark")
-		    .ignoringAntMatchers("/unBoardBookmark")
-		    .ignoringAntMatchers("/post/*");
+			.ignoringAntMatchers("/");
+
 
 		    	 
 		

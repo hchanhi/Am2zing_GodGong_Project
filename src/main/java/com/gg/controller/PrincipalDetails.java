@@ -1,4 +1,4 @@
-package com.gg.member;
+package com.gg.controller;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,7 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 // Authentication 객체에 저장할 수 있는 유일한 타입
-public class PrincipalDetails implements UserDetails {// , OAuth2User{
+public class PrincipalDetails implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 	@Autowired

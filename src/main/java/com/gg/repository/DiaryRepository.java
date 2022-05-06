@@ -1,4 +1,4 @@
-package com.gg.diary;
+package com.gg.repository;
 
 import com.gg.domain.Diary;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,7 +1,8 @@
 
-package com.gg.member;
+package com.gg.dumpdata;
 
 import com.gg.domain.Member;
+import com.gg.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;

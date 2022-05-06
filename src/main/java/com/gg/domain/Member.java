@@ -7,34 +7,42 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-// ORM - Object Relation Mapping
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Builder
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+
+
 public class Member {
-    @Id // primary key
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memberId;
-
-    private String memberEmail;
-
-    private String memberPassword;
-
-    private String memberBirth;
-
-    private String memberNickname;
-
-    @CreationTimestamp
-    private Timestamp memberCreated;
+	@Id // primary key
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long memId;
+	
+	@Column(nullable = false, unique = true)
+	private String memEmail; 
+	private String memPassword;
+	private String memBirth;
+	@Column(unique = true)
+	private String memNickname;
+	private String memRole; //ROLE_USER, ROLE_ADMIN
+	// OAuth를 위해 구성한 추가 필드 2개
+//	private String provider;
+//	private String providerId;
+	@CreationTimestamp
+	private Timestamp createDate;
+	
+	public void encodePassword(PasswordEncoder passwordEncoder) {
+		this.memPassword = passwordEncoder.encode(this.memPassword);
+	}
 
 }

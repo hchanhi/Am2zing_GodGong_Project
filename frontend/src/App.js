@@ -2,10 +2,9 @@ import './App.css';
 
 function App() {
 
-
     return (
         <div className="App">
-            여기에 작성
+            <h1>여기에 작성</h1>
         </div>
 
     );

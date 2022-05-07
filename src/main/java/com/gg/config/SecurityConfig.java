@@ -2,6 +2,7 @@ package com.gg.config;
 
 import com.gg.handler.MemberLoginFail;
 import com.gg.handler.MemberLoginSuccess;
+import com.gg.service.CustomOAuth2UserService;
 import com.gg.service.PrincipalDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,8 +25,8 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true) // 특정 주소 접근시 권한 및 인증을 위한 어노테이션 활성화
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //	
-//	@Autowired
-//	private PrincipalOauth2UserService principalOauth2UserService;
+	@Autowired
+	private CustomOAuth2UserService CustomOAuth2UserService;
 	
 	@Autowired
 	private PrincipalDetailsService principalDetailsService;
@@ -72,11 +73,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     		.logoutSuccessUrl("/") // 로그아웃 성공 시 redirect 이동 
     		.invalidateHttpSession(true) // HTTP Session 초기화 
     		.deleteCookies("JSESSIONID") // 특정 쿠키 제거
-    .and() // 403 예외처리 핸들링 
-    	.exceptionHandling()
-    		.accessDeniedPage("/denied")
-    		
-    .and()
+
+   		 .and() // 403 예외처리 핸들링
+    		.exceptionHandling()
+    			.accessDeniedPage("/denied")
+		.and()
 			.csrf()
 			.ignoringAntMatchers("/upload")
 		    .ignoringAntMatchers("/placeList/*")
@@ -87,7 +88,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		    .ignoringAntMatchers("/deleteComment/*")
 		    .ignoringAntMatchers("/boardBookmark")
 		    .ignoringAntMatchers("/unBoardBookmark")
-		    .ignoringAntMatchers("/post/*");
+		    .ignoringAntMatchers("/post/*")
+
+		.and()
+			.oauth2Login()
+			.userInfoEndpoint() // oauth2 로그인 성공 후 가져올 때의 설정들
+			// 소셜로그인 성공 시 후속 조치를 진행할 UserService 인터페이스 구현체 등록
+			.userService(CustomOAuth2UserService); // 리소스 서버에서 사용자 정보를 가져온 상태에서 추가로 진행하고자 하는 기능 명시
 
 		    	 
 		

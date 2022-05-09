@@ -64,14 +64,14 @@ public class MemberController {
 
     //회원가입 진행
     @PostMapping("/api/member/joinProc")
-    public String joinProc(Member member) {
+    public boolean joinProc(Member member) {
 
         String rawPassword = member.getPassword();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
         member.setPassword(encPassword);
         member.setRole("ROLE_MEMBER");
         memberRepository.save(member);
-        return "member/member_loginForm";
+        return true;
     }
 
     //마이페이지

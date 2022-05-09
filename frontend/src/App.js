@@ -6,6 +6,7 @@ import Login from './Login.js';
 import Signin from './Signin.js';
 import TodoList from './Todo/TodoList.js';
 import TodoStudy from './Todo/TodoStudy.js';
+import Challenge from './Challenge'; //hee
 import Footer from './Footer.js';
 
 function App() {

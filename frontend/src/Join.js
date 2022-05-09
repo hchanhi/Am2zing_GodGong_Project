@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import {
@@ -29,7 +28,6 @@ const Register = () => {
     const [nameError, setNameError] = useState('');
     const [birthError, setBirthError] = useState('');
     const [registerError, setRegisterError] = useState('');
-    const history = useNavigate();
 
     // 동의 체크
     const handleAgree = (event) => {
@@ -43,10 +41,9 @@ const Register = () => {
         // post
 
         await axios
-            .post('api/member/joinProc', postData)
+            .post('/api/member/joinProc', postData)
             .then(function (response) {
                 console.log(response, '성공');
-                history.push('/login');
             })
             .catch(function (err) {
                 console.log(err);

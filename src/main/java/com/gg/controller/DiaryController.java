@@ -31,7 +31,8 @@ public class DiaryController {
     }
 
     @PostMapping("")
-    public String postDiary(String content, Member member, String sentiment){
+    public String postDiary(String content, Member member){
+        String sentiment = diaryService.sentiment(content);
         diaryService.postDiary(content,member,sentiment);
         return "";
     }

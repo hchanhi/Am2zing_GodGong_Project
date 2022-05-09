@@ -65,8 +65,20 @@ public class MemberController {
 
 		return "member/member_joinForm";
 	}
-	
-	//마이페이지
+
+    //회원가입 진행
+    @PostMapping("/member/joinProc")
+    public String joinProc(Member member) {
+
+        String rawPassword = member.getPassword();
+        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+        member.setPassword(encPassword);
+        member.setRole("ROLE_MEMBER");
+        memberRepository.save(member);
+        return "member/member_loginForm";
+    }
+
+    //마이페이지
 	@GetMapping("member/mypage")
     public String mypage(Authentication authentication, Model model) {
         Member member = memberService.mypage(authentication.getName());
@@ -74,8 +86,6 @@ public class MemberController {
 
         return "member/member_mypage";
     }
-	
-
 
 	 //내정보 수정
     @PostMapping("member/myinfoEdit")
@@ -84,18 +94,6 @@ public class MemberController {
         return "member/member_mypage";
     }
 
-	//회원가입 진행
-	@PostMapping("/joinProc")
-	public String joinProc(Member member) {
-		
-		String rawPassword = member.getPassword();
-		String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-		member.setPassword(encPassword);
-		member.setRole("ROLE_MEMBER");
-		memberRepository.save(member);
-		return "member/member_loginForm";
-	}
-	
 	//회원가입 이메일 중복 체크
 	@ResponseBody
     @GetMapping("/member/emailChk")
@@ -117,7 +115,6 @@ public class MemberController {
     public HashMap<String, Object> memNicknameEdit(@RequestParam(required = false) Long memId, String memNickname) {
         return memberService.memNicknameEdit(memNickname, memId);
     }
-    
     
     //패스워드 수정페이지
     @GetMapping("/member/pwdEdit")

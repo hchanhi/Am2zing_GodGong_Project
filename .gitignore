@@ -55,4 +55,8 @@ gradle-app.setting
 
 build
 
+spring:
+  profiles:
+    include: oauth
+
 application.yml

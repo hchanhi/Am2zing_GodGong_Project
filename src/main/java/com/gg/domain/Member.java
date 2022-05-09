@@ -32,17 +32,23 @@ public class Member {
 	private String email;
 	private String password;
 	private String birth;
+
 	@Column(unique = true)
 	private String nickname;
-	private String role; //ROLE_USER, ROLE_ADMIN
-	// OAuth를 위해 구성한 추가 필드 2개
-//	private String provider;
-//	private String providerId;
+
+	private String role; //ROLE_MEMBER, ROLE_ADMIN
+
 	@CreationTimestamp
 	private Timestamp createDate;
 	
 	public void encodePassword(PasswordEncoder passwordEncoder) {
 		this.password = passwordEncoder.encode(this.password);
+	}
+
+	public Member update(String nickname){
+		this.nickname = nickname;
+
+		return this;
 	}
 
 }

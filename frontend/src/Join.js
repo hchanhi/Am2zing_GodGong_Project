@@ -54,6 +54,7 @@ const Register = () => {
             .post('/api/member/joinProc', postData, headers)
             .then(function (response) {
                 console.log(response, '성공');
+                history('/challenge');
 
             })
             .catch(function (err) {
@@ -62,6 +63,7 @@ const Register = () => {
                 console.log(origin);
                 alert("API Call error:" + err);
                 setRegisterError('회원가입에 실패하였습니다. 다시한번 확인해 주세요.');
+
             });
     };
     // useState 추가

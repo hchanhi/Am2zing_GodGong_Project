@@ -41,7 +41,7 @@ public class OAuthAttributes {
         return Member.builder()
                 .nickname(nickname)
                 .email(email)
-                .role("ROLE_MEMBER") // 기본 권한 GUEST
+                .role("ROLE_MEMBER") // 기본 권한 MEMBER
                 .build();
     }
 

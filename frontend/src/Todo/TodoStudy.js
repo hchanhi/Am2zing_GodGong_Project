@@ -1,15 +1,49 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import axios from 'axios';
+import { useParams, useNavigate } from "react-router-dom";
+import Modal from "../Modal";
 
 function TodoStudy() {
 
+    let myId = "";
     let { id } = useParams();
-    // 새로고침으로 인한 state 초기화를 대비하기 위해 Ajax 다시 실행
+    let [isMember, setIsMember] = useState(false);
+
+    let [study, setStudy] = useState({
+        roomCategory: "",
+        roomTitle: "",
+        roomUuid: "",
+        roomCreated: "",
+        roomEntry: "",
+        memberId: ""
+    });
+
+    useEffect(() => {
+        axios.get('/api/todoStudy/', {params: {roomId: id}})
+            .then((res) => {
+                setStudy(res.data);
+                if (res.data((x) => x.memberId == myId).length != 0) {
+                    setIsMember(true);
+                }
+                // todo list작성하는 모달
+                <Modal />
+            }).catch((error) => {
+                // alert('Todo study방의 정보를 가져오는 데 실패했습니다.');
+                console.log(error);
+            });
+    }, [study]);
+    // 다른 스터디원의 실시간 투두 진행상황 보려면 양방향 데이터 통신 필요
 
     return (
         <div>
             <h3>스터디방 id : {id}</h3>
-            스터디만들기 모달창은 라이브러리 쓰지 않고 직접 구현하기<br />
+            {study.roomCategory}
+            {study.roomTitle}
+            {
+                isMember
+                    ? <button>나가기</button>
+                    : <button>참여하기</button>
+            }
         </div>
     );
 }

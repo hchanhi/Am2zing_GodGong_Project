@@ -12,15 +12,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 
 
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 
 public class MemberController {
@@ -62,20 +59,19 @@ public class MemberController {
 
 	@GetMapping("/api/member/join")
 	public String join() {
-
 		return "member/member_joinForm";
 	}
 
     //회원가입 진행
     @PostMapping("/api/member/joinProc")
-    public String joinProc(Member member) {
+    public boolean joinProc(Member member) {
 
         String rawPassword = member.getPassword();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
         member.setPassword(encPassword);
         member.setRole("ROLE_MEMBER");
         memberRepository.save(member);
-        return "member/member_loginForm";
+        return true;
     }
 
     //마이페이지

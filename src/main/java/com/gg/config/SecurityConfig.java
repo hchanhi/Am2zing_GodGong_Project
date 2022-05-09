@@ -7,6 +7,7 @@ import com.gg.service.PrincipalDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -30,6 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
 	private PrincipalDetailsService principalDetailsService;
+
+
 	
 	@Bean
 	public BCryptPasswordEncoder encodePwd() {
@@ -50,23 +53,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		
 		http.authorizeRequests()
-			.antMatchers("/member/login").permitAll()
-			.antMatchers("/member/join").permitAll()
-			.antMatchers("/member/emailChk").permitAll()
-			.antMatchers("/member/nicknameChk").permitAll()
+			.mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Preflight Request 허용해주기
+			.antMatchers("/api/member/login").permitAll()
+			.antMatchers("/api/member/join").permitAll()
+			.antMatchers("/api/member/emailChk").permitAll()
+			.antMatchers("/api/member/nicknameChk").permitAll()
 			.antMatchers("/member/**").access("hasRole('ROLE_MEMBER')or hasRole('ROLE_ADMIN')")
 			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
 			.anyRequest().permitAll()
-		.and()
-			.formLogin()
-			.loginPage("/member/login")
-			.defaultSuccessUrl("/")
-			.failureUrl("/member/login?error=true")
-			.usernameParameter("memEmail")
-            .passwordParameter("memPassword")
-            .successHandler(successHandler())
-            .failureHandler(failureHandler())
-            .permitAll()
+//		.and()
+//			.formLogin()
+//			.loginPage("/member/login")
+//			.defaultSuccessUrl("/")
+//			.failureUrl("/member/login?error=true")
+//			.usernameParameter("memEmail")
+//            .passwordParameter("memPassword")
+//            .successHandler(successHandler())
+//            .failureHandler(failureHandler())
+//            .permitAll()
 		.and()
 			.logout()
     		.logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // 로그아웃 시 URL 재정의 
@@ -79,7 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     			.accessDeniedPage("/denied")
 		.and()
 			.csrf()
-			.ignoringAntMatchers("/upload")
+			.ignoringAntMatchers("/api/*")
 		    .ignoringAntMatchers("/placeList/*")
 		    .ignoringAntMatchers("/deleteList/*")
 		    .ignoringAntMatchers("/deletePlace/*")

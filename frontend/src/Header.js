@@ -13,7 +13,7 @@ function Header() {
                 로그인
             </Link>
             <span>|</span>
-            <Link to="/signin">
+            <Link to="/Join">
                 회원가입
             </Link>
             <br />

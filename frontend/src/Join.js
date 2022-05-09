@@ -18,7 +18,8 @@ import {
     Container,
 } from '@mui/material/';
 
-import './signin.css';
+import './join.css';
+
 const Register = () => {
 
     const [checked, setChecked] = useState(false);
@@ -36,19 +37,20 @@ const Register = () => {
     };
 
     const onhandlePost = async (data) => {
-        const { email, nickname, password } = data;
-        const postData = { email: "email", nickname: "nickname", password: "password" };
+        const { email, nickname, password, birth } = data;
+        const postData = { email, nickname, password, birth };
 
         // post
 
         await axios
-            .post('member/joinProc', postData)
+            .post('api/member/joinProc', postData)
             .then(function (response) {
                 console.log(response, '성공');
                 history.push('/login');
             })
             .catch(function (err) {
                 console.log(err);
+                console.log(postData);
                 setRegisterError('회원가입에 실패하였습니다. 다시한번 확인해 주세요.');
             });
     };
@@ -97,9 +99,9 @@ const Register = () => {
             setNameError('');
         }
         // 이름 유효성 검사
-        const birthRegex = /^[0-9]+$/;
+        const birthRegex = /^[0-9]{6}$/;
         if (!birthRegex.test(birth)) {
-            setBirthError('생년월일을 입력해주세요.');
+            setBirthError('생년월일을 6자리로 입력해주세요.');
         } else {
             setBirthError('');
         }
@@ -144,6 +146,7 @@ const Register = () => {
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                     <FormControl component="fieldset" variant="standard">
                         <Grid container spacing={2}>
+
                             <Grid item xs={12}>
                                 <TextField
                                     required
@@ -157,11 +160,32 @@ const Register = () => {
                                 />
                             </Grid>
                             <FormHelperText>{emailError}</FormHelperText>
+                            <Grid sx={{
+
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'flex-end',
+
+                            }} xs={12}>
+                                <a >
+                                    중복체크
+                                </a>
+                            </Grid>
                             <Grid item xs={12}>
                                 <TextField required fullWidth id="nickname" name="nickname" label="닉네임"
                                     error={nameError !== '' || false} />
                             </Grid>
                             <FormHelperText>{nameError}</FormHelperText>
+                            <Grid xs={12} sx={{
+
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'flex-end',
+                            }} >
+                                <a >
+                                    중복체크
+                                </a>
+                            </Grid>
                             <Grid item xs={12}>
                                 <TextField
                                     required
@@ -193,7 +217,7 @@ const Register = () => {
                                     type="text"
                                     id="birth"
                                     name="birth"
-                                    label="생년월일"
+                                    label="생년월일(6자리)"
                                     error={birthError !== '' || false}
                                 />
                             </Grid>

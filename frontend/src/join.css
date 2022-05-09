@@ -22,3 +22,10 @@ code {
 p {
   padding-left: 20px;
 }
+
+.check {
+  display: flex;
+  text-align: end;
+  flex-direction: column;
+  align-items: flex-end;
+}

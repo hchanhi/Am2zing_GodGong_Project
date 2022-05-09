@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import DisplayComponent from './components/DisplayComponent';
-import BtnComponent from './components/BtnComponent';
+import React, { useState } from 'react';
+// import DisplayComponent from './DisplayComponent.js';
+import BtnComponent from './BtnComponent.js';
 import './Challenge.css';
 
 function App() {
@@ -51,7 +51,7 @@ function App() {
     <div className="main-secion">
       <div className="clock-holder">
         <div className="stopwatch">
-          <DisplayComponent time={time}/>
+          {/* <DisplayComponent time={time}/> */}
           <BtnComponent status ={status} resume={resume} reset={reset} stop={stop} start={start}/>
 
         </div>

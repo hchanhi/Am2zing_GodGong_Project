@@ -17,7 +17,7 @@ function App() {
 
             <Routes>
                 <Route exact path="/" element={<Home />} />
-                <Route path="/challenge" elment={<Challenge />} />
+                <Route path="/challenge" element={<Challenge />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/Join" element={<Join />} />
                 <Route path="/todoList" element={<TodoList />} />

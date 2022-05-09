@@ -2,7 +2,7 @@ import './App.css';
 import { Route, Routes } from "react-router-dom";
 import Header from './Header.js';
 import Home from './Home.js';
-import Challenge from './Challenge.js'
+import Challenge from './Challenge.js';
 import Login from './Login.js';
 import Join from './Join.js';
 import TodoList from './Todo/TodoList.js';

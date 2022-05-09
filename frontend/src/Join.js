@@ -37,6 +37,14 @@ const Register = () => {
     const onhandlePost = async (data) => {
         const { email, nickname, password, birth } = data;
         const postData = { email, nickname, password, birth };
+        const headers = {
+            'headers': {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With,application/json, text/plain, */*"
+            }
+
+        };
 
         // post
 
@@ -48,6 +56,8 @@ const Register = () => {
             .catch(function (err) {
                 console.log(err);
                 console.log(postData);
+                console.log(origin);
+                alert("API Call error:" + err);
                 setRegisterError('회원가입에 실패하였습니다. 다시한번 확인해 주세요.');
             });
     };
@@ -143,8 +153,24 @@ const Register = () => {
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                     <FormControl component="fieldset" variant="standard">
                         <Grid container spacing={2}>
+                            <Grid item xs={12} sx={{
 
-                            <Grid item xs={12}>
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'flex-end',
+                                padding: '2px !important'
+
+
+                            }}>
+                                <a >
+                                    중복체크
+                                </a>
+                            </Grid>
+                            <Grid item xs={12} sx={{
+
+                                paddingTop: '3px !important'
+
+                            }}>
                                 <TextField
                                     required
                                     autoFocus
@@ -157,32 +183,29 @@ const Register = () => {
                                 />
                             </Grid>
                             <FormHelperText>{emailError}</FormHelperText>
-                            <Grid sx={{
+                            <Grid item xs={12} sx={{
 
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'flex-end',
+                                padding: '2px !important'
 
-                            }} xs={12}>
-                                <a >
-                                    중복체크
-                                </a>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField required fullWidth id="nickname" name="nickname" label="닉네임"
-                                    error={nameError !== '' || false} />
-                            </Grid>
-                            <FormHelperText>{nameError}</FormHelperText>
-                            <Grid xs={12} sx={{
-
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'flex-end',
                             }} >
                                 <a >
                                     중복체크
                                 </a>
                             </Grid>
+
+                            <Grid item xs={12} sx={{
+
+                                paddingTop: '3px !important'
+
+                            }}>
+                                <TextField required fullWidth id="nickname" name="nickname" label="닉네임"
+                                    error={nameError !== '' || false} />
+                            </Grid>
+                            <FormHelperText>{nameError}</FormHelperText>
+
                             <Grid item xs={12}>
                                 <TextField
                                     required

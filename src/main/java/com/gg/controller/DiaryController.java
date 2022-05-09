@@ -31,7 +31,8 @@ public class DiaryController {
     }
 
     @PostMapping("")
-    public String postDiary(String content, Member member, String sentiment){
+    public String postDiary(String content, Member member){
+        String sentiment = diaryService.sentiment(content);
         diaryService.postDiary(content,member,sentiment);
         return "";
     }
@@ -42,7 +43,8 @@ public class DiaryController {
     }
 
     @PostMapping("/{diaryId}")
-    public String editDiary(String content, @PathVariable Long diaryId, String sentiment){
+    public String editDiary(String content, @PathVariable Long diaryId){
+        String sentiment = diaryService.sentiment(content);
         diaryService.editDiary(content, diaryId, sentiment);
         return "";
     }
@@ -54,4 +56,5 @@ public class DiaryController {
         model.addAttribute("diaries", diaries);
         return "";
     }
+
 }

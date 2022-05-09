@@ -42,7 +42,8 @@ public class DiaryController {
     }
 
     @PostMapping("/{diaryId}")
-    public String editDiary(String content, @PathVariable Long diaryId, String sentiment){
+    public String editDiary(String content, @PathVariable Long diaryId){
+        String sentiment = diaryService.sentiment(content);
         diaryService.editDiary(content, diaryId, sentiment);
         return "";
     }
@@ -54,4 +55,5 @@ public class DiaryController {
         model.addAttribute("diaries", diaries);
         return "";
     }
+
 }

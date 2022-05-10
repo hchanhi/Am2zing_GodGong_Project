@@ -1,4 +1,4 @@
-package com.gg.godgong;
+package com.gg;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -18,39 +18,41 @@ public class DiaryController {
     @Autowired
     DiaryService diaryService;
 
-    @GetMapping("")
+    @GetMapping("api/diary/mydiary")
     public String findMyDiary(Member member, Model model){
         List<Diary> diary = diaryService.findByMemberId(member.getId());
         model.addAttribute("diaries",diary);
         return "";
     }
 
-    @GetMapping("")
+    @GetMapping("api/diary/post")
     public String postPage(){
         return "";
     }
 
-    @PostMapping("")
+    @PostMapping("api/diary/post")
     public String postDiary(String content, Member member){
         String sentiment = diaryService.sentiment(content);
         diaryService.postDiary(content,member,sentiment);
         return "";
     }
 
-    @GetMapping("")
-    public String editPage(){
+    @GetMapping("api/diary/edit/{diaryId}")
+    public String editPage(@PathVariable Long diaryId, Model model){
+        Diary diary = diaryService.findByDiaryId(diaryId);
+        model.addAttribute("diary", diary);
         return "";
     }
 
-    @PostMapping("/{diaryId}")
+    @PostMapping("api/diary/edit/{diaryId}")
     public String editDiary(String content, @PathVariable Long diaryId){
         String sentiment = diaryService.sentiment(content);
         diaryService.editDiary(content, diaryId, sentiment);
         return "";
     }
 
-    @GetMapping("")
-    public String deleteDiary(Long diaryId, Member member, Model model){
+    @GetMapping("api/diary/delete/{diaryId}")
+    public String deleteDiary(@PathVariable Long diaryId, Member member, Model model){
         diaryService.deleteDiary(diaryId);
         List<Diary> diaries = diaryService.findByMemberId(member.getId());
         model.addAttribute("diaries", diaries);

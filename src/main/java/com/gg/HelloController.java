@@ -1,4 +1,4 @@
-package com.gg.godgong;
+package com.gg;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

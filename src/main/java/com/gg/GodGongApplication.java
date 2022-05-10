@@ -1,4 +1,4 @@
-package com.gg.godgong;
+package com.gg;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -37,12 +37,12 @@ public class DiaryController {
         return "";
     }
 
-    @GetMapping("api/diary/edit/{diaryId}")
-    public String editPage(@PathVariable Long diaryId, Model model){
-        Diary diary = diaryService.findByDiaryId(diaryId);
-        model.addAttribute("diary", diary);
-        return "";
-    }
+//    @GetMapping("api/diary/edit/{diaryId}")
+//    public String editPage(@PathVariable Long diaryId, Model model){
+//        Diary diary = diaryService.findByDiaryId(diaryId);
+//        model.addAttribute("diary", diary);
+//        return "";
+//    }
 
     @PostMapping("api/diary/edit/{diaryId}")
     public String editDiary(String content, @PathVariable Long diaryId){

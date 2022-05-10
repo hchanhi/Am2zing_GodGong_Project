@@ -49,7 +49,7 @@ const Register = () => {
         // post
 
         await axios
-            .post('/api/member/joinProc', postData)
+            .post('/api/auth/signup', postData)
             .then(function (response) {
                 console.log(response, '성공');
 

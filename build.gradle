@@ -3,7 +3,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id 'war'
-    id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
+
 }
 
 group = 'com.gg'
@@ -22,10 +22,7 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compile 'mysql:mysql-connector-java'
-    implementation 'mysql:mysql-connector-java'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.session:spring-session-core'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
@@ -35,33 +32,23 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // MySQL 연결
+    implementation 'mysql:mysql-connector-java'
+
+    //소셜 로그인 OAuth
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    //spring security + jwt 추가
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
 
-    // Querydsl 추가
-    implementation 'com.querydsl:querydsl-jpa'
-    // Querydsl 추가 끝
 }
-//querydsl 추가
-def querydslDir = "$buildDir/generated/querydsl" //QClass 생성 위치
-
-querydsl {
-    library = "com.querydsl:querydsl-apt"
-    jpa = true
-    querydslSourcesDir = querydslDir
-}
-sourceSets {
-    main.java.srcDir querydslDir
-}
-configurations {
-    querydsl.extendsFrom compileClasspath
-}
-compileQuerydsl {
-    options.annotationProcessorPath = configurations.querydsl
-}
-// 끝
-
-
 
 tasks.named('test') {
     useJUnitPlatform()

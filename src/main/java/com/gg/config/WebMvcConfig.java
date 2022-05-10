@@ -1,23 +1,23 @@
 package com.gg.config;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.boot.web.servlet.view.MustacheViewResolver;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-
-@RequiredArgsConstructor
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    private final long MAX_AGE_SECS = 3600;
 
+    @Value("${app.cors.allowedOrigins}")
+    private String[] allowedOrigins;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000")
-                .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE");
+                .allowedOrigins(allowedOrigins)
+                .allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE")
+                .maxAge(MAX_AGE_SECS);
     }
 }

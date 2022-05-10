@@ -1,40 +1,39 @@
 package com.gg.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
-import com.gg.domain.Member;
-import com.gg.repository.MemberRepository;
-import com.gg.repository.PrincipalDetails;
+import com.gg.domain.User;
+import com.gg.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-
-
+import javax.transaction.Transactional;
 
 
 @Service
 public class PrincipalDetailsService implements UserDetailsService{
 
 	@Autowired
-	private MemberRepository memberRepository;
-	
-	
+	UserRepository userRepository;
 	@Override
-	public UserDetails loadUserByUsername(String memEmail) throws UsernameNotFoundException {
-
-	        Optional<Member> memberWrapper = memberRepository.findByEmail(memEmail);
-	        Member member = memberWrapper.get();
-	        List<GrantedAuthority> authorities = new ArrayList<>();
-	        authorities.add(new SimpleGrantedAuthority(member.getRole()));
-	        return new PrincipalDetails(member);
-	    }
+	@Transactional
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		User user = userRepository.findByEmail(email)
+				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + email));
+		return PrincipalDetails.create(user);
 	}
 
+		// This method is used by JWTAuthenticationFilter
+	@Transactional
+	public UserDetails loadUserById(Long id) {
+		User user = userRepository.findById(id).orElseThrow(
+				() -> new UsernameNotFoundException("User not found with id : " + id)
+		);
+
+		return PrincipalDetails.create(user);
+	}
+}
 

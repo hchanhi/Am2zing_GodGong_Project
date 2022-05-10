@@ -18,6 +18,7 @@ import {
 } from '@mui/material/';
 
 import './join.css';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
 
@@ -28,6 +29,7 @@ const Register = () => {
     const [nameError, setNameError] = useState('');
     const [birthError, setBirthError] = useState('');
     const [registerError, setRegisterError] = useState('');
+    const navigate = useNavigate();
 
     // 동의 체크
     const handleAgree = (event) => {
@@ -35,8 +37,8 @@ const Register = () => {
     };
 
     const onhandlePost = async (data) => {
-        const { email, nickname, password, birth } = data;
-        const postData = { email, nickname, password, birth };
+        const { birth, nickname, email, password } = data;
+        const postData = { birth, nickname, email, password };
         const headers = {
             'headers': {
                 "Access-Control-Allow-Origin": "*",
@@ -52,6 +54,11 @@ const Register = () => {
             .post('/api/auth/signup', postData)
             .then(function (response) {
                 console.log(response, '성공');
+
+                navigate('/login');
+
+
+
             })
             .catch(function (err) {
                 console.log(err);
@@ -59,6 +66,7 @@ const Register = () => {
                 console.log(origin);
                 alert("API Call error:" + err);
                 setRegisterError('회원가입에 실패하였습니다. 다시한번 확인해 주세요.');
+
             });
     };
     // useState 추가
@@ -69,11 +77,13 @@ const Register = () => {
 
         const data = new FormData(e.currentTarget);
         const joinData = {
-            email: data.get('email'),
+            birth: data.get('birth'),
             nickname: data.get('nickname'),
+            email: data.get('email'),
+
             password: data.get('password'),
             rePassword: data.get('rePassword'),
-            birth: data.get('birth'),
+
         };
         const { email, nickname, password, rePassword, birth } = joinData;
 

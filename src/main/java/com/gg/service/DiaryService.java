@@ -45,6 +45,10 @@ public class DiaryService {
         diaryRepository.delete(diary);
     }
 
+    public Diary findByDiaryId(Long diaryId){
+        return diaryRepository.findByDiaryId(diaryId);
+    }
+
     ///네이버 api 시작
     public String sentiment(String content){
         String clientId = "z2528dw8cg"; // 애플리케이션 클라이언트 아이디

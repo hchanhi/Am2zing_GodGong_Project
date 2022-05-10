@@ -13,24 +13,22 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @Entity
-@Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"nickname"}),
-        @UniqueConstraint(columnNames = {"email"})
-})
+@AllArgsConstructor
+@Table(name = "users",
+        uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"nickname", "email"})})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
-    @Size(max = 20)
-    private String nickname;
-    @NotBlank
-    @Size(max = 50)
-    private String email;
-    @NotBlank
-    @Size(max = 120)
-    private String password;
 
+    @Column
+    private String nickname;
+    @Column
+    private String email;
+    @Column
+    private String password;
+    @Column
     private String birth;
 
     @ManyToMany(fetch = FetchType.LAZY)

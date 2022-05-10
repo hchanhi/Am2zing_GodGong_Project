@@ -1,6 +1,7 @@
 package com.gg.config;
 
-import com.gg.config.jwt.AuthEntryPointJwt;
+
+import com.gg.config.jwt.JwtAuthenticationEntryPoint;
 import com.gg.config.jwt.JwtAuthenticationFilter;
 import com.gg.service.PrincipalDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	PrincipalDetailsService principalDetailsService;
 
 	@Autowired
-	private AuthEntryPointJwt authEntryPointJwt;
+	private JwtAuthenticationEntryPoint authEntryPointJwt;
 
 	//Field authenticationManager in service.SecurityServiceImpl required a bean of type 'org.springframework.security.authentication.AuthenticationManager'
 	//이 오류나서 추가

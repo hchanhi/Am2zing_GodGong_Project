@@ -2,30 +2,22 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { useParams } from "react-router-dom";
 import Modal from "../Modal";
-import { Grid, Card, Chip, CardContent, Checkbox, Typography } from '@mui/material/';
 import styled from "styled-components";
-import { BsChatDots } from 'react-icons/bs'
 import CheckboxTodo from "./CheckboxTodo";
+import { Grid, Chip } from '@mui/material/';
+import Badge from '@mui/material/Badge';
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import IconButton from '@mui/material/IconButton'; import MailIcon from '@mui/icons-material/Mail';
 
 let Wrapper = styled.div`
     margin: auto;
     padding: 3rem 0;
     width: 70%;
     text-align: left;
-`
-let CardStyle = styled(Card)`
-    width: 20%;
-    minWidth: 200;
-    float: left;
-    
-    hr {
-        margin: 0.5rem 0;
-        color: gray;
+
+    h3 {
+        margin-top: 1rem;
     }
-`
-let CardContentStyle = styled(CardContent)`
-    background-color: WhiteSmoke;
-    
 `
 
 function TodoStudy() {
@@ -33,20 +25,15 @@ function TodoStudy() {
     let myId = "";
     let { id } = useParams();
     let [isMember, setIsMember] = useState(false);
-    let [checked, setChecked] = useState(false);
 
     let [study, setStudy] = useState({
-        roomCategory: "대기업",
+        roomCategory: "",
         roomTitle: "",
         roomUuid: "",
         roomCreated: "",
         roomEntry: "",
         memberId: ""
     });
-
-    let changeFunc = (e) => {
-        setChecked(e.target.checked);
-    }
 
     useEffect(() => {
         axios.get('/api/todoStudy/', {params: {roomId: id}})
@@ -71,31 +58,18 @@ function TodoStudy() {
                     <h1>에너지 넘치는 2조 투두방📚</h1>
                 </Grid>
                 <Grid item xs={6}>
-                    <Chip label={study.roomCategory}/><br/>
-                    현재 4/5명
+                    <Chip label='대기업' color="info" />
+                    <h3>현재인원 : 4/5명</h3>
                 </Grid>
                 <Grid item xs={6} sx={{ textAlign: 'right' }}>
-                    <BsChatDots size="50"/>
+                    <IconButton color="inherit">
+                        <Badge badgeContent={3} color="error">
+                            <ChatBubbleIcon sx={{ fontSize: 50 }} />
+                        </Badge>
+                    </IconButton>
                 </Grid>
                 <Grid item xs={12}>
                     <CheckboxTodo />
-                    <CardStyle>
-                        <CardContentStyle>
-                            <h3>닉네임의 Todo</h3>
-                            <hr />
-                            <Typography variant="body">
-                                수행할 투두리스트
-                                <Checkbox
-                                    edge="end"
-                                    checked={checked}
-                                    onChange={changeFunc}
-                                    defaultChecked color="default"/>
-                                <br />
-                            </Typography>
-                            <br/><h4>현재 진행 중 ... (50%)</h4>
-                        </CardContentStyle>
-                    </CardStyle>
-                    
                 </Grid>
                 <Grid item xs={12} sx={{textAlign: 'right'}}>
                     {

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
@@ -8,56 +8,44 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
+import Checkbox from '@mui/material/Checkbox';
 
-const data = [
-    {  label: 'Authentication' },
-    { label: 'Database' },
-    { label: 'Storage' },
-    { label: 'Hosting' },
-];
+let data = ['멋지게 밥먹기', '끝내주게 숨쉬기', '알람끄고 잘자기', '코딩하기...'];
 
-const FireNav = styled(List)({
-    '& .MuiListItemButton-root': {
-        paddingLeft: 24,
-        paddingRight: 24,
-    },
+let FireNav = styled(List)({
     '& .MuiListItemIcon-root': {
         minWidth: 0,
-        marginRight: 16,
-    },
-    '& .MuiSvgIcon-root': {
-        fontSize: 20,
-    },
+        marginLeft: 10,
+    }
 });
 
 function CheckboxTodo() {
+
+    let [checked, setChecked] = useState([1]);
+
+    let handleToggle = (value) => () => {
+        let currentIndex = checked.indexOf(value);
+        let newChecked = [...checked];
+
+        if (currentIndex === -1) {
+            newChecked.push(value);
+        } else {
+            newChecked.splice(currentIndex, 1);
+        }
+
+        setChecked(newChecked);
+    };
+
     return (
         <Box sx={{ display: 'flex' }}>
             <ThemeProvider
                 theme={createTheme({
-                    components: {
-                        MuiListItemButton: {
-                            defaultProps: {
-                                disableTouchRipple: true,
-                            },
-                        },
-                    },
-                    palette: {
-                        mode: 'dark',
-                        primary: { main: 'rgb(102, 157, 246)' },
-                        background: { paper: 'rgb(5, 30, 52)' },
-                    },
+                    palette: { mode: 'dark', background: { paper: 'rgb(5, 30, 52)' }, }
                 })}
             >
                 <Paper elevation={0} sx={{ maxWidth: 256 }}>
                     <FireNav component="nav" disablePadding>
-                        <ListItemButton
-                            sx={{
-                                pt: 2.5,
-                                pb: 2.5,
-                            }}
-                        >
-                            <ListItemIcon sx={{ fontSize: 20 }}>🔥</ListItemIcon>
+                        <ListItemButton sx={{ pt: 2, pb: 2, }}>
                             <ListItemText
                                 primary="닉네임의 Todos"
                                 primaryTypographyProps={{
@@ -67,39 +55,46 @@ function CheckboxTodo() {
                                     lineHeight: '20px',
                                 }}
                             />
+                            <ListItemIcon sx={{ fontSize: 20 }}>🔥</ListItemIcon>
                         </ListItemButton>
                         <Divider />
-                        <Box
-                            sx={{
-                                bgcolor: 'rgba(71, 98, 130, 0.2)',
-                                pb: 2
-                            }}
-                        >
-                            {data.map((item) => (
+                        <Box sx={{ bgcolor: 'rgba(71, 98, 130, 0.2)', }}>
+                            {data.map((value) => (
+                                <ListItem
+                                    key={value}
+                                    secondaryAction={
+                                        <Checkbox
+                                            edge="end"
+                                            onChange={handleToggle(value)}
+                                            checked={checked.indexOf(value) !== -1}
+                                        />
+                                    }
+                                    disablePadding
+                                >
                                     <ListItemButton
                                         alignItems="flex-start"
-                                        key={item.label}
+                                        key={value}
                                         sx={{
                                             px: 3,
-                                            pt: 2.5,
-                                            pb: 2.5,
+                                            pt: 2,
+                                            pb: 2,
                                             minHeight: 32
                                         }}
-                                >
-                                    
+                                    >
+
                                         <ListItemText
-                                            primary={item.label}
+                                            primary={value}
                                             primaryTypographyProps={{
                                                 fontSize: 15,
                                                 fontWeight: 'medium',
                                                 lineHeight: '10px',
-                                                mb: '2px',
                                             }}
                                         />
                                     </ListItemButton>
-                                ))}
+                                </ListItem>
+                            ))}
                         </Box>
-                        <h4 style={{padding: '1rem'}}>현재 진행 중 ... (50%)</h4>
+                        <h4 style={{ padding: '1rem' }}>현재 진행 중 ... (50%)</h4>
                     </FireNav>
                 </Paper>
             </ThemeProvider>

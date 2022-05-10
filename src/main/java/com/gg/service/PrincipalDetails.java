@@ -17,6 +17,7 @@ public class PrincipalDetails implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
+
 	private String nickname;
 	private String email;
 	private String birth;

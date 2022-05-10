@@ -37,11 +37,20 @@ function Login() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
+        const data = {
             email: data.get('email'),
             password: data.get('password'),
-        });
+        };
+
+        axios.post('/login', data)
+            .then(res => {
+                console.log(res.data);
+                localStorage.setItem('token', res.data);
+
+            })
+            .catch(err => {
+                console.log(err);
+            });
     };
 
     return (

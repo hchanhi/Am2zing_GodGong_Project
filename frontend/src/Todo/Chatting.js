@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SockJs from "sockjs-client";
 import StompJs from "stompjs";
@@ -29,6 +29,8 @@ function Chatting(props) {
 
     let token = localStorage.getItem('access-token');
     let navigate = useNavigate();
+    let roomId = '';
+    let nickName = '';
 
     // 소켓 통신 객체
     let sock = new SockJs("url");
@@ -40,16 +42,16 @@ function Chatting(props) {
     useEffect(() => {
         wsConnnect();
         return wsDisConnect();
-    }, [props.roomId])
+    }, [roomId])
 
     // 웹소켓 연결, 구독??
     function wsConnnect() {
         ws.connect(
             { token: token },
             function () {
-                ws.subscribe("/api/room/chat/" + props.roomId, function (chat) {
+                ws.subscribe("/api/room/chat/" + roomId, function (chat) {
 
-                    if (writer === props.nickName) {
+                    if (writer === nickName) {
                         let newMessage = JSON.parse(chat.body);
                         setWriter('');
                         // styled-components 가변스타일링 나중에 주기

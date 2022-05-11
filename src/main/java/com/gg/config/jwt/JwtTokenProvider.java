@@ -28,6 +28,7 @@ public class JwtTokenProvider {
     @Value("${gg.app.jwtExpirationMs}")
     private int jwtExpirationInMs;
 
+    // 토큰 생성
     public String generateToken(Authentication authentication) {
 
         PrincipalDetails principalDetails = (PrincipalDetails)authentication.getPrincipal();
@@ -39,6 +40,7 @@ public class JwtTokenProvider {
         // 표준 클레임 셋팅
         return Jwts.builder()
                 .setSubject(Long.toString(principalDetails.getId()))
+                .setAudience(principalDetails.getNickname())
                 .setIssuedAt(new Date())
                 .setExpiration(expiryDate)
                 .signWith(getSignKey())

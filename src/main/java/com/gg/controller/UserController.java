@@ -42,7 +42,7 @@ public class UserController {
     }
 
     // 유저 닉네임 체크
-    @GetMapping("/user/checkUsernameAvailability")
+    @GetMapping("/user/checkNicknameAvailability")
     public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "nickname") String nickname) {
         Boolean isAvailable = !userRepository.existsByNickname(nickname);
         return new UserIdentityAvailability(isAvailable);

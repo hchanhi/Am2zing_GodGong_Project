@@ -72,6 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.exceptionHandling()
 				.authenticationEntryPoint(authEntryPointJwt)
 				.and()
+				// 토큰으로 security를 적용하기 때문에 session은 stateless로 막음
 				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
@@ -86,14 +87,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/**/*.css",
 						"/**/*.js")
 				.permitAll()
-				.antMatchers("/api/auth/**")
-				.permitAll()
-				.antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
-				.permitAll()
-				.antMatchers(HttpMethod.GET, "/api/users/**")
-				.permitAll()
-				.anyRequest()
-				.authenticated();
+				.antMatchers("/api/auth/**").permitAll()
+				.antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/users/**").permitAll()
+				// 위 경로 이외의 토큰을 사용하는 경우 접근할 수 있도록 한다.
+				.anyRequest().authenticated();
 
 		// JWT security filter 추가
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

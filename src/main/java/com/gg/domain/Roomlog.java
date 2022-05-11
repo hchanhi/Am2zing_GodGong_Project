@@ -10,7 +10,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-@Data
 public class Roomlog {
 
     @Id
@@ -18,10 +17,9 @@ public class Roomlog {
     private Long roomlogId;
 
     @ManyToOne
-    private Member member;
+    private User user;
 
     @ManyToOne
-    private Todo todo;
-
+    private Room room;
 
 }

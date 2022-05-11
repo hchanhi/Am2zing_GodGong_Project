@@ -13,7 +13,7 @@ function BtnComponent(props) {
           <button className="stopwatch-btn stopwatch-btn-red"
                   onClick={props.stop}>Stop</button>
           <button className="stopwatch-btn stopwatch-btn-yel"
-                  onClick={props.reset}>Reset</button>
+                  onClick={() => {props.reset(); props.setOpenModal(true);}}>Reset</button>
         </div> : ""
       }
 

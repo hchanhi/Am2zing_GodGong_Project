@@ -47,13 +47,18 @@ function Challenge() {
    const resume =() => start();
 
 
+   //MODAL
+   const [openModal,setOpenModal] = useState(false);
+   
+
   return (
     <div className="main-secion">
       <div className="clock-holder">
         <div className="stopwatch">
           <DisplayComponent time={time}/>
-          <BtnComponent status ={status} resume={resume} reset={reset} stop={stop} start={start}/>
-          <Challengemodal />
+          //다른컴포넌트한테 줄때는 이렇게 줘야 그 컴포넌트가 알아먹어요!! 
+          <BtnComponent setOpenModal={setOpenModal} status ={status} resume={resume} reset={reset} stop={stop} start={start}/>
+          {openModal && <Challengemodal />}
         </div>
       </div>
     </div>

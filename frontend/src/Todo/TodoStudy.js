@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { useParams } from "react-router-dom";
-import Modal from "../Modal";
 import styled from "styled-components";
+import Modal from "../Modal";
 import CheckboxTodo from "./CheckboxTodo";
+import ChattingBox from "./ChattingBox";
 import { Grid, Chip } from '@mui/material/';
-import Badge from '@mui/material/Badge';
-import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-import IconButton from '@mui/material/IconButton'; import MailIcon from '@mui/icons-material/Mail';
 
 let Wrapper = styled.div`
     margin: auto;
@@ -62,11 +60,7 @@ function TodoStudy() {
                     <h3>현재인원 : 4/5명</h3>
                 </Grid>
                 <Grid item xs={6} sx={{ textAlign: 'right' }}>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={3} color="error">
-                            <ChatBubbleIcon sx={{ fontSize: 50 }} />
-                        </Badge>
-                    </IconButton>
+                    <ChattingBox />
                 </Grid>
                 <Grid item xs={12}>
                     <CheckboxTodo />

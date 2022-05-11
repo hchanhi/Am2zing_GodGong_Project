@@ -62,7 +62,7 @@ const Resigter = () => {
             .post('/api/auth/signin', postData)
             .then(function (response) {
                 console.log(response.data, '성공');
-                localStorage.setItem('accessToken', response.data);
+                localStorage.setItem('accessToken', JSON.stringify(response.data));
                 navigate('/');
 
 

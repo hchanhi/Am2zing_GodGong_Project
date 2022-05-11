@@ -28,7 +28,7 @@ public class PrincipalDetailsService implements UserDetailsService {
 		// Let people login with either username or email
 		User user = userRepository.findByEmail(Email)
 				.orElseThrow(() ->
-						new UsernameNotFoundException("User not found with email : " + Email)
+						new UsernameNotFoundException("사용자를 찾을 수 없습니다. : " + Email)
 				);
 
 		return PrincipalDetails.create(user);
@@ -38,7 +38,7 @@ public class PrincipalDetailsService implements UserDetailsService {
 	@Transactional
 	public UserDetails loadUserById(Long id) {
 		User user = userRepository.findById(id).orElseThrow(
-				() -> new UsernameNotFoundException("User not found with id : " + id)
+				() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다. : " + id)
 		);
 
 		return PrincipalDetails.create(user);

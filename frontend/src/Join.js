@@ -36,6 +36,8 @@ const Register = () => {
         setChecked(event.target.checked);
     };
 
+
+
     const onhandlePost = async (data) => {
         const { birth, nickname, email, password } = data;
         const postData = { birth, nickname, email, password };
@@ -54,7 +56,7 @@ const Register = () => {
         await axios
             .post('/api/auth/signup', postData)
             .then(function (response) {
-                console.log(response, '성공');
+                console.log(response.status, '성공');
 
                 navigate('/login');
 
@@ -65,7 +67,10 @@ const Register = () => {
                 console.log(err);
                 console.log(postData);
                 console.log(origin);
-                alert("API Call error:" + err);
+                console.log(err.response.data.message);
+                if (err.response.status === 400) {
+                    alert(err.response.data.message);
+                }
                 setRegisterError('회원가입에 실패하였습니다. 다시한번 확인해 주세요.');
 
             });
@@ -164,24 +169,8 @@ const Register = () => {
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                     <FormControl component="fieldset" variant="standard">
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sx={{
 
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'flex-end',
-                                padding: '2px !important'
-
-
-                            }}>
-                                <a >
-                                    중복체크
-                                </a>
-                            </Grid>
-                            <Grid item xs={12} sx={{
-
-                                paddingTop: '3px !important'
-
-                            }}>
+                            <Grid item xs={12} >
                                 <TextField
                                     required
                                     autoFocus
@@ -194,24 +183,9 @@ const Register = () => {
                                 />
                             </Grid>
                             <FormHelperText>{emailError}</FormHelperText>
-                            <Grid item xs={12} sx={{
 
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'flex-end',
-                                padding: '2px !important'
 
-                            }} >
-                                <a >
-                                    중복체크
-                                </a>
-                            </Grid>
-
-                            <Grid item xs={12} sx={{
-
-                                paddingTop: '3px !important'
-
-                            }}>
+                            <Grid item xs={12} >
                                 <TextField required fullWidth id="nickname" name="nickname" label="닉네임"
                                     error={nameError !== '' || false} />
                             </Grid>

@@ -41,6 +41,7 @@ const Register = () => {
         const postData = { birth, nickname, email, password };
         const headers = {
             'headers': {
+
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
                 "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With,application/json, text/plain, */*"

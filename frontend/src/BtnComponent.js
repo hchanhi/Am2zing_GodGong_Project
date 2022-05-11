@@ -5,24 +5,24 @@ function BtnComponent(props) {
     <div>
       {(props.status === 0)? 
         <button className="stopwatch-btn stopwatch-btn-gre"
-        onClick={props.start}>Start</button> : ""
+        onClick={props.start}>시작</button> : ""
       }
 
       {(props.status === 1)? 
         <div>
           <button className="stopwatch-btn stopwatch-btn-red"
-                  onClick={props.stop}>Stop</button>
+                  onClick={props.stop}>일시정지</button>
           <button className="stopwatch-btn stopwatch-btn-yel"
-                  onClick={() => {props.reset(); props.setOpenModal(true);}}>Reset</button>
+                  onClick={() => {props.reset(); props.setOpenModal(true);}}>완료</button>
         </div> : ""
       }
 
      {(props.status === 2)? 
         <div>
           <button className="stopwatch-btn stopwatch-btn-gre"
-                  onClick={props.resume}>Resume</button>
+                  onClick={props.resume}>이어서하기</button>
           <button className="stopwatch-btn stopwatch-btn-yel"
-                  onClick={() => {props.reset(); props.setOpenModal(true);}}>Reset</button>
+                  onClick={() => {props.reset(); props.setOpenModal(true);}}>완료</button>
         </div> : ""
       }
      

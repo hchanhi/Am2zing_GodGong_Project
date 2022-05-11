@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import DisplayComponent from './DisplayComponent.js';
 import BtnComponent from './BtnComponent.js';
 import './Challenge.css';
+import Challengemodal from './Challengemodal.js';
 
 function Challenge() {
   const [time, setTime] = useState({s:0, m:0, h:0});
@@ -52,6 +53,7 @@ function Challenge() {
         <div className="stopwatch">
           <DisplayComponent time={time}/>
           <BtnComponent status ={status} resume={resume} reset={reset} stop={stop} start={start}/>
+          <Challengemodal />
         </div>
       </div>
     </div>

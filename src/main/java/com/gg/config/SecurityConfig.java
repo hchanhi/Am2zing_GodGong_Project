@@ -36,8 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private JwtAuthenticationEntryPoint authEntryPointJwt;
 
-	//Field authenticationManager in service.SecurityServiceImpl required a bean of type 'org.springframework.security.authentication.AuthenticationManager'
-	//이 오류나서 추가
+	// authenticationManager Bean 등록
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -56,6 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.passwordEncoder(passwordEncoder());
 	}
 
+
+	// 암호화에 필요한 PasswordEncoder Bean 등록
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -89,12 +90,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll()
 				.antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
 				.permitAll()
-				.antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
+				.antMatchers(HttpMethod.GET, "/api/users/**")
 				.permitAll()
 				.anyRequest()
 				.authenticated();
 
-		// Add our custom JWT security filter
+		// JWT security filter 추가
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 }

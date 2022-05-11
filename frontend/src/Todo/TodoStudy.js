@@ -18,7 +18,7 @@ let Wrapper = styled.div`
     h3 {
         margin-top: 1rem;
     }
-`
+`;
 
 function TodoStudy() {
 
@@ -36,14 +36,14 @@ function TodoStudy() {
     });
 
     useEffect(() => {
-        axios.get('/api/todoStudy/', {params: {roomId: id}})
+        axios.get('/api/todoStudy/', { params: { roomId: id } })
             .then((res) => {
                 setStudy(res.data);
                 if (res.data((x) => x.memberId == myId).length != 0) {
                     setIsMember(true);
                 }
                 // todo list작성하는 모달
-                <Modal />
+                <Modal />;
             }).catch((error) => {
                 // alert('Todo study방의 정보를 가져오는 데 실패했습니다.');
                 console.log(error);
@@ -71,7 +71,7 @@ function TodoStudy() {
                 <Grid item xs={12}>
                     <CheckboxTodo />
                 </Grid>
-                <Grid item xs={12} sx={{textAlign: 'right'}}>
+                <Grid item xs={12} sx={{ textAlign: 'right' }}>
                     {
                         isMember
                             ? <button>나가기</button>
@@ -79,9 +79,9 @@ function TodoStudy() {
                     }
                 </Grid>
             </Grid>
-         
-            
-            
+
+
+
         </Wrapper>
     );
 }

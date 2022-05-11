@@ -109,7 +109,7 @@ const Register = () => {
         }
 
         // 이름 유효성 검사
-        const nameRegex = /^[가-힣a-zA-Z]+$/;
+        const nameRegex = /^[가-힣|a-zA-Z|0-9]+$/;
         if (!nameRegex.test(nickname) || nickname.length < 1) {
             setNameError('올바른 이름을 입력해주세요.');
         } else {

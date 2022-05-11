@@ -47,13 +47,17 @@ function Challenge() {
    const resume =() => start();
 
 
+   //MODAL
+   const [openModal,setOpenModal] = useState(false);
+   
+
   return (
     <div className="main-secion">
       <div className="clock-holder">
         <div className="stopwatch">
           <DisplayComponent time={time}/>
-          <BtnComponent status ={status} resume={resume} reset={reset} stop={stop} start={start}/>
-          <Challengemodal />
+          <BtnComponent setOpenModal={setOpenModal} status ={status} resume={resume} reset={reset} stop={stop} start={start}/>
+          {openModal && <Challengemodal closeModal={setOpenModal}/>}
         </div>
       </div>
     </div>

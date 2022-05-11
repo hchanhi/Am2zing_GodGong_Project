@@ -33,25 +33,95 @@ function Copyright(props) {
 }
 
 
-function Login() {
+const Resigter = () => {
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = {
-            email: data.get('email'),
-            password: data.get('password'),
+    const [checked, setChecked] = useState(false);
+    const [emailError, setEmailError] = useState('');
+    const [passwordState, setPasswordState] = useState('');
+    const [registerError, setRegisterError] = useState('');
+    const navigate = useNavigate();
+
+    // 동의 체크
+
+
+    const onhandlePost = async (data) => {
+        const { email, password } = data;
+        const postData = { email, password };
+        const headers = {
+            'headers': {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With,application/json, text/plain, */*"
+            }
+
         };
 
-        axios.post('/login', data)
-            .then(res => {
-                console.log(res.data);
-                localStorage.setItem('token', res.data);
+        // post
+
+        await axios
+            .post('/api/auth/signin', postData)
+            .then(function (response) {
+                console.log(response.data, '성공');
+                localStorage.setItem('accessToken', response.data);
+                navigate('/');
+
+
 
             })
-            .catch(err => {
+            .catch(function (err) {
                 console.log(err);
+                console.log(postData);
+                console.log(origin);
+                alert("API Call error:" + err);
+                setRegisterError('회원가입에 실패하였습니다. 다시한번 확인해 주세요.');
+
             });
     };
+    // useState 추가
+
+    // form 전송
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const data = new FormData(e.currentTarget);
+        const joinData = {
+
+            email: data.get('email'),
+            password: data.get('password'),
+
+
+        };
+        const { email, password } = joinData;
+
+        // 이메일 유효성 체크
+        // 이메일 유효성 체크
+        const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        if (!emailRegex.test(email)) setEmailError('올바른 이메일 형식이 아닙니다.');
+        else setEmailError('');
+
+        // 비밀번호 유효성 체크
+        const passwordRegex = /^.{4,20}$/;
+        if (!passwordRegex.test(password)) {
+            setPasswordState('4~20글자를 입력해주세요!');
+        } else {
+            setPasswordState('');
+        }
+
+
+
+
+        // 회원가입 동의 체크
+
+        if (
+            emailRegex.test(email) &&
+            passwordRegex.test(password)
+
+        ) {
+            onhandlePost(joinData);
+        }
+    };
+
+
 
     return (
 
@@ -84,6 +154,7 @@ function Login() {
                         autoComplete="email"
                         autoFocus
                     />
+                    <FormHelperText>{emailError}</FormHelperText>
                     <TextField
                         margin="normal"
                         required
@@ -125,7 +196,7 @@ function Login() {
         </Container>
 
     );
-}
+};
 
-export default Login;
+export default Resigter;
 

@@ -4,7 +4,11 @@ import BtnComponent from './BtnComponent.js';
 import './Challenge.css';
 import Challengemodal from './Challengemodal.js';
 
-function Challenge() {
+function Challenge(props) {
+
+  const nickName = props.userNickName;
+  console.log(nickName); // 콘솔창에서 닉네임 잘 나오는지 확인해보세요!
+
   const [time, setTime] = useState({s:0, m:0, h:0});
   const [interv, setInterv] = useState();
   const [status, setStatus] = useState(0);

@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-
-
 import {
     Avatar,
     Button,
@@ -68,21 +66,16 @@ const Resigter = (props) => {
                 console.log(response.data, '성공');
                 console.log(response.data.sub, '성공');
                 localStorage.setItem('accessToken', JSON.stringify(response.data));
-                axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data;
 
                 if (response.status === 200) {
                     alert('로그인 되었습니다');
+                    props.setIsLogin(true);
                     navigate('/');
                 }
-
-
-
             })
             .catch(function (err) {
                 console.log(err);
                 alert("이메일 혹은 비밀번호가 틀렸습니다.");
-
-
             });
     };
 

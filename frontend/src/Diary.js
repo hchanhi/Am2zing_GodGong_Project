@@ -29,7 +29,11 @@ let Wrapper = styled.div`
         margin-top: 1rem;
     }
 `;
-const Diary = () => {
+const Diary = (props) => {
+
+    const nickName = props.userNickName;
+    console.log(nickName); // 콘솔창에서 닉네임 잘 나오는지 확인해보세요!
+
     const authorInput = useRef();
     const contentInput = useRef();
 

@@ -5,59 +5,64 @@ import com.gg.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
-@Controller
+@RestController
 public class DiaryController {
 
     @Autowired
     DiaryService diaryService;
 
 
-    @GetMapping("api/diary/mydiary")
-    public String findMyDiary(String nickname, Model model){
+    @GetMapping("/api/diary/mydiary")
+    public List<Diary> findMyDiary(String nickname, Model model){
 
         List<Diary> diary = diaryService.findByUserNickname(nickname);
-        model.addAttribute("diaries",diary);
-        return "";
+        return diary;
+
     }
 
-    @GetMapping("api/diary/post")
-    public String postPage(){
-        return "";
-    }
-
-    @PostMapping("api/diary/post")
-    public String postDiary(String content, String nickname){
+    @PostMapping("/api/diary/post")
+    public Boolean postDiary(@RequestBody HashMap<String, String> param){
+        Boolean check = true;
+        String content = param.get("content");
+        String nickname = param.get("nickname");
         String sentiment = diaryService.sentiment(content);
         diaryService.postDiary(content,nickname,sentiment);
-        return "";
+        if(sentiment.isEmpty()){
+            check = false;
+        }
+        return check;
     }
 
-//    @GetMapping("api/diary/edit/{diaryId}")
-//    public String editPage(@PathVariable Long diaryId, Model model){
-//        Diary diary = diaryService.findByDiaryId(diaryId);
-//        model.addAttribute("diary", diary);
-//        return "";
-//    }
+    @GetMapping("api/diary/edit/{diaryId}")
+    public Diary editPage(@PathVariable Long diaryId){
+        Diary diary = diaryService.findByDiaryId(diaryId);
+        return diary;
+    }
 
-    @PostMapping("api/diary/edit/{diaryId}")
-    public String editDiary(String content, @PathVariable Long diaryId){
+    @PostMapping("/api/diary/edit/{diaryId}")
+    public Boolean editDiary(String content, @PathVariable Long diaryId){
+        Boolean check = true;
         String sentiment = diaryService.sentiment(content);
         diaryService.editDiary(content, diaryId, sentiment);
-        return "";
+        if(sentiment.isEmpty()){
+            check = false;
+        }
+        return check;
     }
 
-    @GetMapping("api/diary/delete/{diaryId}")
-    public String deleteDiary(@PathVariable Long diaryId, String nickname, Model model){
+    @GetMapping("/api/diary/delete/{diaryId}")
+    public Boolean deleteDiary(@PathVariable Long diaryId, String nickname){
+        Boolean check = false;
         diaryService.deleteDiary(diaryId);
-        List<Diary> diaries = diaryService.findByUserNickname(nickname);
-        model.addAttribute("diaries", diaries);
-        return "";
+        if(diaryService.findByDiaryId(diaryId)==null){
+            check = true;
+        }
+        return check;
     }
 
 }

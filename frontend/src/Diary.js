@@ -44,11 +44,11 @@ const Diary = (props) => {
 
     const [state, setState] = useState({
         nickname: "",
-        diaryContent: "",
+        content: "",
 
     });
     const [nickname, setNickname] = useState("");
-    const [diaryContent, setDiaryContent] = useState("");
+    const [content, setContent] = useState("");
     const navigate = useNavigate();
     const handleChangeState = (e) => {
         setState({
@@ -58,7 +58,7 @@ const Diary = (props) => {
     };
     let body = {
         nickname: state.nickname,
-        diaryContent: state.diaryContent,
+        content: state.content,
     };
     const handleSubmit = () => {
         axios
@@ -67,13 +67,14 @@ const Diary = (props) => {
                 console.log(response.status, '성공');
 
                 navigate('/login');
-
+                console.log(state);
+                alert("저장 성공!");
 
 
             })
             .catch(function (err) {
                 console.log(err);
-
+                console.log(state);
                 console.log(origin);
                 console.log(err.response.data.message);
                 if (err.response.status === 400) {
@@ -84,8 +85,7 @@ const Diary = (props) => {
             });
 
 
-        console.log(state);
-        alert("저장 성공!");
+
     };
 
     return (
@@ -103,9 +103,9 @@ const Diary = (props) => {
                 </div>
                 <div>
                     <textarea
-                        value={state.diaryContent}
+                        value={state.content}
                         onChange={handleChangeState}
-                        name="diaryContent"
+                        name="content"
                         placeholder="일기"
                         type="text"
                     />

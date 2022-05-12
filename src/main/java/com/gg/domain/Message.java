@@ -23,7 +23,7 @@ public class Message {
 
 
     @ManyToOne
-    private Member member;
+    private User user;
 
     @ManyToOne
     private Room room;

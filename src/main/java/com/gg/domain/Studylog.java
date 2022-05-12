@@ -26,7 +26,7 @@ public class Studylog {
     private Timestamp studylogCreated;
 
     @ManyToOne
-    private Member member;
+    private User user;
 
 
 }

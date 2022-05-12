@@ -43,12 +43,11 @@ const Diary = (props) => {
 
 
     const [state, setState] = useState({
-        nickname: "",
+        nickName: "",
         content: "",
 
     });
-    const [nickname, setNickname] = useState("");
-    const [content, setContent] = useState("");
+
     const navigate = useNavigate();
     const handleChangeState = (e) => {
         setState({
@@ -57,7 +56,7 @@ const Diary = (props) => {
         });
     };
     let body = {
-        nickname: state.nickname,
+        nickname: nickName,
         content: state.content,
     };
     const handleSubmit = () => {
@@ -94,11 +93,12 @@ const Diary = (props) => {
             <Box component="form" sx={{ mt: 3 }}>
                 <div>
                     <input
-                        value={state.nickname}
+                        value={nickName}
                         onChange={handleChangeState}
-                        name="nickname"
+                        name="nickName"
                         placeholder="작성자"
                         type="text"
+                        readOnly
                     />
                 </div>
                 <div>

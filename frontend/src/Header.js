@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
 
 function Header(props) {
@@ -12,13 +12,13 @@ function Header(props) {
             </Link>
 
             {
-                props.isLogin
+                nickName
                     ? (<div>
                         <Link to="/">
                             <span
                                 onClick={() => {
                                     localStorage.clear();
-                                    props.setIsLogin(false);
+                                    props.setUserNickName('');
                                 }}
                             >
                                 로그아웃

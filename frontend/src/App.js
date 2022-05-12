@@ -5,6 +5,7 @@ import Home from './Home.js';
 import Challenge from './Challenge.js';
 import Login from './Login.js';
 import Join from './Join.js';
+import Diary from './Diary.js';
 import TodoList from './Todo/TodoList.js';
 import TodoStudy from './Todo/TodoStudy.js';
 import Footer from './Footer.js';
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/challenge" element={<Challenge />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/Join" element={<Join />} />
+                <Route path="/diary" element={<Diary />} />
                 <Route path="/todoList" element={<TodoList />} />
                 <Route path="/todoStudy/:id" element={<TodoStudy />} />
             </Routes>

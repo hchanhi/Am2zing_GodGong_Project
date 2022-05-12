@@ -65,7 +65,7 @@ const Diary = (props) => {
             .then(function (response) {
                 console.log(response.status, '성공');
 
-                navigate('/login');
+                navigate('/mypage');
                 console.log(state);
                 alert("저장 성공!");
 

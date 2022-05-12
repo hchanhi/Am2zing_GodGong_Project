@@ -19,8 +19,8 @@ public class Studylog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long studylogId;
 
-
-    private Timestamp studylogTotal;
+    //공부시간을 초로 받아오기.
+    private int studylogTime;
 
     @CreationTimestamp
     private Timestamp studylogCreated;

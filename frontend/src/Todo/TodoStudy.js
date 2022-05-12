@@ -6,7 +6,6 @@ import Modal from "../Modal";
 import CheckboxTodo from "./CheckboxTodo";
 import ChattingBox from "./ChattingBox";
 import { Grid, Chip } from '@mui/material/';
-import { useJwt } from 'react-jwt';
 
 let Wrapper = styled.div`
     margin: auto;
@@ -33,11 +32,6 @@ function TodoStudy() {
         roomEntry: "",
         memberId: ""
     });
-
-    const token = localStorage.getItem('accessToken');
-
-    const { decodedToken, isExpired } = useJwt(token);
-    console.log(decodedToken);
 
     useEffect(() => {
         axios.get('/api/todoStudy/', { params: { roomId: id } })

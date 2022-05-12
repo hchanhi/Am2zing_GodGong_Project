@@ -8,8 +8,14 @@ import Join from './Join.js';
 import TodoList from './Todo/TodoList.js';
 import TodoStudy from './Todo/TodoStudy.js';
 import Footer from './Footer.js';
+// import jwt from 'jsonwebtoken';
+import jwt_decode from 'jwt-decode';
 
 function App() {
+    const token = localStorage.getItem('accessToken');
+    
+    // console.log(jwt.decode(token));
+    console.log(jwt_decode(token));
 
     return (
         <div className="App">

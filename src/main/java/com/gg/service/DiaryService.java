@@ -1,8 +1,9 @@
 package com.gg.service;
 
 import com.gg.domain.Diary;
-import com.gg.domain.Member;
+import com.gg.domain.User;
 import com.gg.repository.DiaryRepository;
+import com.gg.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +21,19 @@ public class DiaryService {
     @Autowired
     DiaryRepository diaryRepository;
 
-    public List<Diary> findByMemberId(Long memberId){
-        List<Diary> diary = diaryRepository.findByMemberId(memberId);
+    @Autowired
+    UserRepository userRepository;
+
+    public List<Diary> findByUserNickname(String nickname){
+        List<Diary> diary = diaryRepository.findByUserNickname(nickname);
         return diary;
     }
 
-    public void postDiary(String content, Member member, String sentiment){
+    public void postDiary(String content, String nickname, String sentiment){
         Diary diary = new Diary();
+        User user =userRepository.findByNickname(nickname);
         diary.setDiaryContent(content);
-        diary.setMember(member);
+        diary.setUser(user);
         diary.setDiarySentiment(sentiment);
         diaryRepository.save(diary);
     }

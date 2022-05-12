@@ -20,7 +20,6 @@ public class DiaryController {
     public List<Diary> findMyDiary(String nickname){
         List<Diary> diary = diaryService.findByUserNickname(nickname);
         return diary;
-
     }
 
     @PostMapping("/api/diary/post")
@@ -63,4 +62,9 @@ public class DiaryController {
         return check;
     }
 
+    @GetMapping("api/diary/detail/{diaryId}")
+    public Diary detail(@PathVariable Long diaryId){
+        Diary diary = diaryService.findByDiaryId(diaryId);
+        return diary;
+    }
 }

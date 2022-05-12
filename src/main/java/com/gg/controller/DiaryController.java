@@ -3,8 +3,7 @@ package com.gg.controller;
 import com.gg.domain.Diary;
 import com.gg.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -18,8 +17,7 @@ public class DiaryController {
 
 
     @GetMapping("/api/diary/mydiary")
-    public List<Diary> findMyDiary(String nickname, Model model){
-
+    public List<Diary> findMyDiary(String nickname){
         List<Diary> diary = diaryService.findByUserNickname(nickname);
         return diary;
 
@@ -56,7 +54,7 @@ public class DiaryController {
     }
 
     @GetMapping("/api/diary/delete/{diaryId}")
-    public Boolean deleteDiary(@PathVariable Long diaryId, String nickname){
+    public Boolean deleteDiary(@PathVariable Long diaryId){
         Boolean check = false;
         diaryService.deleteDiary(diaryId);
         if(diaryService.findByDiaryId(diaryId)==null){

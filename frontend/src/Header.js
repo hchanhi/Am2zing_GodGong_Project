@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
-function Header() {
+function Header(props) {
+
+    const nickName = props.userNickName;
 
     return (
         <header>
@@ -9,15 +11,33 @@ function Header() {
                 <h1>GODGONG</h1>
             </Link>
 
-            <Link to="/login">
-                로그인
-            </Link>
-            <span>|</span>
-            <Link to="/Join">
-                회원가입
-            </Link>
-            <br />
-            로그인하는 경우 로그아웃 + 사람모양 아이콘
+            {
+                props.isLogin
+                    ? (<div>
+                        <Link to="/">
+                            <span
+                                onClick={() => {
+                                    localStorage.clear();
+                                    props.setIsLogin(false);
+                                }}
+                            >
+                                로그아웃
+                            </span>
+                        </Link>
+                        <Link to="/mypage">
+                            {nickName}님(누르면 마이페이지)
+                        </Link>
+                    </div>)
+                    : (<div>
+                        <Link to="/login">
+                            로그인
+                        </Link>
+                        <span>|</span>
+                        <Link to="/Join">
+                            회원가입
+                        </Link>
+                    </div>)
+            }
         </header>
     );
 }

@@ -39,15 +39,15 @@ function App() {
         // } catch (err) {
         //     console.log(err);
         // }
-    }, []);
+    }, [isLogin]);
 
     return (
         <div className="App">
-            <Header setIsLogin={setIsLogin} userNickName={userNickName} isLogin={isLogin}/>
+            <Header userNickName={userNickName} setUserNickName={setUserNickName} />
 
             <Routes>
                 <Route exact path="/" element={<Home />} />
-                <Route path="/login" element={<Login setUserNickName={setUserNickName} setIsLogin={setIsLogin}/>} />
+                <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin}/>} />
                 <Route path="/Join" element={<Join />} />
                 <Route path="/mypage" element={<MyPage userNickName={userNickName}/>} />
                 <Route path="/challenge" element={<Challenge userNickName={userNickName} />} />

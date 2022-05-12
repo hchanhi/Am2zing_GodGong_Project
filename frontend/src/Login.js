@@ -69,7 +69,7 @@ const Resigter = (props) => {
 
                 if (response.status === 200) {
                     alert('로그인 되었습니다');
-                    props.setIsLogin(true);
+                    props.setIsLogin(!props.isLogin);
                     navigate('/');
                 }
             })

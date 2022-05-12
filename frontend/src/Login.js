@@ -33,12 +33,14 @@ function Copyright(props) {
 }
 
 
-const Resigter = () => {
+const Resigter = (props) => {
 
     const [checked, setChecked] = useState(false);
     const [emailError, setEmailError] = useState('');
     const [passwordState, setPasswordState] = useState('');
     const [registerError, setRegisterError] = useState('');
+    const [nickName, setNickName] = useState();
+    const [test, setTest] = useState(null);
     const navigate = useNavigate();
 
     // 동의 체크
@@ -62,22 +64,20 @@ const Resigter = () => {
             .post('/api/auth/signin', postData)
             .then(function (response) {
                 console.log(response.data, '성공');
-                localStorage.setItem('accessToken', response.data);
-                navigate('/');
+                console.log(response.data.sub, '성공');
+                localStorage.setItem('accessToken', JSON.stringify(response.data));
 
-
-
+                if (response.status === 200) {
+                    alert('로그인 되었습니다');
+                    props.setIsLogin(true);
+                    navigate('/');
+                }
             })
             .catch(function (err) {
                 console.log(err);
-                console.log(postData);
-                console.log(origin);
-                alert("API Call error:" + err);
-                setRegisterError('회원가입에 실패하였습니다. 다시한번 확인해 주세요.');
-
+                alert("이메일 혹은 비밀번호가 틀렸습니다.");
             });
     };
-    // useState 추가
 
     // form 전송
     const handleSubmit = (e) => {
@@ -186,7 +186,7 @@ const Resigter = () => {
 
                     </Grid>
                     <Grid item>
-                        <Link href="#" variant="body2">
+                        <Link href="/join" variant="body2">
                             {"Don't have an account? Sign Up"}
                         </Link>
                     </Grid>

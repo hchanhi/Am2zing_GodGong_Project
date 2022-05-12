@@ -14,8 +14,12 @@ function Home() {
             일별, 월별 공부시간 랭킹 <br />
             TODO 리스트 상위(최신순?) 8개 <br />
 
-            <Link to="/todoList" style={{textDecoration: 'underline'}}>
+            <Link to="/todoList" style={{ textDecoration: 'underline' }}>
                 더보기
+            </Link>
+            <br></br>
+            <Link to="/diary" style={{ textDecoration: 'underline' }}>
+                일기장
             </Link>
         </div>
     );

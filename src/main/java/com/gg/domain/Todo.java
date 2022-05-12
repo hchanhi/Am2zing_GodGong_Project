@@ -27,7 +27,7 @@ public class Todo {
     private Timestamp todoCreated;
 
     @ManyToOne
-    private Member member;
+    private User user;
 
 
 }

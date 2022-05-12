@@ -29,7 +29,7 @@ public class Diary {
     private Timestamp diaryCreated;
 
     @ManyToOne
-    private Member member;
+    private User user;
 
 
 }

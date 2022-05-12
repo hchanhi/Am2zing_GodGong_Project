@@ -1,7 +1,6 @@
 package com.gg.controller;
 
 import com.gg.domain.Diary;
-import com.gg.domain.Member;
 import com.gg.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,9 +17,11 @@ public class DiaryController {
     @Autowired
     DiaryService diaryService;
 
+
     @GetMapping("api/diary/mydiary")
-    public String findMyDiary(Member member, Model model){
-        List<Diary> diary = diaryService.findByMemberId(member.getId());
+    public String findMyDiary(String nickname, Model model){
+
+        List<Diary> diary = diaryService.findByUserNickname(nickname);
         model.addAttribute("diaries",diary);
         return "";
     }
@@ -31,9 +32,9 @@ public class DiaryController {
     }
 
     @PostMapping("api/diary/post")
-    public String postDiary(String content, Member member){
+    public String postDiary(String content, String nickname){
         String sentiment = diaryService.sentiment(content);
-        diaryService.postDiary(content,member,sentiment);
+        diaryService.postDiary(content,nickname,sentiment);
         return "";
     }
 
@@ -52,9 +53,9 @@ public class DiaryController {
     }
 
     @GetMapping("api/diary/delete/{diaryId}")
-    public String deleteDiary(@PathVariable Long diaryId, Member member, Model model){
+    public String deleteDiary(@PathVariable Long diaryId, String nickname, Model model){
         diaryService.deleteDiary(diaryId);
-        List<Diary> diaries = diaryService.findByMemberId(member.getId());
+        List<Diary> diaries = diaryService.findByUserNickname(nickname);
         model.addAttribute("diaries", diaries);
         return "";
     }

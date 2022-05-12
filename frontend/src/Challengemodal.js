@@ -19,7 +19,7 @@ function Challengemodal({closeModal}){
                 <h4>공부일기를 작성하시겠어요?</h4>
             </div>
             <div className="footer">
-                <button>작성하기</button>
+                <button id="cancelBtn">작성하기</button>
                 <button>메인으로</button>
             </div>
         </div>

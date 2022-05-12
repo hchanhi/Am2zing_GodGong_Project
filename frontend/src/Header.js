@@ -1,19 +1,29 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
+let HeaderStyle = styled.div`
+    margin: auto;
+    padding: 3rem 18vw 3rem;
+    font-size: 15pt;
+
+    h1 {
+        font-family: 'SB';
+        font-size: 35pt;
+        margin-top: 3rem;
+    }
+`
 
 function Header(props) {
 
-    const nickName = props.userNickName;
+    let nickName = props.userNickName;
 
     return (
-        <header>
-            <Link to="/">
-                <h1>GODGONG</h1>
-            </Link>
-
+        <HeaderStyle>
             {
                 nickName
-                    ? (<div>
+                    ? (<div style={{textAlign: 'right'}}>
                         <Link to="/">
                             <span
                                 onClick={() => {
@@ -25,10 +35,11 @@ function Header(props) {
                             </span>
                         </Link>
                         <Link to="/mypage">
-                            {nickName}님(누르면 마이페이지)
+                            {nickName}
+                            <AccountCircleIcon sx={{ fontSize: 40}} />
                         </Link>
                     </div>)
-                    : (<div>
+                    : (<div style={{ textAlign: 'right' }} >
                         <Link to="/login">
                             로그인
                         </Link>
@@ -38,7 +49,11 @@ function Header(props) {
                         </Link>
                     </div>)
             }
-        </header>
+
+            <Link to="/">
+                <h1>GOD·GONG</h1>
+            </Link>
+        </HeaderStyle>
     );
 }
 

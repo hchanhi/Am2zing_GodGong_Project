@@ -40,7 +40,7 @@ public class JwtTokenProvider {
         // 표준 클레임 셋팅
         return Jwts.builder()
                 .setSubject(Long.toString(principalDetails.getId()))
-                .setAudience(principalDetails.getNickname())
+                .setIssuer(principalDetails.getNickname())
                 .setIssuedAt(new Date())
                 .setExpiration(expiryDate)
                 .signWith(getSignKey())

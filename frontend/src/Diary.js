@@ -1,6 +1,9 @@
 import { useRef, useState } from "react";
 
+import axios from 'axios';
+
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import {
     Avatar,
     Button,
@@ -29,90 +32,85 @@ let Wrapper = styled.div`
         margin-top: 1rem;
     }
 `;
+
+
 const Diary = () => {
-    const authorInput = useRef();
-    const contentInput = useRef();
+
 
     const [state, setState] = useState({
-        author: "",
-        content: "",
-        emotion: 1
-    });
+        nickname: "",
+        diaryContent: "",
 
+    });
+    const [nickname, setNickname] = useState("");
+    const [diaryContent, setDiaryContent] = useState("");
+    const navigate = useNavigate();
     const handleChangeState = (e) => {
         setState({
             ...state,
             [e.target.name]: e.target.value
         });
     };
-
+    let body = {
+        nickname: state.nickname,
+        diaryContent: state.diaryContent,
+    };
     const handleSubmit = () => {
-        if (state.author.length < 1) {
-            authorInput.current.focus();
-            return;
-        }
+        axios
+            .post('/api/diary/post', body)
+            .then(function (response) {
+                console.log(response.status, '성공');
 
-        if (state.content.length < 5) {
-            contentInput.current.focus();
-            return;
-        }
+                navigate('/login');
+
+
+
+            })
+            .catch(function (err) {
+                console.log(err);
+
+                console.log(origin);
+                console.log(err.response.data.message);
+                if (err.response.status === 400) {
+                    alert(err.response.data.message);
+                }
+
+
+            });
+
 
         console.log(state);
         alert("저장 성공!");
     };
 
     return (
-        <Container className="DiaryEditor" component="main" maxWidth="xs">
-
-            <Box
-                sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    borderRadius: '10px',
-                    padding: '32px',
-                    backgroundColor: '#fff',
-                    boxShadow: ' 0 8px 20px 0 rgba(0, 0, 0, 0.15)'
-                }}
-            >
-
-                <Typography component="h1" variant="h5">
-                    오늘의 일기
-                </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                    <Grid> <input
-                        value={state.author}
+        <Container className="DiaryEditor">
+            <h2>오늘의 일기</h2>
+            <Box component="form" sx={{ mt: 3 }}>
+                <div>
+                    <input
+                        value={state.nickname}
                         onChange={handleChangeState}
-                        name="author"
+                        name="nickname"
                         placeholder="작성자"
                         type="text"
-                    /></Grid>
-                    <Grid>  <textarea
-                        value={state.content}
+                    />
+                </div>
+                <div>
+                    <textarea
+                        value={state.diaryContent}
                         onChange={handleChangeState}
-                        name="content"
+                        name="diaryContent"
                         placeholder="일기"
                         type="text"
-                    /></Grid>
-
-
-
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                    >
-                        일기 저장하기
-                    </Button>
-
-
-
-                </Box>
+                    />
+                </div>
             </Box>
-
+            <div>
+                <button onClick={handleSubmit}>일기 저장하기</button>
+            </div>
         </Container>
     );
+
 };
 export default Diary;

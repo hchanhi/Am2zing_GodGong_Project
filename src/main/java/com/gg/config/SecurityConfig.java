@@ -88,7 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/**/*.js")
 				.permitAll()
 				.antMatchers("/api/auth/**").permitAll()
-				.antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability").permitAll()
+				.antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability", "/api/chat/**", "/api/diary/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/users/**").permitAll()
 				// 위 경로 이외의 토큰을 사용하는 경우 접근할 수 있도록 한다.
 				.anyRequest().authenticated();

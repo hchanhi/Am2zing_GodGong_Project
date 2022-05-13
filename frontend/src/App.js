@@ -8,6 +8,7 @@ import Login from './Login.js';
 import Join from './Join.js';
 import MyPage from './MyPage.js';
 import Diary from './Diary.js';
+import DiaryList from './DiaryList.js';
 import TodoList from './Todo/TodoList.js';
 import TodoStudy from './Todo/TodoStudy.js';
 import Footer from './Footer.js';
@@ -47,15 +48,16 @@ function App() {
 
             <Routes>
                 <Route exact path="/" element={<Home />} />
-                <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin}/>} />
+                <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin} />} />
                 <Route path="/Join" element={<Join />} />
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/challenge" element={<Challenge />} />
                 <Route path="/diary" element={<Diary />} />
+                <Route path="/mypage/diary" element={<DiaryList userNickName={userNickName} />} />
                 <Route path="/todoList" element={<TodoList />} />
                 <Route path="/todoStudy/:id" element={<TodoStudy />} />
                 
-                <PrivateRoute path="/challenge" element={<Challenge />}/>
+                {/* <PrivateRoute path="/challenge" element={<Challenge />}/> */}
             </Routes>
 
             <Footer />

@@ -15,17 +15,18 @@
   }
   
   .clock-holder {
-    width: 100%;
+    width: 1500px;
+    height: 500px;
     background: #fff;
     margin: 30px auto;
     position: relative;
   }
   
-  
   .stopwatch {
-    padding: 60px 0px;
+    padding: 0 0 100px 0;
     text-align: center;
   }
+  
   .stopwatch span{
     background:#00ABA9;
     color: #fff;
@@ -52,6 +53,7 @@
     transition: background 1s;
     cursor: pointer;
   }
+
   .stopwatch .stopwatch-btn-red{
     border: 2px solid #C85454;
     color: #C85454;

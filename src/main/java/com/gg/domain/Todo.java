@@ -29,5 +29,6 @@ public class Todo {
     @ManyToOne
     private User user;
 
+    private Boolean todoCheck;
 
 }

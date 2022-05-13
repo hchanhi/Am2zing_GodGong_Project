@@ -3,6 +3,7 @@ package com.gg.domain;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.gg.payload.UserSummary;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 

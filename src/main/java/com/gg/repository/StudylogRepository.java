@@ -1,12 +1,11 @@
 package com.gg.repository;
 
-import com.gg.domain.Diary;
 import com.gg.domain.Studylog;
-import com.gg.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
+import java.sql.Date;
+
 
 public interface StudylogRepository extends JpaRepository<Studylog, Long> {
 
@@ -18,4 +17,9 @@ public interface StudylogRepository extends JpaRepository<Studylog, Long> {
 
     @Query(value= "select studylog_time from studylog where user_id=?1 and date(studylog_created) >= date_format(now(), '%Y-%m-01') group by user_id", nativeQuery = true)
     Integer oneMonthTime(Long userId);
+
+    @Query(value= "select studylog_time from studylog where user_id=?1 and date(studylog_created) = ?2 group by user_id", nativeQuery = true)
+    Integer selectDayTime(Long userId, Date date);
+
+    Studylog findByUserNickname(String nickname);
 }

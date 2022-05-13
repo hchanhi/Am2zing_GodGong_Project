@@ -12,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +77,6 @@ public class DiaryService {
         } else {
             result = responseBody.substring(26,34);
         }
-
         return result;
     }
 

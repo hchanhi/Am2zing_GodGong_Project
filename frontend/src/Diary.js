@@ -42,7 +42,11 @@ const Diary = () => {
     const authorInput = useRef();
     const contentInput = useRef();
 
-
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let date = today.getDate();
+    var format = year + "-" + (("00" + month.toString()).slice(-2)) + "-" + (("00" + date.toString()).slice(-2));
     const [state, setState] = useState({
         nickname: nickName,
         content: "",
@@ -58,7 +62,8 @@ const Diary = () => {
     };
     let body = {
         nickname: nickName,
-        content: state.content,
+        content: state.content
+
     };
     const handleSubmit = () => {
         axios
@@ -66,8 +71,8 @@ const Diary = () => {
             .then(function (response) {
                 console.log(response.status, '성공');
 
-                navigate('/mypage');
-                console.log(state);
+                navigate('/mypage/diary');
+                console.log(response);
                 alert("저장 성공!");
 
 
@@ -99,6 +104,16 @@ const Diary = () => {
                         name="nickName"
                         placeholder="작성자"
                         type="text"
+                        readOnly
+                    />
+                </div>
+                <div>
+                    <input
+                        value={format}
+                        onChange={handleChangeState}
+                        name="date"
+                        placeholder="작성자"
+                        type="date"
                         readOnly
                     />
                 </div>

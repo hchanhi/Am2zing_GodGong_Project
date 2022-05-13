@@ -8,6 +8,7 @@ import DiaryButton from './components/DiaryButton';
 import axios from 'axios';
 import './diary.css';
 import DiaryCom from "./components/DiaryCom";
+import { DiscFullSharp } from '@mui/icons-material';
 
 function DiaryList(props) {
 
@@ -20,6 +21,8 @@ function DiaryList(props) {
         console.log(json.data);
         console.log(nickname);
         setLoading(false);
+        console.log(diaries.diaryContent);
+
 
     };
     useEffect(() => {
@@ -39,7 +42,7 @@ function DiaryList(props) {
                 <div>
                     <h3>{props.userNickName}님의 마이페이지💁🏻‍♀️</h3>
 
-                    <h2>공부일기 목록들입니다. 하단에 나올 예정입니다.</h2>
+                    <h2>공부일기📆</h2>
                     <h2></h2>
                     <DiaryButton text={'버튼'} onClick={() => alert("버튼 클릭")} type={'positive'} />
                     <DiaryButton text={'버튼'} onClick={() => alert("버튼 클릭")} type={'negative'} />
@@ -47,6 +50,7 @@ function DiaryList(props) {
                     <div >
 
                         {diaries.map((diary) => (
+
                             <DiaryCom
                                 key={diary.diaryId}
                                 diaryId={diary.diaryId}
@@ -56,6 +60,7 @@ function DiaryList(props) {
 
 
                             />
+
 
                         ))}
 

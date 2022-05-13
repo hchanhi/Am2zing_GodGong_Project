@@ -9,6 +9,8 @@ import com.gg.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+
 @Service
 public class MypageService {
 
@@ -37,5 +39,10 @@ public class MypageService {
     public Integer oneMonthTime(String nickname){
         User user = userRepository.findByNickname(nickname);
         return studylogRepository.oneMonthTime(user.getId());
+    }
+
+    public Integer selectDayTime(String nickname, Date date){
+        User user = userRepository.findByNickname(nickname);
+        return studylogRepository.selectDayTime(user.getId(), date);
     }
 }

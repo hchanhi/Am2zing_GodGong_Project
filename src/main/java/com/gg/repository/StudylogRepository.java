@@ -21,5 +21,5 @@ public interface StudylogRepository extends JpaRepository<Studylog, Long> {
     @Query(value= "select studylog_time from studylog where user_id=?1 and date(studylog_created) = ?2 group by user_id", nativeQuery = true)
     Integer selectDayTime(Long userId, Date date);
 
-    Studylog findByStudylogUserNickname(String nickname);
+    Studylog findByUserNickname(String nickname);
 }

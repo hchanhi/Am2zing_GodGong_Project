@@ -30,7 +30,7 @@ public class StudylogService {
 
     //총 공부시간
     public Integer totalTime(String nickname){
-        Studylog studylog = studylogRepository.findByStudylogUserNickname(nickname);
+        Studylog studylog = studylogRepository.findByUserNickname(nickname);
         return studylog.getStudylogTime();
     }
 

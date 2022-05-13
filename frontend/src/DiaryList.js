@@ -42,9 +42,11 @@ function DiaryList(props) {
                         diaryId={diary.diaryId}
                         diaryContent={diary.diaryContent}
                         diarySentiment={diary.diarySentiment}
-                        diaryCreated={diary.diaryCreated}
+                        diaryCreated={diary.diaryCreated.substr(0, 10)}
+
 
                     />
+
                 ))}
 
 

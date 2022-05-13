@@ -1,7 +1,7 @@
 import React from "react";
 import "./ChallengeModal.css";
 
-function Challengemodal({closeModal}){
+function ChallengeModal({closeModal}){
 
     return (
     <div className="modalBackground">
@@ -28,4 +28,4 @@ function Challengemodal({closeModal}){
 }
 
 
-export default Challengemodal
+export default ChallengeModal

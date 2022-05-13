@@ -1,0 +1,61 @@
+.DiaryEditor {
+
+    text-align: center;
+    padding: 20px;
+}
+
+.DiaryEditor input,
+textarea {
+    margin-bottom: 20px;
+    width: 500px;
+}
+
+.DiaryEditor input {
+    padding: 10px;
+}
+
+.DiaryEditor textarea {
+    padding: 10px;
+    height: 150px;
+}
+
+.DiaryEditor select {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.DiaryEditor button {
+    width: 500px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.DiaryButton {
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    font-size: 18px;
+    white-space: nowrap;
+}
+
+.DiaryButton_default {
+    background-color: #ececec;
+    color: black;
+}
+
+.DiaryButton_positive {
+    background-color: #2fbe9f;
+    color: white;
+}
+
+.DiaryButton_negative {
+    background-color: #fd565f;
+    color: white;
+}

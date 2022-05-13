@@ -2,7 +2,9 @@ package com.gg.service;
 
 import com.gg.domain.Room;
 import com.gg.domain.User;
+import com.gg.payload.UserSummary;
 import com.gg.repository.RoomRepository;
+import com.gg.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoomService {
     private final RoomRepository roomRepository;
+
+    private final UserRepository userRepository;
 
     public List<Room> findAllRooms(){
         List<Room> rooms = roomRepository.findAll();
@@ -25,8 +29,9 @@ public class RoomService {
         return roomRepository.findRoomByRoomNumber(roomNumber);
     }
 
-    public Room createRoom(String roomCategory, String roomTitle, User user){
-        Room room = Room.create(roomCategory, roomTitle, user);;
+    public Room createRoom(String roomCategory, String roomTitle, String userNickname){
+        User user = userRepository.findByNickname(userNickname);
+        Room room = Room.create(roomCategory, roomTitle, user);
         roomRepository.save(room);
 
         return room;

@@ -3,7 +3,7 @@ import DisplayComponent from './DisplayComponent.js';
 import BtnComponent from './BtnComponent.js';
 import './Challenge.css';
 import { isAuth, getNickName } from './jwtCheck';
-import Challengemodal from './Challengemodal.js';
+import ChallengeModal from './ChallengeModal.js';
 import * as tf from '@tensorflow/tfjs';
 import * as tmPose from '@teachablemachine/pose';
 
@@ -65,7 +65,7 @@ function Challenge(props) {
         <div className="stopwatch">
           <DisplayComponent time={time} />
           <BtnComponent setOpenModal={setOpenModal} status={status} resume={resume} reset={reset} stop={stop} start={start} />
-          {openModal && <Challengemodal closeModal={setOpenModal} />}
+          {openModal && <ChallengeModal closeModal={setOpenModal} />}
 
           <div><canvas id="canvas"></canvas></div>
           <div id="label-container"></div>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import Modal from "../Modal.js";
 import CheckboxTodo from "./CheckboxTodo.js";
 import ChattingBox from "./ChattingBox.js";
 import { isAuth, getNickName } from '../jwtCheck.js';
@@ -45,7 +44,6 @@ function TodoStudy() {
                     setIsMember(true);
                 }
                 // todo list작성하는 모달
-                <Modal />;
             }).catch((error) => {
                 // alert('Todo study방의 정보를 가져오는 데 실패했습니다.');
                 console.log(error);

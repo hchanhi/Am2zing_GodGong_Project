@@ -3,11 +3,12 @@ import DisplayComponent from './DisplayComponent.js';
 import BtnComponent from './BtnComponent.js';
 import './Challenge.css';
 import Challengemodal from './Challengemodal.js';
+import { isAuth, getNickName } from './jwtCheck';
 
 function Challenge(props) {
 
-  const nickName = props.userNickName;
-  console.log(nickName); // 콘솔창에서 닉네임 잘 나오는지 확인해보세요!
+  const token = JSON.parse(localStorage.getItem('accessToken'));
+  let nickname = getNickName(token);
 
   const [time, setTime] = useState({s:0, m:0, h:0});
   const [interv, setInterv] = useState();

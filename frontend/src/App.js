@@ -11,36 +11,36 @@ import Diary from './Diary.js';
 import TodoList from './Todo/TodoList.js';
 import TodoStudy from './Todo/TodoStudy.js';
 import Footer from './Footer.js';
-// import jwt from 'jsonwebtoken';
-import jwt_decode from 'jwt-decode';
+import { isAuth, getNickName } from './jwtCheck.js';
+import PrivateRoute from './PrivateRoute.js';
 
 function App() {
 
     let [userNickName, setUserNickName] = useState('');
-    // isLogin : 리렌더링을 위한 state
+    // isLogin : Header 리렌더링을 위한 state
     let [isLogin, setIsLogin] = useState(false);
 
     useEffect(() => {
-        const token = localStorage.getItem('accessToken');
+        const token = JSON.parse(localStorage.getItem('accessToken'));
 
-        // 토큰이 없는 경우, 토큰 검증이 성공한 경우(try), 검증이 실패한 경우(catch)
-
-        if (!token) {
-            return;
+        if (isAuth(token)) {
+            setUserNickName(getNickName(token));
+            setIsLogin(true);
+        } else {
+            setIsLogin(false);
         }
-
-        // let decoded = jwt.decode(token);  // null로 출력
-        let decoded = jwt_decode(token);
-        setUserNickName(decoded.iss);
-
-        // try {
-        //     let verify = jwt.verify(token, process.env.JWT_SECRET);
-        //     console.log(verify);
-        // } catch (err) {
-        //     console.log(err);
-        // }
     }, [isLogin]);
 
+    // axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data;
+
+    // const getUserInfo = () => {
+    //     return axios.get(API_URL + "user", { headers: authHeader() });
+    // };
+
+    // const isAdmin = () => {
+    //     return axios.get(API_URL + "admin", { headers: authHeader() });
+    // };
+    
     return (
         <div className="App">
             <Header userNickName={userNickName} setUserNickName={setUserNickName} />
@@ -49,11 +49,13 @@ function App() {
                 <Route exact path="/" element={<Home />} />
                 <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin}/>} />
                 <Route path="/Join" element={<Join />} />
-                <Route path="/mypage" element={<MyPage userNickName={userNickName}/>} />
-                <Route path="/challenge" element={<Challenge userNickName={userNickName} />} />
-                <Route path="/diary" element={<Diary userNickName={userNickName} />} />
+                <Route path="/mypage" element={<MyPage />} />
+                <Route path="/challenge" element={<Challenge />} />
+                <Route path="/diary" element={<Diary />} />
                 <Route path="/todoList" element={<TodoList />} />
                 <Route path="/todoStudy/:id" element={<TodoStudy />} />
+                
+                <PrivateRoute path="/challenge" element={<Challenge />}/>
             </Routes>
 
             <Footer />

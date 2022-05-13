@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import Modal from "../Modal";
-import CheckboxTodo from "./CheckboxTodo";
-import ChattingBox from "./ChattingBox";
+import Modal from "../Modal.js";
+import CheckboxTodo from "./CheckboxTodo.js";
+import ChattingBox from "./ChattingBox.js";
+import { isAuth, getNickName } from '../jwtCheck.js';
 import { Grid, Chip } from '@mui/material/';
 
 let Wrapper = styled.div`
@@ -19,6 +20,9 @@ let Wrapper = styled.div`
 `;
 
 function TodoStudy() {
+
+    const token = JSON.parse(localStorage.getItem('accessToken'));
+    const nickName = getNickName(token);
 
     let myId = "";
     let { id } = useParams();

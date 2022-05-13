@@ -1,10 +1,13 @@
 import React from "react";
+import { getNickName } from './jwtCheck';
 
-function MyPage(props) {
+function MyPage() {
+    
+    const token = JSON.parse(localStorage.getItem('accessToken'));
 
     return (
         <div>
-            <h3>{props.userNickName}님의 마이페이지💁🏻‍♀️</h3>
+            <h3>{getNickName(token)}님의 마이페이지💁🏻‍♀️</h3>
         </div>
     );
 }

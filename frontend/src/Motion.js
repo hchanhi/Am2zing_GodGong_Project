@@ -58,7 +58,6 @@ async function predict() {
     console.log(prediction[0].probability);
     if (prediction[0].probability > 0.001) {
         console.log('공부중');
-        document.querySelector
     } else {
         console.log('자리비움');
         //시간이멈추게하는 코드 입력하기

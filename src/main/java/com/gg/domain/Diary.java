@@ -30,6 +30,4 @@ public class Diary {
 
     @ManyToOne
     private User user;
-
-
 }

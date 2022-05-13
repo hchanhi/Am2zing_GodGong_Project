@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-
+import { isAuth, getNickName } from './jwtCheck';
 import axios from 'axios';
 
 import styled from "styled-components";
@@ -33,9 +33,10 @@ let Wrapper = styled.div`
     }
 `;
 
-const Diary = (props) => {
+const Diary = () => {
 
-    const nickName = props.userNickName;
+    const token = JSON.parse(localStorage.getItem('accessToken'));
+    const nickName = getNickName(token);
 
 
     const authorInput = useRef();

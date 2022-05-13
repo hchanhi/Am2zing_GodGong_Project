@@ -63,8 +63,6 @@ const Resigter = (props) => {
         await axios
             .post('/api/auth/signin', postData)
             .then(function (response) {
-                console.log(response.data, '성공');
-                console.log(response.data.sub, '성공');
                 localStorage.setItem('accessToken', JSON.stringify(response.data));
 
                 if (response.status === 200) {

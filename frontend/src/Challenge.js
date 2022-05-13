@@ -2,13 +2,15 @@ import React, {useState} from 'react';
 import DisplayComponent from './DisplayComponent.js';
 import BtnComponent from './BtnComponent.js';
 import './Challenge.css';
+import { isAuth, getNickName } from './jwtCheck';
+
 import ChallengeModal from './ChallengeModal.js';
 // import {init} from './Motion.js';
 
 function Challenge(props) {
 
-  const nickName = props.userNickName;
-  console.log(nickName); // 콘솔창에서 닉네임 잘 나오는지 확인해보세요!
+  const token = JSON.parse(localStorage.getItem('accessToken'));
+  let nickname = getNickName(token);
 
   const [time, setTime] = useState({s:0, m:0, h:0});
   const [interv, setInterv] = useState();

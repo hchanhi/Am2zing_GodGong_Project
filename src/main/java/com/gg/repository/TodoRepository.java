@@ -4,6 +4,8 @@ import com.gg.domain.Diary;
 import com.gg.domain.Todo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TodoRepository extends JpaRepository<Todo, Long> {
+import java.util.List;
 
+public interface TodoRepository extends JpaRepository<Todo, Long> {
+    List<Todo> FindByUserId(Long userId);
 }

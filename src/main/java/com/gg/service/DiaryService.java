@@ -77,7 +77,6 @@ public class DiaryService {
         } else {
             result = responseBody.substring(26,34);
         }
-
         return result;
     }
 

@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import DisplayComponent from './DisplayComponent.js';
 import BtnComponent from './BtnComponent.js';
 import './Challenge.css';
-import Challengemodal from './ChallengeModal.js';
-import Motion from './Motion.js';
+import ChallengeModal from './ChallengeModal.js';
+// import {init} from './Motion.js';
 
 function Challenge(props) {
 
@@ -18,10 +18,10 @@ function Challenge(props) {
   //stopped = 2
 
   const start =() => {
+    // init();
     run();
     setStatus(1);
     setInterv(setInterval(run,1000));
-    // <Motion />
   };
 
   var updatedS = time.s, updatedM = time.m, updatedH= time.h;
@@ -60,11 +60,10 @@ function Challenge(props) {
   return (
     <div className="main-secion">
       <div className="clock-holder">
-        <Motion />
         <div className="stopwatch">
           <DisplayComponent time={time}/>
           <BtnComponent setOpenModal={setOpenModal} status ={status} resume={resume} reset={reset} stop={stop} start={start}/>
-          {openModal && <Challengemodal closeModal={setOpenModal}/>}
+          {openModal && <ChallengeModal closeModal={setOpenModal}/>}
         </div>
       </div>
     </div>

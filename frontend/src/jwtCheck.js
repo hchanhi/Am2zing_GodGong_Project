@@ -1,12 +1,13 @@
 import jwt from 'jsonwebtoken';
 
 export function isAuth(token) {
+    
     if (!token) {
         return false;
     }
     try {
         let decoded = jwt.verify(token.accessToken, process.env.REACT_APP_JWT_SECRET);
-        return true;
+        return decoded;
     } catch (err) {
         console.log(err);
         localStorage.clear();
@@ -15,5 +16,9 @@ export function isAuth(token) {
 }
 
 export function getNickName(token) {
+
+    if (!token) {
+        return;
+    }
     return jwt.verify(token.accessToken, process.env.REACT_APP_JWT_SECRET).iss;
 }

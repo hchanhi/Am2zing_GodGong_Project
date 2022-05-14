@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { isAuth, getNickName } from './jwtCheck';
 import axios from 'axios';
 
@@ -38,7 +38,6 @@ const Diary = () => {
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const nickName = getNickName(token);
 
-
     const authorInput = useRef();
     const contentInput = useRef();
 
@@ -65,6 +64,14 @@ const Diary = () => {
         content: state.content
 
     };
+
+    useEffect(() => {
+        if (!isAuth(token)) {
+            alert('로그인 후 이용하실 수 있어요😥');
+            return navigate('/login');
+        }
+    }, []);
+
     const handleSubmit = () => {
         axios
             .post('/api/diary/post', body)

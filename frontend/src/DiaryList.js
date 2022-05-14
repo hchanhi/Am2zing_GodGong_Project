@@ -9,10 +9,14 @@ import axios from 'axios';
 import './diary.css';
 import DiaryCom from "./components/DiaryCom";
 import { DiscFullSharp } from '@mui/icons-material';
+import { isAuth, getNickName } from './jwtCheck';
 
 function DiaryList(props) {
 
-    const nickname = props.userNickName;
+    const token = JSON.parse(localStorage.getItem('accessToken'));
+    const nickname = getNickName(token);
+    const navigate = useNavigate();
+    
     const [loading, setLoading] = useState(true);
     const [diaries, setDiaries] = useState([]);
     const getDiaries = async () => {
@@ -27,6 +31,11 @@ function DiaryList(props) {
     };
     useEffect(() => {
         getDiaries();
+
+        if (!isAuth(token)) {
+            alert('로그인 후 이용하실 수 있어요😥');
+            return navigate('/login');
+        }
     }, []);
 
 

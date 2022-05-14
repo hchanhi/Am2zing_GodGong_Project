@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import styled from "styled-components";
+import TodoList from "./Todo/TodoList.js";
 
 let Wrapper = styled.div`
     margin: auto;
@@ -88,10 +89,11 @@ function Home() {
                 </RankingText>
                 <Grid item xs={8} sx={{ textAlign: 'left'}}>
                     <div><b>1~10위</b> 누적 공부시간 랭킹에서 다른 사용자와 공부시간을 비교할 수 있습니다.</div>
-                    <div>이제 여기에 랭킹 표 넣기..</div>
+                    <div>***랭킹 표***</div>
                 </Grid>
             </Grid>
             <h1 style={{ textAlign: 'left' }}>TODO</h1>
+            <TodoList />
             <Link to="/todoList" style={{ textDecoration: 'underline' }}>
                 더보기
             </Link>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DisplayComponent from './DisplayComponent.js';
 import BtnComponent from './BtnComponent.js';
 import './Challenge.css';
@@ -6,11 +6,13 @@ import { isAuth, getNickName } from './jwtCheck';
 import ChallengeModal from './ChallengeModal.js';
 import * as tf from '@tensorflow/tfjs';
 import * as tmPose from '@teachablemachine/pose';
+import { useNavigate } from "react-router-dom";
 
 function Challenge(props) {
 
-  // const token = JSON.parse(localStorage.getItem('accessToken'));
+  const token = JSON.parse(localStorage.getItem('accessToken'));
   // let nickname = getNickName(token);
+  const navigate = useNavigate();
 
   const [time, setTime] = useState({ s: 0, m: 0, h: 0 });
   const [interv, setInterv] = useState();
@@ -58,6 +60,12 @@ function Challenge(props) {
   //MODAL
   const [openModal, setOpenModal] = useState(false);
 
+  useEffect(() => {
+    if (!isAuth(token)) {
+      alert('로그인 후 이용하실 수 있어요😥');
+      return navigate('/login');
+    }
+  }, []);
 
   return (
     <div className="main-secion">

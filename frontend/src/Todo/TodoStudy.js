@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import CheckboxTodo from "./CheckboxTodo.js";
 import ChattingBox from "./ChattingBox.js";
@@ -21,7 +21,8 @@ let Wrapper = styled.div`
 function TodoStudy() {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
-    const nickName = getNickName(token);
+    // const nickName = getNickName(token);
+    const navigate = useNavigate();
 
     let myId = "";
     let { id } = useParams();
@@ -35,6 +36,13 @@ function TodoStudy() {
         roomEntry: "",
         memberId: ""
     });
+
+    useEffect(() => {
+        if (!isAuth(token)) {
+            alert('로그인 후 이용하실 수 있어요😥');
+            return navigate('/login');
+        }
+    }, []);
 
     useEffect(() => {
         axios.get('/api/todoStudy/', { params: { roomId: id } })

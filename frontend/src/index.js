@@ -7,9 +7,10 @@ import { BrowserRouter } from 'react-router-dom';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-    <React.StrictMode>
+    {/* 두번씩 렌더링되어 alert가 두번 출력되는 것을 방지하기 위해 주석처리 */}
+    {/* <React.StrictMode> */}
       <App />
-    </React.StrictMode>
+    {/* </React.StrictMode> */}
   </BrowserRouter>
 );
 

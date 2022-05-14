@@ -92,10 +92,10 @@ function Home() {
                     <div>***랭킹 표***</div>
                 </Grid>
             </Grid>
-            <h1 style={{ textAlign: 'left' }}>TODO</h1>
-            <TodoList />
+            <h1 style={{ textAlign: 'left' }}>최신 TODO Study</h1>
+            <TodoList isHome={true}/>
             <Link to="/todoList" style={{ textDecoration: 'underline' }}>
-                더보기
+                더 보러가기
             </Link>
             <br></br>
         </Wrapper>

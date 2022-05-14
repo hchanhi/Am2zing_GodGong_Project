@@ -6,12 +6,17 @@ import axios from 'axios';
 import './diary.css';
 import DiaryCom from "./components/DiaryCom";
 
+
 import { getNickName } from './jwtCheck';
+
 
 function DiaryList(diary) {
 
+
+
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const nickname = getNickName(token);
+
     const [loading, setLoading] = useState(true);
     const [diaries, setDiaries] = useState([]);
     const getDiaries = async () => {
@@ -27,6 +32,7 @@ function DiaryList(diary) {
     };
     useEffect(() => {
         getDiaries();
+
     }, [diary]);
 
 
@@ -53,6 +59,18 @@ function DiaryList(diary) {
             });
 
     };
+
+
+    if (!isAuth(token)) {
+        alert('로그인 후 이용하실 수 있어요😥');
+        return navigate('/login');
+    }
+
+
+
+
+
+
 
 
     return (

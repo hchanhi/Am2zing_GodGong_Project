@@ -1,23 +1,30 @@
 
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
+
+import React, { useState, createContext } from "react";
 
 
 function DiaryCom({ diaryId, diaryContent, diarySentiment, diaryCreated, handleSubmit }) {
 
-
+    let navigate = useNavigate();
 
 
 
     return <div>
 
         <div >
+            <div onClick={() => {
+                navigate("/mypage/diaryDetail/" + diaryId);
+            }}>
+            </div>
             <h2>{diaryId}</h2>
             <h5>{diaryCreated}</h5>
             <br></br>
             <h5 >
-                <Link to={`/`}>{diaryContent}</Link>
+                <Link to={`/mypage/diaryDetail/${diaryId}/${diaryContent}`}>{diaryContent}</Link>
 
             </h5>
             <br></br>
@@ -48,4 +55,4 @@ DiaryCom.propTypes = {
 
 };
 // <Link to={`/Movie/${diaryId}`}>
-export default DiaryCom;
+export default DiaryCom;;

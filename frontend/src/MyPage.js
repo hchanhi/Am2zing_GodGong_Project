@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { isAuth, getNickName } from './jwtCheck';
 function MyPage(props) {

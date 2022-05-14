@@ -1,9 +1,6 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
-import styled from "styled-components";
-import DiaryList from "./DiaryList";
+import { Link } from "react-router-dom";
+
 import { getNickName } from './jwtCheck';
 function MyPage(props) {
 

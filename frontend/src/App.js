@@ -41,22 +41,29 @@ function App() {
     // const isAdmin = () => {
     //     return axios.get(API_URL + "admin", { headers: authHeader() });
     // };
-    
+
     return (
         <div className="App">
             <Header userNickName={userNickName} setUserNickName={setUserNickName} />
-
+            <React.Fragment>
+                <PrivateRoute path='/mypage' component={MyPage} />
+                <PrivateRoute path='/challenge' component={Challenge} />
+                <PrivateRoute path='/diary' component={Diary} />
+                <PrivateRoute
+                    path='/mypage/diary' component={DiaryList} />
+                <PrivateRoute path='/todoStudy/:id' component={TodoStudy} />
+            </React.Fragment>
             <Routes>
-                <Route exact path="/" element={<Home />} />
+                <Route exact path="" element={<Home />} />
                 <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin} />} />
                 <Route path="/Join" element={<Join />} />
                 <Route path="/todoList" element={<TodoList />} />
-                
-                <Route path="/mypage" element={<PrivateRoute path={'/mypage'} component={MyPage}/>} />
+
+                {/* <Route path="/mypage" element={<PrivateRoute path={'/mypage'} component={MyPage} />} />
                 <Route path="/challenge" element={<PrivateRoute path={'/challenge'} component={Challenge} />} />
                 <Route path="/diary" element={<PrivateRoute path={'/diary'} component={Diary} />} />
                 <Route path="/mypage/diary" element={<PrivateRoute userNickName={userNickName} path={'/mypage/diary'} component={DiaryList} />} />
-                <Route path="/todoStudy/:id" element={<PrivateRoute path={'/todoStudy/:id'} component={TodoStudy}/>} />
+                <Route path="/todoStudy/:id" element={<PrivateRoute path={'/todoStudy/:id'} component={TodoStudy} />} /> */}
             </Routes>
 
             <Footer />

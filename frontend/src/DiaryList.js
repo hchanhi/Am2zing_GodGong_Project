@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import DiaryButton from './components/DiaryButton';
 import axios from 'axios';
 import './diary.css';

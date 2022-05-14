@@ -10,21 +10,20 @@ import React, { useState, createContext } from "react";
 function DiaryCom({ diaryId, diaryContent, diarySentiment, diaryCreated, handleSubmit }) {
 
     let navigate = useNavigate();
-
+    function move() {
+        navigate(`/mypage/diaryDetail/${diaryId}/${diaryContent}`);
+    }
 
 
     return <div>
 
         <div >
-            <div onClick={() => {
-                navigate("/mypage/diaryDetail/" + diaryId);
-            }}>
-            </div>
+
             <h2>{diaryId}</h2>
             <h5>{diaryCreated}</h5>
             <br></br>
             <h5 >
-                <Link to={`/mypage/diaryDetail/${diaryId}/${diaryContent}`}>{diaryContent}</Link>
+                {diaryContent}
 
             </h5>
             <br></br>
@@ -34,7 +33,7 @@ function DiaryCom({ diaryId, diaryContent, diarySentiment, diaryCreated, handleS
                     <h5 >감정분석결과 : 기분이 나쁩니다. 👿</h5>
                     : <h5 >감정분석결과 : 기분이 좋습니다. 🥰</h5>
             }
-            <button type="submit" >수정</button>
+            <button type="submit" onClick={() => move()} >수정</button>
             <button type="submit" onClick={() => handleSubmit(diaryId)}>삭제</button>
             <br></br>
             <hr></hr>

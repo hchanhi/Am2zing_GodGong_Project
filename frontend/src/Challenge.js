@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DisplayComponent from './DisplayComponent.js';
 import BtnComponent from './BtnComponent.js';
 import './Challenge.css';
 import { isAuth, getNickName } from './jwtCheck';
-import ChallengeModal from './ChallengeModal.js';
+import ChallengeModal from './Challengemodal.js';
 import * as tf from '@tensorflow/tfjs';
 import * as tmPose from '@teachablemachine/pose';
+import { useNavigate } from "react-router-dom";
 
 function Challenge(props) {
 
-  // const token = JSON.parse(localStorage.getItem('accessToken'));
+  const token = JSON.parse(localStorage.getItem('accessToken'));
   // let nickname = getNickName(token);
+  const navigate = useNavigate();
 
   const [time, setTime] = useState({ s: 0, m: 0, h: 0 });
   const [interv, setInterv] = useState();
@@ -58,15 +60,21 @@ function Challenge(props) {
   //MODAL
   const [openModal, setOpenModal] = useState(false);
 
+  useEffect(() => {
+    if (!isAuth(token)) {
+      alert('로그인 후 이용하실 수 있어요😥');
+      return navigate('/login');
+    }
+  }, []);
 
   return (
     <div className="main-secion">
       <div className="clock-holder">
+        <div className="clock-title1">Ama2zing 님의 오늘의 챌린지(버튼수정예정)</div>
         <div className="stopwatch">
-          <DisplayComponent time={time} />
-          <BtnComponent setOpenModal={setOpenModal} status={status} resume={resume} reset={reset} stop={stop} start={start} />
           {openModal && <ChallengeModal closeModal={setOpenModal} />}
-
+          <DisplayComponent className="DisplayComponent" time={time} />
+          <BtnComponent setOpenModal={setOpenModal} status={status} resume={resume} reset={reset} stop={stop} start={start} />
           <div><canvas id="canvas"></canvas></div>
           <div id="label-container"></div>
         </div>

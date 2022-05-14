@@ -1,10 +1,10 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { isAuth, getNickName } from './jwtCheck';
 import axios from 'axios';
 
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
 
     Box,
@@ -16,20 +16,22 @@ import './diary.css';
 
 
 
-const Diary = () => {
+const DiaryDetail = () => {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const nickName = getNickName(token);
-
-
+    const { id, diaryContent } = useParams();
+    const contentz = diaryContent;
+    console.log(id);
+    console.log(diaryContent);
     let today = new Date();
     let year = today.getFullYear();
     let month = today.getMonth() + 1;
     let date = today.getDate();
     var format = year + "-" + (("00" + month.toString()).slice(-2)) + "-" + (("00" + date.toString()).slice(-2));
     const [state, setState] = useState({
-        nickname: nickName,
-        content: "",
+
+        content: contentz,
 
     });
 
@@ -41,11 +43,11 @@ const Diary = () => {
         });
     };
     let body = {
-        nickname: nickName,
+        diaryId: id,
         content: state.content
 
     };
-
+    console.log(state.content);
     useEffect(() => {
         if (!isAuth(token)) {
             alert('로그인 후 이용하실 수 있어요😥');
@@ -55,7 +57,7 @@ const Diary = () => {
 
     const handleSubmit = () => {
         axios
-            .post('/api/diary/post', body)
+            .post('/api/diary/edit/' + id, body)
             .then(function (response) {
                 console.log(response.status, '성공');
 
@@ -93,6 +95,7 @@ const Diary = () => {
                         placeholder="작성자"
                         type="text"
                         readOnly
+
                     />
                 </div>
                 <div>
@@ -122,4 +125,4 @@ const Diary = () => {
     );
 
 };
-export default Diary;
+export default DiaryDetail;

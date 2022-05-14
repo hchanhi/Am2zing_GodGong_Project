@@ -3,7 +3,7 @@ import DisplayComponent from './DisplayComponent.js';
 import BtnComponent from './BtnComponent.js';
 import './Challenge.css';
 import { isAuth, getNickName } from './jwtCheck';
-import ChallengeModal from './ChallengeModal.js';
+import ChallengeModal from './Challengemodal.js';
 import * as tf from '@tensorflow/tfjs';
 import * as tmPose from '@teachablemachine/pose';
 

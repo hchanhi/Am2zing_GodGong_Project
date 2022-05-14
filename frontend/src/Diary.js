@@ -1,45 +1,27 @@
-import { useRef, useState, useEffect } from "react";
-import { isAuth, getNickName } from './jwtCheck';
+
+import { useState } from "react";
+import { getNickName } from './jwtCheck';
+
 import axios from 'axios';
 
-import styled from "styled-components";
+
 import { useNavigate } from "react-router-dom";
 import {
-    Avatar,
-    Button,
-    CssBaseline,
-    TextField,
-    FormControl,
-    FormControlLabel,
-    Checkbox,
-    FormHelperText,
-    Grid,
+
     Box,
-    Typography,
     Container,
-    Link,
+
 
 } from '@mui/material/';
 import './diary.css';
 
-let Wrapper = styled.div`
-    margin: auto;
-    padding: 3rem 0;
-    width: 70%;
-    text-align: left;
 
-    h3 {
-        margin-top: 1rem;
-    }
-`;
 
 const Diary = () => {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const nickName = getNickName(token);
 
-    const authorInput = useRef();
-    const contentInput = useRef();
 
     let today = new Date();
     let year = today.getFullYear();

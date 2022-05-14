@@ -3,9 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 import {
-    Avatar,
     Button,
-    CssBaseline,
     TextField,
     FormControl,
     FormControlLabel,
@@ -41,15 +39,6 @@ const Register = () => {
     const onhandlePost = async (data) => {
         const { birth, nickname, email, password } = data;
         const postData = { birth, nickname, email, password };
-        const headers = {
-            'headers': {
-
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With,application/json, text/plain, */*"
-            }
-
-        };
 
         // post
 

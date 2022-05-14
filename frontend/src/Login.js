@@ -3,11 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import {
-    Avatar,
+
     Button,
-    CssBaseline,
     TextField,
-    FormControl,
     FormControlLabel,
     Checkbox,
     FormHelperText,
@@ -35,12 +33,9 @@ function Copyright(props) {
 
 const Resigter = (props) => {
 
-    const [checked, setChecked] = useState(false);
+
     const [emailError, setEmailError] = useState('');
     const [passwordState, setPasswordState] = useState('');
-    const [registerError, setRegisterError] = useState('');
-    const [nickName, setNickName] = useState();
-    const [test, setTest] = useState(null);
     const navigate = useNavigate();
 
     // 동의 체크
@@ -49,14 +44,6 @@ const Resigter = (props) => {
     const onhandlePost = async (data) => {
         const { email, password } = data;
         const postData = { email, password };
-        const headers = {
-            'headers': {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With,application/json, text/plain, */*"
-            }
-
-        };
 
         // post
 

@@ -40,13 +40,13 @@ function App() {
     // const isAdmin = () => {
     //     return axios.get(API_URL + "admin", { headers: authHeader() });
     // };
-    
+
     return (
         <div className="App">
             <Header userNickName={userNickName} setUserNickName={setUserNickName} />
-
+      
             <Routes>
-                <Route exact path="/" element={<Home />} />
+                <Route exact path="" element={<Home />} />
                 <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin} />} />
                 <Route path="/Join" element={<Join />} />
                 <Route path="/mypage" element={<MyPage />} />
@@ -54,8 +54,9 @@ function App() {
                 <Route path="/challenge" element={<Challenge />} />
                 <Route path="/diary" element={<Diary />} />
                 <Route path="/todoList" element={<TodoList />} />
+
                 <Route path="/todoStudy/:id" element={<TodoStudy />} />
-                
+
             </Routes>
 
             <Footer />

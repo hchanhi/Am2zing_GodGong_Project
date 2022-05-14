@@ -20,6 +20,7 @@ function DiaryList(diary) {
 
     const [loading, setLoading] = useState(true);
     const [diaries, setDiaries] = useState([]);
+    const [state, setsState] = useState();
     const getDiaries = async () => {
         const json = await axios.get('/api/diary/mydiary', { params: { nickname: nickname } });
         setDiaries(json.data);
@@ -27,9 +28,7 @@ function DiaryList(diary) {
         console.log(nickname);
         setLoading(false);
         console.log(diaries.diaryContent);
-        console.log(diaries.length);
-
-
+        setsState(false);
 
     };
     useEffect(() => {
@@ -38,7 +37,7 @@ function DiaryList(diary) {
             alert('로그인 후 이용하실 수 있어요😥');
             return navigate('/login');
         }
-    }, [diary]);
+    }, [state == true]);
 
 
     const handleSubmit = (diaryId) => {
@@ -47,6 +46,8 @@ function DiaryList(diary) {
             .get('/api/diary/delete/' + diaryId, { params: { diaryId: diaryId } })
             .then(function (response) {
                 console.log(response.status, '성공');
+
+                setsState(true);
 
 
 

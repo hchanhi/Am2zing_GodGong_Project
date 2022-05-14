@@ -1,8 +1,7 @@
-import { border } from "@mui/system";
+
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-import axios from 'axios';
 
 
 function DiaryCom({ diaryId, diaryContent, diarySentiment, diaryCreated, handleSubmit }) {

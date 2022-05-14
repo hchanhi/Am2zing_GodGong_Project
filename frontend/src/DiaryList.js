@@ -6,14 +6,17 @@ import axios from 'axios';
 import './diary.css';
 import DiaryCom from "./components/DiaryCom";
 
+import { isAuth, getNickName } from './jwtCheck';
 
-import { getNickName } from './jwtCheck';
+
+function DiaryList(diary) {
 
 
-function DiaryList(props) {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const nickname = getNickName(token);
+    const navigate = useNavigate();
+
 
     const [loading, setLoading] = useState(true);
     const [diaries, setDiaries] = useState([]);
@@ -24,20 +27,50 @@ function DiaryList(props) {
         console.log(nickname);
         setLoading(false);
         console.log(diaries.diaryContent);
+        console.log(diaries.length);
+
 
 
     };
     useEffect(() => {
         getDiaries();
-
-    }, [setDiaries]);
-
-
         if (!isAuth(token)) {
             alert('로그인 후 이용하실 수 있어요😥');
             return navigate('/login');
         }
-    }, []);
+    }, [diary]);
+
+
+    const handleSubmit = (diaryId) => {
+
+        axios
+            .get('/api/diary/delete/' + diaryId, { params: { diaryId: diaryId } })
+            .then(function (response) {
+                console.log(response.status, '성공');
+
+
+
+
+
+            })
+            .catch(function (err) {
+                console.log(err);
+                console.log(err.response.data.message);
+                if (err.response.status === 400) {
+                    alert(err.response.data.message);
+                }
+
+
+            });
+
+    };
+
+
+
+
+
+
+
 
 
 
@@ -63,12 +96,13 @@ function DiaryList(props) {
                         {diaries.map((diary) => (
 
                             <DiaryCom
+                                diary={diary}
                                 key={diary.diaryId}
                                 diaryId={diary.diaryId}
                                 diaryContent={diary.diaryContent}
                                 diarySentiment={diary.diarySentiment}
                                 diaryCreated={diary.diaryCreated.substr(0, 10)}
-
+                                handleSubmit={handleSubmit}
 
                             />
 

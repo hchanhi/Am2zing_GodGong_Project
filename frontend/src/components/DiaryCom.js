@@ -5,32 +5,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 
 
-function DiaryCom({ diaryId, diaryContent, diarySentiment, diaryCreated }) {
-
-
-    const handleSubmit = (diaryId) => {
-
-        axios
-            .get('/api/diary/delete/' + diaryId, { params: { diaryId: diaryId } })
-            .then(function (response) {
-                console.log(response.status, '성공');
-
-
-
-
-
-            })
-            .catch(function (err) {
-                console.log(err);
-                console.log(err.response.data.message);
-                if (err.response.status === 400) {
-                    alert(err.response.data.message);
-                }
-
-
-            });
-
-    };
+function DiaryCom({ diaryId, diaryContent, diarySentiment, diaryCreated, handleSubmit }) {
 
 
 

@@ -1,7 +1,6 @@
 
-import { useState } from "react";
-import { getNickName } from './jwtCheck';
-
+import { useState, useEffect } from "react";
+import { isAuth, getNickName } from './jwtCheck';
 import axios from 'axios';
 
 

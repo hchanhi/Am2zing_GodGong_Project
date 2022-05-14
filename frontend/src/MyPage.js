@@ -1,14 +1,12 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
-
-import { getNickName } from './jwtCheck';
-
+import { isAuth, getNickName } from './jwtCheck';
 function MyPage(props) {
 
     let navigate = useNavigate();
     const token = JSON.parse(localStorage.getItem('accessToken'));
-    
+
     if (!isAuth(token)) {
         alert('로그인 후 이용하실 수 있어요😥');
         return navigate('/login');

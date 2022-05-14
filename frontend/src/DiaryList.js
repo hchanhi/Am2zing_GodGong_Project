@@ -6,8 +6,7 @@ import axios from 'axios';
 import './diary.css';
 import DiaryCom from "./components/DiaryCom";
 
-
-import { getNickName } from './jwtCheck';
+import { isAuth, getNickName } from './jwtCheck';
 
 
 function DiaryList(diary) {
@@ -16,6 +15,8 @@ function DiaryList(diary) {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const nickname = getNickName(token);
+    const navigate = useNavigate();
+
 
     const [loading, setLoading] = useState(true);
     const [diaries, setDiaries] = useState([]);
@@ -29,10 +30,14 @@ function DiaryList(diary) {
         console.log(diaries.length);
 
 
+
     };
     useEffect(() => {
         getDiaries();
-
+        if (!isAuth(token)) {
+            alert('로그인 후 이용하실 수 있어요😥');
+            return navigate('/login');
+        }
     }, [diary]);
 
 
@@ -61,10 +66,7 @@ function DiaryList(diary) {
     };
 
 
-    if (!isAuth(token)) {
-        alert('로그인 후 이용하실 수 있어요😥');
-        return navigate('/login');
-    }
+
 
 
 

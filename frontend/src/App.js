@@ -8,6 +8,7 @@ import Login from './Login.js';
 import Join from './Join.js';
 import MyPage from './MyPage.js';
 import Diary from './Diary.js';
+import DiaryDetail from './DiaryDetail';
 import DiaryList from './DiaryList.js';
 import TodoList from './Todo/TodoList.js';
 import TodoStudy from './Todo/TodoStudy.js';
@@ -44,13 +45,14 @@ function App() {
     return (
         <div className="App">
             <Header userNickName={userNickName} setUserNickName={setUserNickName} />
-      
+
             <Routes>
                 <Route exact path="" element={<Home />} />
                 <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin} />} />
                 <Route path="/Join" element={<Join />} />
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/mypage/diary" element={<DiaryList />} />
+                <Route path="/mypage/diaryDetail/:id/:diaryContent" element={<DiaryDetail />} />
                 <Route path="/challenge" element={<Challenge />} />
                 <Route path="/diary" element={<Diary />} />
                 <Route path="/todoList" element={<TodoList />} />

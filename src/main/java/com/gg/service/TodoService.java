@@ -20,7 +20,7 @@ public class TodoService {
 
     public List<Todo> findByUserId(String nickname){
         User user = userRepository.findByNickname(nickname);
-        return todoRepository.FindByUserId(user.getId());
+        return todoRepository.findByUserId(user.getId());
     }
 
 

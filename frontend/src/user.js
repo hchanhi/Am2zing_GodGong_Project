@@ -16,7 +16,7 @@ import './diary.css';
 
 
 
-const DiaryDetail = () => {
+const User = () => {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const nickName = getNickName(token);
@@ -126,4 +126,4 @@ const DiaryDetail = () => {
     );
 
 };
-export default DiaryDetail;
+export default User;

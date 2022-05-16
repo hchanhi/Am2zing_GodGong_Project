@@ -5,7 +5,13 @@ import { useNavigate } from "react-router-dom";
 
 
 import React, { useState, createContext } from "react";
+import {
 
+    Box,
+    Container,
+
+
+} from '@mui/material/';
 
 function DiaryCom({ diaryId, diaryContent, diarySentiment, diaryCreated, handleSubmit }) {
 
@@ -16,32 +22,37 @@ function DiaryCom({ diaryId, diaryContent, diarySentiment, diaryCreated, handleS
 
 
     return <div>
+        <Container >
+            <Box component="form" sx={{ mt: 3 }}>
+                <div >
 
-        <div >
+                    <h2>{diaryId}</h2>
+                    <h5>{diaryCreated}</h5>
+                    <br></br>
+                    <div className="content">
 
-            <h2>{diaryId}</h2>
-            <h5>{diaryCreated}</h5>
-            <br></br>
-            <h5 >
-                {diaryContent}
-
-            </h5>
-            <br></br>
-            {diarySentiment === 'neutral' ?
-                <h5 >감정분석결과  : 기분이 보통입니다. 😐</h5> :
-                diarySentiment === 'negative' ?
-                    <h5 >감정분석결과 : 기분이 나쁩니다. 👿</h5>
-                    : <h5 >감정분석결과 : 기분이 좋습니다. 🥰</h5>
-            }
-            <button type="submit" onClick={() => move()} >수정</button>
-            <button type="submit" onClick={() => handleSubmit(diaryId)}>삭제</button>
-            <br></br>
-            <hr></hr>
-            <br></br>
+                        {diaryContent}
 
 
+                    </div>
+                    <br></br>
+                    {diarySentiment === 'neutral' ?
+                        <h5 >감정분석결과  : 기분이 보통입니다. 😐</h5> :
+                        diarySentiment === 'negative' ?
+                            <h5 >감정분석결과 : 기분이 나쁩니다. 👿</h5>
+                            : <h5 >감정분석결과 : 기분이 좋습니다. 🥰</h5>
+                    }
+                    <button type="submit" onClick={() => move()} >자세히보기</button>
+                    <button type="submit" onClick={() => handleSubmit(diaryId)}>삭제</button>
+                    <br></br>
+                    <hr></hr>
+                    <br></br>
 
-        </div>
+
+
+                </div>
+            </Box>
+        </Container>
     </div >;
 }
 

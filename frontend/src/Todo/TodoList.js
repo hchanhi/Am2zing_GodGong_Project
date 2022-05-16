@@ -3,6 +3,14 @@ import axios from 'axios';
 import TodoCard from "./TodoCard.js";
 import { getNickName } from '../jwtCheck';
 import { Grid } from "@mui/material";
+import styled from "styled-components";
+
+let Wrapper = styled.div`
+    margin: auto;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    width: ${props => props.isHome ? '0' : '65vw'}
+`
 
 function TodoList(props) {
 
@@ -22,7 +30,6 @@ function TodoList(props) {
     sliceTodoList = rooms.slice(0, LastIndex);
 
     function makeRoom() {
-        // RequestBody가 아닌 RequestParam으로 받기 때문에 params로 보내야 값을 인식한다.
         axios.post('/api/chat/room', null, { params: room })
             .then(res => {
                 alert('스터디룸을 성공적으로 만들었어요.');
@@ -37,7 +44,6 @@ function TodoList(props) {
         axios.get('/api/chat/rooms')
             .then(res => {
                 setRooms(res.data);
-                console.log(res.data);
             })
             .catch(error => {
                 console.log(error);
@@ -45,7 +51,7 @@ function TodoList(props) {
     },[])
        
     return (
-        <div>
+        <Wrapper>
             {
                 props.isHome
                     ? null 
@@ -68,7 +74,7 @@ function TodoList(props) {
                     ? null
                     : <button onClick={() => setNowPage(++nowPage)}>▼ 더보기</button>
             }
-        </div>
+        </Wrapper>
     );
 }
 

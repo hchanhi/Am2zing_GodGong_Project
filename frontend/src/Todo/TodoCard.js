@@ -5,9 +5,13 @@ import { Grid } from "@mui/material";
 
 let Wrapper = styled.div`
     background-color: white;
+    box-shadow: 5px 5px 5px rgb(226, 233, 230);
     margin: 10px;
-    padding: 10px;
+    padding: 1.5rem;
     text-align: left;
+    cursor: pointer;
+    border-radius: 2rem;
+    // border: solid 8px black;
 `
 
 function TodoCard({ studyRoom }) {
@@ -23,10 +27,10 @@ function TodoCard({ studyRoom }) {
             
         }}>
             <Wrapper>
-                <h4>{studyRoom.roomTitle}</h4>
-                0/6 <br />
-                카테고리 : {studyRoom.roomCategory}<br/>
-                {roomCreatedDate} ~
+                <h2>{studyRoom.roomTitle}</h2>
+                 {studyRoom.roomCategory} <br />
+                {roomCreatedDate} ~ <br />
+                <h3 style={{textAlign: 'right', color: 'orangered'}}>5/6</h3>
             </Wrapper>
         </Grid>
     );

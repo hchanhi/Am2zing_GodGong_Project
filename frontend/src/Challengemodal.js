@@ -26,7 +26,7 @@ function ChallengeModal({closeModal}){
             </div>
             <div className="footer">
                 <button id="cancelBtn" onClick={() => navigate("/Diary")}>작성하기</button>
-                <button onClick={() => navigate("/Home")}>메인으로</button>
+                <button onClick={() => navigate("/App")}>메인으로</button>
             </div>
         </div>
     </div>

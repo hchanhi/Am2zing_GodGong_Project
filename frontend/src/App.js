@@ -47,7 +47,6 @@ function App() {
                 <Route path="/diary" element={<Diary />} />
                 <Route path='/mypage/user' element={<User />} />
                 <Route path="/todoList" element={<TodoList />} />
-
                 <Route path="/todoStudy/:id" element={<TodoStudy />} />
 
             </Routes>

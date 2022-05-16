@@ -8,7 +8,7 @@ import * as tmPose from '@teachablemachine/pose';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
+var status = 0;
 function Challenge(props) {
 
   const token = JSON.parse(localStorage.getItem('accessToken'));
@@ -145,6 +145,14 @@ async function predict() {
   } = await model.estimatePose(webcam.canvas);
   // Prediction 2: run input through teachable machine classification model
   const prediction = await model.predict(posenetOutput);
+  if(prediction[0].probability>= 0.8){
+    status = 1;
+
+  } else if (prediction[1].probability>= 0.8){
+    status = 0;
+
+  }
+  console.log(status);
 /*
   //콘솔로 확인하는 코드
   console.log(prediction[0].probability);

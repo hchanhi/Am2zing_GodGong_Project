@@ -41,7 +41,6 @@ public class StudylogController {
         studytime.add(day);
         studytime.add(week);
         studytime.add(month);
-        System.out.println(studytime);
         return studytime;
     }
 

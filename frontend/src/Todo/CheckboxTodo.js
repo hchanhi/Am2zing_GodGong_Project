@@ -40,7 +40,7 @@ function CheckboxTodo() {
         <Box sx={{ display: 'flex' }}>
             <ThemeProvider
                 theme={createTheme({
-                    palette: { mode: 'dark', background: { paper: 'rgb(5, 30, 52)' }, }
+                    palette: { mode: 'dark', background: { paper: 'rgb(5, 51, 52)' }, }
                 })}
             >
                 <Paper elevation={0} sx={{ maxWidth: 256 }}>
@@ -58,7 +58,7 @@ function CheckboxTodo() {
                             <ListItemIcon sx={{ fontSize: 20 }}>🔥</ListItemIcon>
                         </ListItemButton>
                         <Divider />
-                        <Box sx={{ bgcolor: 'rgba(71, 98, 130, 0.2)', }}>
+                        <Box sx={{ bgcolor: 'rgba(114, 143, 143, 0.2)', }}>
                             {data.map((value) => (
                                 <ListItem
                                     key={value}

@@ -7,13 +7,13 @@ import TodoList from "./Todo/TodoList.js";
 
 let Wrapper = styled.div`
     margin: auto;
-    padding-bottom: 10vh;
     width: 65%;
     height: 100%;
 `
 
 let TodayStyle = styled(Grid)`
-    background-color: rgb(232, 233, 233);
+    background-color: white;
+    box-shadow: 15px 15px 10px rgb(226, 233, 230);
     border-radius: 20px;
     padding: 1rem 3rem;
 `
@@ -22,15 +22,12 @@ let StudyTime = styled(Grid)`
     height: 100%;
 
     div {
-        color: dimgrey;
         font-size: 13pt;
     }
     h1 {
-        font-size: 40pt;
+        font-size: 50pt;
         letter-spacing: 6px;
-        color: black;
         margin: 4vh 0;
-        font-weight: normal;
     }
     button {
         font-family: 'Pretendard-Medium';
@@ -38,20 +35,21 @@ let StudyTime = styled(Grid)`
         font-size: 16pt;
         margin-bottom: 3vh;
         width: 12vw;
-        background-color: rgb(62, 26, 224)
+        background-color: lightseagreen
     }
 `
 let StudyDiary = styled(Grid)`
     span {
-        color: dimgrey;
         font-size: 13pt;
         margin-left: 0;
     }
     div {
-        background-color: white;
+        background-color: mintcream;
         padding: 1rem;
         margin-top: 1rem;
         border-radius: 20px;
+        border: solid 1px lightseagreen;
+        // box-shadow: 1px 1px 10px gainsboro;
     }
 `
 let RankingText = styled(Grid)`
@@ -76,14 +74,14 @@ function Home() {
                 <StudyDiary item xs={7} sx={{ textAlign: 'left' }}>
                     <Link to="/diary">
                         <span>오늘의 공부일기</span>
-                        <div>나중에 더보기 처리하기</div>
+                        <div>여기에도 일기 띄우기</div>
                     </Link>
                 </StudyDiary>
             </TodayStyle>
 
             <Grid container spacing={1} sx={{ marginTop: '3vh'}}>
                 <RankingText item xs={4} sx={{ margin: '5vh 0 10vh' }}>
-                    <div><h1 style={{ color: 'rgb(62, 26, 224)' }}>하루 전 ▾</h1></div>
+                    <div><h1 style={{ color: 'darkcyan'}}>하루 전 ▾</h1></div>
                     <div><h1>누적 공부 시간 랭킹</h1></div>
                     <div>2022.05.25(수) 오전 06:00 기준</div>
                 </RankingText>
@@ -92,12 +90,12 @@ function Home() {
                     <div>***랭킹 표***</div>
                 </Grid>
             </Grid>
-            <h1 style={{ textAlign: 'left' }}>최신 TODO Study</h1>
+
+            <h1 style={{ textAlign: 'left' }}>같이 TODO 해요 ❗</h1>
             <TodoList isHome={true}/>
-            <Link to="/todoList" style={{ textDecoration: 'underline' }}>
+            <Link to="/todoList" style={{ textDecoration: 'underline', textAlign: 'right' }}>
                 더 보러가기
             </Link>
-            <br></br>
         </Wrapper>
     );
 }

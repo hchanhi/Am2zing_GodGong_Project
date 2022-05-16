@@ -10,8 +10,9 @@ let HeaderStyle = styled.div`
 
     h1 {
         font-family: 'SB';
-        font-size: 35pt;
-        margin-top: 3rem;
+        font-size: 40pt;
+        margin-top: 1rem;
+        color: darkcyan;
     }
 `
 
@@ -51,6 +52,7 @@ function Header(props) {
             }
 
             <Link to="/">
+                <div style={{ color: 'grey', marginTop: '3rem' }}>같이·공부하는 같·공</div>
                 <h1>GOD·GONG</h1>
             </Link>
         </HeaderStyle>

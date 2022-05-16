@@ -4,9 +4,9 @@ import BtnComponent from './BtnComponent.js';
 import './Challenge.css';
 import { isAuth, getNickName } from './jwtCheck';
 import ChallengeModal from './ChallengeModal.js';
-import * as tf from '@tensorflow/tfjs';
 import * as tmPose from '@teachablemachine/pose';
 import { useNavigate } from "react-router-dom";
+
 
 function Challenge(props) {
 
@@ -56,7 +56,6 @@ function Challenge(props) {
 
   const resume = () => start();
 
-
   //MODAL
   const [openModal, setOpenModal] = useState(false);
 
@@ -70,7 +69,7 @@ function Challenge(props) {
   return (
     <div className="main-secion">
       <div className="clock-holder">
-        <div className="clock-title1">Ama2zing 님의 오늘의 챌린지(버튼수정예정)</div>
+        <div className="clock-title1">{getNickName(token)} 님의 오늘의 챌린지</div>
         <div className="stopwatch">
           {openModal && <ChallengeModal closeModal={setOpenModal} />}
           <DisplayComponent className="DisplayComponent" time={time} />
@@ -139,7 +138,7 @@ async function predict() {
     console.log('공부중');
   } else {
     console.log('자리비움');
-    //시간이멈추게하는 코드 입력하기
+    // {props.stop};
   }
 
   //퍼센트 화면표시2

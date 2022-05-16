@@ -42,8 +42,10 @@ public class DiaryController {
     }
 
     @PostMapping("/api/diary/edit/{diaryId}")
-    public Boolean editDiary(String content, @PathVariable Long diaryId){
+    public Boolean editDiary(@RequestBody HashMap<String, String> param){
         Boolean check = true;
+        String content = param.get("content");
+        Long diaryId = Long.parseLong(param.get("diaryId"));
         String sentiment = diaryService.sentiment(content);
         diaryService.editDiary(content, diaryId, sentiment);
         if(sentiment.isEmpty()){

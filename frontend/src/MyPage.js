@@ -15,12 +15,18 @@ function MyPage(props) {
     return (
         <div>
             <h3>{getNickName(token)}님의 마이페이지💁🏻‍♀️</h3>
+            <Link to="/mypage/studylog">
             <h3>공부시간</h3>
+            </Link>
+            <Link to="/mypage/todo">
             <h3>투두리스트</h3>
+            </Link>
             <Link to="/mypage/diary">
                 <h3>공부일기 목록</h3>
             </Link>
+            <Link to="/mypage/user">
             <h3>회원정보 수정</h3>
+            </Link>
         </div>
     );
 }

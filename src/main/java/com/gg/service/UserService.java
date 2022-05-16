@@ -28,15 +28,13 @@ public class UserService {
 
 
     public void updateNickname(Long id, String nickname){
-        Optional<User> users = userRepository.findById(id);
-        User user = users.get();
+        User user = userRepository.findById(id).get();
         user.setNickname(nickname);
         //토큰..refresh
     }
 
     public void updatePassword(Long id, String password){
-        Optional<User> users = userRepository.findById(id);
-        User user = users.get();
+        User user = userRepository.findById(id).get();
         user.setPassword(passwordEncoder.encode(password));
         //토큰..refresh
     }

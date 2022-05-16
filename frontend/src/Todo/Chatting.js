@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SockJs from "sockjs-client";
-import Stomp from '@stomp/stompjs';
+import { Stomp } from '@stomp/stompjs';
 import { useNavigate } from "react-router-dom";
 
 let Receive = styled.div`
@@ -32,99 +32,83 @@ function Chatting(props) {
     let roomId = '';
     let nickName = '';
 
-    // // 소켓 통신 객체
-    // let sock = new SockJs("url");
-    // let ws = Stomp.over(sock);
+    // 소켓 통신 객체
+    let sock = new SockJs("url");
+    let ws = Stomp.over(sock);
 
     let [message, setMessage] = useState('');
+    let [newMessage, setNewMessage] = useState([]);
     let [writer, setWriter] = useState('');
 
-    // useEffect(() => {
-    //     wsConnnect();
-    //     return wsDisConnect();
-    // }, [roomId])
+    useEffect(() => {
+        wsConnnect();
+        return wsDisConnect();
+    }, [roomId])
 
-    // // 웹소켓 연결, 구독??
-    // function wsConnnect() {
-    //     ws.connect(
-    //         { token: token },
-    //         function () {
-    //             ws.subscribe("/api/room/chat/" + roomId, function (chat) {
+    function wsConnnect() {
+        // token위치 위 아래 중 어디인지 정확한 공식문서 찾아보기...
+        ws.connect(token,
+            function () {
+                // subscribe는 채팅내용을 받을 때?
+                ws.subscribe(
+                    "/api/room/chat/" + roomId,
+                    function (chat) {
+                        if (writer === nickName) {
+                            // 추가하는 복사 필요?
+                            setNewMessage(JSON.parse(chat.body));
+                            setWriter('');
+                        } else {
+                            setNewMessage(JSON.parse(chat.body));
+                            setWriter(newMessage.writer);
+                        }
+                    },
+                    token
+                )
+            }
+        )
+    }
 
-    //                 if (writer === nickName) {
-    //                     let newMessage = JSON.parse(chat.body);
-    //                     setWriter('');
-    //                     // styled-components 가변스타일링 나중에 주기
-    //                 } else {
-    //                     let newMessage = JSON.parse(chat.body);
-    //                     setWriter(newMessage.writer);
-    //                 }
-    //             },
-    //             { token: token }
-    //             )
-    //         }
-    //     )
-    // }
+    // disconnect하지 않으면 계속 연결되어있어서 꼭 끊어줘야함. 방에서 나갈 때?
+    function wsDisConnect () {
+        ws.disconnect(
+            function () { ws.unsubscribe('sub-0') },
+            token
+        );
+    }
 
-    // function wsDisConnect () {
-    //     ws.disconnect(
-    //         function () { ws.unsubscribe('sub-0') },
-    //         { token: token }
-    //     );
-    // }
+    function sendMessage() {
 
-    // function waitForConnection(ws, callback) {
-    //     setTimeout(
-    //         function () {
-    //             if (ws.ws.readyState === 1) {
-    //                 callback();
-    //             } else {
-    //                 waitForConnection(ws, callback);
-    //             }
-    //         },
-    //         1
-    //     );
-    // }
+        let chat = {
+            roomId: roomId,
+            writer: writer,
+            message: message
+        };
 
-    // function sendMessage() {
+        if (message === '') {
+            return;
+        }
 
-    //     if (!token) {
-    //         alert("로그인 후 이용하실 수 있어요.");
-    //         navigate('/login');
-    //     }
-
-    //     let chat = {
-    //         roomId: roomId,
-    //         writer: writer,
-    //         message: message
-    //     };
-
-    //     if (message === '') {
-    //         return;
-    //     }
-
-    //     waitForConnection(ws, function () {
-    //         ws.send(
-    //             'url',
-    //             { token: token }, //header
-    //             JSON.stringify(chat)
-    //         );
-    //     })
-    // }
+        // 버전에 따라 publish라는 말을 쓰기도 하는 것 같음
+        ws.send(
+            'url',
+            token, //header
+            JSON.stringify(chat)
+        );
+    }
     
 
     return (
         <div>
             <Receive>
                 <div>{writer}</div>
-                <div>{message}</div>
+                <div>{newMessage}</div>
             </Receive>
             <Send>
                 <div>닉네임</div>
                 <Text onKeyDown={(e) => {
                     setMessage(e.target.value)
                     if (e.key == 'Enter') {
-                        // sendMessage();
+                        sendMessage();
                     }
                 }}></Text>
             </Send>

@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useContext } from "react";
-import { isAuth, getNickName } from './jwtCheck';
+import { isAuth, getNickName, getId } from './jwtCheck';
 import axios from 'axios';
 
 
@@ -20,6 +20,7 @@ const User = () => {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const nickName = getNickName(token);
+    const userId = getId(token);
     const { id, diaryContent } = useParams();
 
     console.log(id);

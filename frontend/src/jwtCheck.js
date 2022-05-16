@@ -22,3 +22,11 @@ export function getNickName(token) {
     }
     return jwt.verify(token.accessToken, process.env.REACT_APP_JWT_SECRET).iss;
 }
+
+export function getId(token) {
+
+    if (!token) {
+        return;
+    }
+    return jwt.verify(token.accessToken, process.env.REACT_APP_JWT_SECRET).sub;
+}

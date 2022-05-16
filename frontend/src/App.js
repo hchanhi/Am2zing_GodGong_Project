@@ -19,7 +19,6 @@ import { isAuth, getNickName } from './jwtCheck.js';
 function App() {
 
     let [userNickName, setUserNickName] = useState('');
-    // isLogin : Header 리렌더링을 위한 state
     let [isLogin, setIsLogin] = useState(false);
 
     useEffect(() => {
@@ -32,16 +31,6 @@ function App() {
             setIsLogin(false);
         }
     }, [isLogin]);
-
-    // axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data;
-
-    // const getUserInfo = () => {
-    //     return axios.get(API_URL + "user", { headers: authHeader() });
-    // };
-
-    // const isAdmin = () => {
-    //     return axios.get(API_URL + "admin", { headers: authHeader() });
-    // };
 
     return (
         <div className="App">

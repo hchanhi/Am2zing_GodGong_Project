@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import CheckboxTodo from "./CheckboxTodo.js";
 import ChattingBox from "./ChattingBox.js";
-import { isAuth, getNickName } from '../jwtCheck.js';
+import { isAuth } from '../jwtCheck.js';
 import { Grid, Chip } from '@mui/material/';
 
 let Wrapper = styled.div`
@@ -66,7 +66,7 @@ function TodoStudy() {
                     <h1>에너지 넘치는 2조 투두방📚</h1>
                 </Grid>
                 <Grid item xs={6}>
-                    <Chip label='대기업' color="info" />
+                    <Chip label='대기업' />
                     <h3>현재인원 : 4/5명</h3>
                 </Grid>
                 <Grid item xs={6} sx={{ textAlign: 'right' }}>

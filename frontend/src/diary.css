@@ -59,3 +59,11 @@ textarea {
     background-color: #fd565f;
     color: white;
 }
+
+.content {
+    width: 300px;
+    height: 55px;
+
+    overflow: hidden;
+    margin-left: 270px;
+}

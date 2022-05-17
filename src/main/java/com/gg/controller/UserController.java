@@ -10,12 +10,14 @@ import com.gg.repository.UserRepository;
 import com.gg.service.PrincipalDetails;
 import com.gg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 
 
 // UserController, API 작성
@@ -68,12 +70,29 @@ public class UserController {
     }
 
     @PostMapping("/user/{id}/nickname")
-    public void editNickname(@PathVariable Long id, String nickname){
-        userService.updateNickname(id, nickname);
+    public void editNickname(@RequestBody HashMap<String, String> param){
+       Long id = Long.parseLong(param.get("id"));
+       String nickname = param.get("nickname");
+       userService.updateNickname(id, nickname);
     }
 
     @PostMapping("/user/{id}/password")
-    public void editPassword(@PathVariable Long id, String password){
-        userService.updatePassword(id, password);
+    public boolean editPassword(@RequestBody HashMap<String, String> param){
+        Long id = Long.parseLong(param.get("id"));
+        String oldPassword = param.get("oldPassword");
+        String newPassword = param.get("newPassword");
+        return userService.updatePassword(id, oldPassword, newPassword);
+    }
+
+    @GetMapping("/user/{id}/delete")
+    public void deleteUser(@PathVariable Long id){
+        userService.deleteUser(id);
+    }
+
+    @PostMapping("/user/{id}/birth")
+    public void editBirth(@RequestBody HashMap<String, String> param){
+        Long id = Long.parseLong(param.get("id"));
+        String birth = param.get("birth");
+        userService.updateBirth(id, birth);
     }
 }

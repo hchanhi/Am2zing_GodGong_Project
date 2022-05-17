@@ -57,12 +57,6 @@ const DiaryDetail = () => {
     };
     console.log(edit);
 
-    useEffect(() => {
-        if (!isAuth(token)) {
-            alert('로그인 후 이용하실 수 있어요😥');
-            return navigate('/login');
-        }
-    }, []);
 
     const handleSubmit = () => {
         axios
@@ -91,19 +85,9 @@ const DiaryDetail = () => {
 
     return (
         <Container className="DiaryEditor">
-            <h2>오늘의 일기</h2>
+            <h2>공부 일기</h2>
             <Box component="form" sx={{ mt: 3 }}>
-                <div>
-                    <input
-                        value={nickName}
 
-                        name="nickName"
-                        placeholder="작성자"
-                        type="text"
-                        readOnly
-
-                    />
-                </div>
                 <div>
                     <input
                         value={dateEdit.substring(0, 10)}
@@ -125,7 +109,7 @@ const DiaryDetail = () => {
                 </div>
             </Box>
             <div>
-                <button onClick={handleSubmit}>일기 저장하기</button>
+                <button onClick={handleSubmit}>일기 수정하기</button>
             </div>
         </Container>
     );

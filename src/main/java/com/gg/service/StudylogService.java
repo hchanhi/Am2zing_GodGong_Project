@@ -65,4 +65,8 @@ public class StudylogService {
     public List<Studylog> Daytop10Studytime(){
         return studylogRepository.Daytop10studyTime();
     }
+
+    public Integer recentStudytime(String nickname){
+        return studylogRepository.findTop1ByUserNicknameIsOrderByStudylogCreatedDesc(nickname);
+    }
 }

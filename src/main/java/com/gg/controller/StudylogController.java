@@ -70,4 +70,9 @@ public class StudylogController {
     public List<Studylog> Daytop10StudyTime(){
         return studylogService.Daytop10Studytime();
     }
+
+    @PostMapping("/api/studytime/recent")
+    public Integer recentStudyTime(String nickname){
+        return studylogService.recentStudytime(nickname);
+    }
 }

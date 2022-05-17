@@ -61,7 +61,7 @@ public class UserController {
         User user = userRepository.findByEmail(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 
-        UserProfile userProfile = new UserProfile(user.getId(), user.getNickname(), user.getEmail());
+        UserProfile userProfile = new UserProfile(user.getId(), user.getNickname(), user.getEmail(), user.getBirth());
 
         return userProfile;
     }

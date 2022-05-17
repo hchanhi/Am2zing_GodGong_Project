@@ -9,4 +9,6 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     List<Diary> findByUserNickname(String nickname);
 
     Diary findByDiaryId(Long diaryId);
+
+    Diary findTop1ByUserNicknameIsOrderByDiaryCreatedDesc(String nickname);
 }

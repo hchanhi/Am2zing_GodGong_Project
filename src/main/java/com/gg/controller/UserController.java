@@ -71,18 +71,28 @@ public class UserController {
 
     @PostMapping("/user/{id}/nickname")
     public void editNickname(@RequestBody HashMap<String, String> param){
-       Long id = Long.parseLong(param.get("diaryId"));
+       Long id = Long.parseLong(param.get("id"));
        String nickname = param.get("nickname");
        userService.updateNickname(id, nickname);
     }
 
     @PostMapping("/user/{id}/password")
-    public void editPassword(@PathVariable Long id, String password){
-        userService.updatePassword(id, password);
+    public boolean editPassword(@RequestBody HashMap<String, String> param){
+        Long id = Long.parseLong(param.get("id"));
+        String oldPassword = param.get("oldPassword");
+        String newPassword = param.get("newPassword");
+        return userService.updatePassword(id, oldPassword, newPassword);
     }
 
-    @PostMapping("/user/{id}/delete")
+    @GetMapping("/user/{id}/delete")
     public void deleteUser(@PathVariable Long id){
         userService.deleteUser(id);
+    }
+
+    @PostMapping("/user/{id}/birth")
+    public void editBirth(@RequestBody HashMap<String, String> param){
+        Long id = Long.parseLong(param.get("id"));
+        String birth = param.get("birth");
+        userService.updateBirth(id, birth);
     }
 }

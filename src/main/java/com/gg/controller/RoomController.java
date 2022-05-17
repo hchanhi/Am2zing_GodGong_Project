@@ -29,9 +29,15 @@ public class RoomController {
         return roomService.findAllRooms();
     }
 
+
     @PostMapping(value = "/room")
     public Room create(@RequestParam String roomCategory, @RequestParam String roomTitle, @RequestParam String userNickname) {
         log.info("# Create Chat Room, category : " + roomCategory + "title" + roomTitle + "user" + userNickname );
         return roomService.createRoom(roomCategory, roomTitle, userNickname);
+    }
+
+    @PostMapping("/allroom")
+    public List<Room> allRoom(){
+        return roomService.allRoom();
     }
 }

@@ -3,16 +3,21 @@ package com.gg.controller;
 
 import com.gg.config.jwt.JwtTokenProvider;
 import com.gg.domain.ERole;
+import com.gg.domain.RefreshToken;
 import com.gg.domain.Role;
 import com.gg.domain.User;
 import com.gg.exception.AppException;
+import com.gg.exception.TokenRefreshException;
 import com.gg.payload.request.LoginRequest;
 import com.gg.payload.request.SignUpRequest;
 
+import com.gg.payload.request.TokenRefreshRequest;
 import com.gg.payload.response.ApiResponse;
 import com.gg.payload.response.JwtAuthenticationResponse;
+import com.gg.payload.response.TokenRefreshReesponse;
 import com.gg.repository.RoleRepository;
 import com.gg.repository.UserRepository;
+import com.gg.service.RefreshTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +44,9 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
+    RefreshTokenService refreshTokenService;
+
+    @Autowired
     UserRepository userRepository;
 
     @Autowired
@@ -63,8 +71,32 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        //refreshToken 추가
+        com.gg.domain.RefreshToken refreshToken = refreshTokenService.createRefreshToken(authentication);
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, refreshToken.getToken()));
     }
+
+    // refreshToken
+    @PostMapping("/refreshtoken")
+    public ResponseEntity<?> refreshtoken(@Valid @RequestBody TokenRefreshRequest tokenRefreshRequest) {
+        String requestRefreshToken = tokenRefreshRequest.getRefreshToken();
+
+        return refreshTokenService.findByToken(requestRefreshToken)
+                .map(refreshTokenService::verifyExpiration)
+                .map(RefreshToken::getUser)
+                .map(user -> {
+                    Authentication authentication = authenticationManager.authenticate(
+                            new UsernamePasswordAuthenticationToken(
+                                    user.getEmail(), user.getPassword()
+                            )
+                    );
+                    String token = tokenProvider.generateToken(authentication);
+                    return ResponseEntity.ok(new TokenRefreshReesponse(token, requestRefreshToken));
+
+                })
+                .orElseThrow(() -> new TokenRefreshException(requestRefreshToken, "Refresh token is not in database!"));
+    }
+
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {

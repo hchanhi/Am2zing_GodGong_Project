@@ -29,6 +29,7 @@ public class RoomController {
         return roomService.findAllRooms();
     }
 
+
     @PostMapping(value = "/room")
     public Room create(@RequestParam String roomCategory, @RequestParam String roomTitle, @RequestParam String userNickname) {
         log.info("# Create Chat Room, category : " + roomCategory + "title" + roomTitle + "user" + userNickname );

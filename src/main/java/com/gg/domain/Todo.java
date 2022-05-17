@@ -19,15 +19,16 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long todoId;
 
-
     private String todoContent;
-
 
     @CreationTimestamp
     private Timestamp todoCreated;
 
     @ManyToOne
     private User user;
+
+    @ManyToOne
+    private Room room;
 
     private Boolean todoCheck;
 

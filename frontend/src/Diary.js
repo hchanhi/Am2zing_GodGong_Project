@@ -100,7 +100,7 @@ const Diary = () => {
                         value={format}
                         onChange={handleChangeState}
                         name="date"
-                        placeholder="작성자"
+                        placeholder="날짜"
                         type="date"
                         readOnly
                     />

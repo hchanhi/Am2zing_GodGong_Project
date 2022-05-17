@@ -53,7 +53,7 @@ function App() {
                 <Route path="/Join" element={<Join />} />
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/mypage/diary" element={<DiaryList />} />
-                <Route path="/mypage/diaryDetail/:id/:diaryContent" element={<DiaryDetail />} />
+                <Route path="/mypage/diaryDetail/:id" element={<DiaryDetail />} />
                 <Route path="/challenge" element={<Challenge />} />
                 <Route path="/diary" element={<Diary />} />
                 <Route path='/mypage/user' element={<User />} />

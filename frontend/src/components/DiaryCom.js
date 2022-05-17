@@ -17,7 +17,7 @@ function DiaryCom({ diaryId, diaryContent, diarySentiment, diaryCreated, handleS
 
     let navigate = useNavigate();
     function move() {
-        navigate(`/mypage/diaryDetail/${diaryId}/${diaryContent}`);
+        navigate(`/mypage/diaryDetail/${diaryId}`);
     }
 
 

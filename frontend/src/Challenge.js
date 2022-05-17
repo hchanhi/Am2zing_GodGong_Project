@@ -8,7 +8,9 @@ import * as tmPose from '@teachablemachine/pose';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
 var status = 0;
+
 function Challenge(props) {
 
   const token = JSON.parse(localStorage.getItem('accessToken'));

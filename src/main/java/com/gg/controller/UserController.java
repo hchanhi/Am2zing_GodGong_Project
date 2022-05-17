@@ -56,12 +56,13 @@ public class UserController {
     }
 
     // 유저 프로필
-    @GetMapping("/user/{id}")
-    public UserProfile getUserProfile(@PathVariable(value = "id") String id) {
-        User user = userRepository.findByEmail(id)
+
+    @GetMapping("/users/{id}")
+    public UserProfile getUserProfile(@PathVariable(value = "id") Long id) {
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 
-        UserProfile userProfile = new UserProfile(user.getId(), user.getNickname(), user.getEmail());
+        UserProfile userProfile = new UserProfile(user.getId(), user.getNickname(), user.getEmail(), user.getBirth());
 
         return userProfile;
     }

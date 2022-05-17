@@ -175,6 +175,7 @@ const User = () => {
                     <input
                         defaultValue={oldPas}
                         name="nickName"
+                        onChange={event => setOldPas(event.target.value)}
                         placeholder="작성자"
                         type="text"
                         readOnly
@@ -186,6 +187,7 @@ const User = () => {
                     <input
                         defaultValue={newPas}
                         name="nickName"
+                        onChange={event => setNewPas(event.target.value)}
                         placeholder="작성자"
                         type="text"
                         readOnly

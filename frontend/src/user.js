@@ -48,7 +48,7 @@ const User = () => {
     }, [state == true]);
     let body = {
         diaryId: userId,
-        nickname: user.nickname
+        nickname: nic
 
     };
 

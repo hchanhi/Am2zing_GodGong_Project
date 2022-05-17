@@ -57,8 +57,8 @@ public class UserController {
 
     // 유저 프로필
     @GetMapping("/users/{id}")
-    public UserProfile getUserProfile(@PathVariable(value = "id") String id) {
-        User user = userRepository.findByEmail(id)
+    public UserProfile getUserProfile(@PathVariable(value = "id") Long id) {
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 
         UserProfile userProfile = new UserProfile(user.getId(), user.getNickname(), user.getEmail(), user.getBirth());

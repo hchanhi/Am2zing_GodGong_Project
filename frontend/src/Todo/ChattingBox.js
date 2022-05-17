@@ -5,6 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import { Box, SwipeableDrawer } from '@mui/material/';
 import Chatting from "./Chatting";
 
+
 function ChattingBox() {
 
     let [open, setOpen] = useState(false);
@@ -29,10 +30,7 @@ function ChattingBox() {
                 onClose={toggleDrawer(false)}
                 onOpen={toggleDrawer(true)}
             >
-                <Box
-                    sx={{ width: 350 }}
-                    // role="presentation"
-                >
+                <Box sx={{ width: 350 }}>
                     <Chatting />
                 </Box>
             </SwipeableDrawer>

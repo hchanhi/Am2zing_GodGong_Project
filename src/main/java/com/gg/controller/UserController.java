@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 
 
 // UserController, API 작성
@@ -69,8 +70,10 @@ public class UserController {
     }
 
     @PostMapping("/user/{id}/nickname")
-    public ResponseEntity<?> editNickname(@PathVariable Long id, String nickname){
-        return userService.updateNickname(id, nickname);
+    public void editNickname(@RequestBody HashMap<String, String> param){
+       Long id = Long.parseLong(param.get("diaryId"));
+       String nickname = param.get("nickname");
+       userService.updateNickname(id, nickname);
     }
 
     @PostMapping("/user/{id}/password")

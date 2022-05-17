@@ -39,21 +39,22 @@ public class UserService {
     }
 
 
-    public ResponseEntity<?> updateNickname(Long id, String nickname){
+    public void updateNickname(Long id, String nickname){
         User user = userRepository.findById(id).get();
         user.setNickname(nickname);
+        userRepository.save(user);
         //토큰..refresh
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        user.getEmail(),
-                        user.getPassword()
-                )
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+//        Authentication authentication = authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(
+//                        user.getEmail(),
+//                        user.getPassword()
+//                )
+//        );
+//
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//        String jwt = tokenProvider.generateToken(authentication);
+//        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
     }
 
     public void updatePassword(Long id, String password){

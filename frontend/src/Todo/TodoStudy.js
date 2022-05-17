@@ -18,6 +18,8 @@ let Wrapper = styled.div`
     }
 `;
 
+export let RoomNumContext = React.createContext();
+
 function TodoStudy() {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
@@ -25,7 +27,7 @@ function TodoStudy() {
     const navigate = useNavigate();
 
     let myId = "";
-    let { id } = useParams();
+    let { roomNum } = useParams();
     let [isMember, setIsMember] = useState(false);
 
     let [study, setStudy] = useState({
@@ -44,19 +46,21 @@ function TodoStudy() {
         }
     }, []);
 
-    useEffect(() => {
-        axios.get('/api/todoStudy/', { params: { roomId: id } })
-            .then((res) => {
-                setStudy(res.data);
-                if (res.data((x) => x.memberId == myId).length != 0) {
-                    setIsMember(true);
-                }
-                // todo list작성하는 모달
-            }).catch((error) => {
-                // alert('Todo study방의 정보를 가져오는 데 실패했습니다.');
-                console.log(error);
-            });
-    }, [study]);
+    // 입장을 하시겠습니까? 하면 그때 뜨게
+
+    // useEffect(() => {
+    //     axios.get('/api/todoStudy/', { params: { roomNum: roomNum } })
+    //         .then((res) => {
+    //             setStudy(res.data);
+    //             if (res.data((x) => x.memberId == myId).length != 0) {
+    //                 setIsMember(true);
+    //             }
+    //             // todo list작성하는 모달
+    //         }).catch((error) => {
+    //             // alert('Todo study방의 정보를 가져오는 데 실패했습니다.');
+    //             console.log(error);
+    //         });
+    // }, [study]);
     // 다른 스터디원의 실시간 투두 진행상황 보려면 양방향 데이터 통신 필요
 
     return (
@@ -70,7 +74,9 @@ function TodoStudy() {
                     <h3>현재인원 : 4/5명</h3>
                 </Grid>
                 <Grid item xs={6} sx={{ textAlign: 'right' }}>
-                    <ChattingBox />
+                    <RoomNumContext.Provider value={roomNum}>
+                        <ChattingBox />
+                    </RoomNumContext.Provider>
                 </Grid>
                 <Grid item xs={12}>
                     <CheckboxTodo />
@@ -83,9 +89,6 @@ function TodoStudy() {
                     }
                 </Grid>
             </Grid>
-
-
-
         </Wrapper>
     );
 }

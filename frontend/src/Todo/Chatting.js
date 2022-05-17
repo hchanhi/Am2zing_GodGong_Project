@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import SockJs from "sockjs-client";
 import { Stomp } from '@stomp/stompjs';
-import { useNavigate } from "react-router-dom";
+import { getNickName } from '../jwtCheck.js';
+import { RoomNumContext } from './TodoStudy.js'
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 let Receive = styled.div`
-    height: 85vh;
+    height: 78vh;
     width: 100%
 `
 let Send = styled.div`
@@ -25,89 +28,100 @@ let Text = styled.textarea`
     font-size: 11pt;
 `
 
-function Chatting(props) {
+function Chatting() {
 
-    let token = localStorage.getItem('access-token');
-    let navigate = useNavigate();
-    let roomId = '';
-    let nickName = '';
+    let token = JSON.parse(localStorage.getItem('accessToken'));
+    let userNickname = getNickName(token);
+    // room Number로 해야됨
+    let roomNum = useContext(RoomNumContext);
+
+    let [myMessage, setMyMessage] = useState('');
+    let [newMessage, setNewMessage] = useState([]);
 
     // 소켓 통신 객체
-    let sock = new SockJs("url");
-    let ws = Stomp.over(sock);
-
-    let [message, setMessage] = useState('');
-    let [newMessage, setNewMessage] = useState([]);
-    let [writer, setWriter] = useState('');
+    // let sock = new SockJs("url");
+    // let ws = Stomp.over(sock);
+    let ws = Stomp.over(function () { return new SockJs("http://localhost:8080/api/ws")});
 
     useEffect(() => {
         wsConnnect();
-        return wsDisConnect();
-    }, [roomId])
+        // return wsDisConnect();
+        // return () => wsDisConnect();
+    // 다른방으로 갈 때 연결/구독 해제
+    }, [roomNum])
 
+    // 입장할때 room/chat/enter로 message없이 보내기
+    // 삭제하고 다시만드는건 처음에만 만들 수 있음
     function wsConnnect() {
-        // token위치 위 아래 중 어디인지 정확한 공식문서 찾아보기...
-        ws.connect(token,
-            function () {
-                // subscribe는 채팅내용을 받을 때?
-                ws.subscribe(
-                    "/api/room/chat/" + roomId,
-                    function (chat) {
-                        if (writer === nickName) {
-                            // 추가하는 복사 필요?
-                            setNewMessage(JSON.parse(chat.body));
-                            setWriter('');
-                        } else {
-                            setNewMessage(JSON.parse(chat.body));
-                            setWriter(newMessage.writer);
-                        }
-                    },
-                    token
-                )
+
+        try {
+            ws.connect({},
+                function () {
+                    ws.subscribe(
+                        "/sub/chat/room/" + roomNum,
+                        function (chat) {
+                            // push는 원본에 추가 (concat은 더 느리고 원본 유지)
+                            setNewMessage(newMessage.push(JSON.parse(chat.body)));
+                        },
+                        {}
+                    )
+                }
+            )
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    // send도 connect안에?
+    function sendMessage() {
+
+        try {
+            if (myMessage === '') {
+                return;
             }
-        )
+
+            ws.send(
+                '/pub/chat/message',
+                {}, //header
+                JSON.stringify({
+                    roomNum: roomNum,
+                    writer: userNickname,
+                    message: myMessage
+                })
+            );
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     // disconnect하지 않으면 계속 연결되어있어서 꼭 끊어줘야함. 방에서 나갈 때?
-    function wsDisConnect () {
+    function wsDisConnect() {
         ws.disconnect(
             function () { ws.unsubscribe('sub-0') },
-            token
+            {}
         );
     }
-
-    function sendMessage() {
-
-        let chat = {
-            roomId: roomId,
-            writer: writer,
-            message: message
-        };
-
-        if (message === '') {
-            return;
-        }
-
-        // 버전에 따라 publish라는 말을 쓰기도 하는 것 같음
-        ws.send(
-            'url',
-            token, //header
-            JSON.stringify(chat)
-        );
-    }
-    
 
     return (
         <div>
+            <IconButton onClick={() => wsDisConnect()}>
+                <CloseIcon />
+            </IconButton>
             <Receive>
-                <div>{writer}</div>
-                <div>{newMessage}</div>
+                {
+                    newMessage && newMessage.map(chat => (
+                        <div>
+                            <div>{chat.name}</div>
+                            <div>{chat.content}</div>
+                        </div>
+                    ))
+                }
             </Receive>
             <Send>
                 <div>닉네임</div>
                 <Text onKeyDown={(e) => {
-                    setMessage(e.target.value)
                     if (e.key == 'Enter') {
+                        setMyMessage(e.target.value);
                         sendMessage();
                     }
                 }}></Text>

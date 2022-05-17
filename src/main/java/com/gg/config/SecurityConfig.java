@@ -90,8 +90,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/auth/**").permitAll()
 				.antMatchers("/api/user/**", "/api/user/{id}/**").permitAll()
 				.antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability", "/api/chat/**", "/api/diary/**", "/api/studylog/**", "/api/todo/**").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/users/**","/api/ws/**").permitAll()
 
-				.antMatchers(HttpMethod.GET, "/api/users/**", "/ws/**").permitAll()
 				// 위 경로 이외의 토큰을 사용하는 경우 접근할 수 있도록 한다.
 				.anyRequest().authenticated();
 		// JWT security filter 추가

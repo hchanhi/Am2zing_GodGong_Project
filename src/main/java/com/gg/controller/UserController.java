@@ -10,6 +10,7 @@ import com.gg.repository.UserRepository;
 import com.gg.service.PrincipalDetails;
 import com.gg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,12 +69,17 @@ public class UserController {
     }
 
     @PostMapping("/user/{id}/nickname")
-    public void editNickname(@PathVariable Long id, String nickname){
-        userService.updateNickname(id, nickname);
+    public ResponseEntity<?> editNickname(@PathVariable Long id, String nickname){
+        return userService.updateNickname(id, nickname);
     }
 
     @PostMapping("/user/{id}/password")
     public void editPassword(@PathVariable Long id, String password){
         userService.updatePassword(id, password);
+    }
+
+    @PostMapping("/user/{id}/delete")
+    public void deleteUser(@PathVariable Long id){
+        userService.deleteUser(id);
     }
 }

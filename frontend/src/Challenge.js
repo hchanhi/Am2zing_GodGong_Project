@@ -55,6 +55,7 @@ function Challenge(props) {
   };
 
    const reset = () => {
+     setTime({s:0, m:0, h:0});
     clearInterval(interv);
     setStatus(0);
     var time = updatedS + updatedM*60 + updatedH*3600;

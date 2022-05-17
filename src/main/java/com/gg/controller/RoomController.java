@@ -34,4 +34,9 @@ public class RoomController {
         log.info("# Create Chat Room, category : " + roomCategory + "title" + roomTitle + "user" + userNickname );
         return roomService.createRoom(roomCategory, roomTitle, userNickname);
     }
+
+    @PostMapping("/allroom")
+    public List<Room> allRoom(){
+        return roomService.allRoom();
+    }
 }

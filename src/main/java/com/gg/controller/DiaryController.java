@@ -54,7 +54,7 @@ public class DiaryController {
         return check;
     }
 
-    @GetMapping("/api/diary/delete/{diaryId}")
+    @PostMapping("/api/diary/delete/{diaryId}")
     public Boolean deleteDiary(@PathVariable Long diaryId){
         Boolean check = false;
         diaryService.deleteDiary(diaryId);
@@ -64,9 +64,14 @@ public class DiaryController {
         return check;
     }
 
-    @GetMapping("api/diary/detail/{diaryId}")
+    @GetMapping("/api/diary/detail/{diaryId}")
     public Diary detail(@PathVariable Long diaryId){
         Diary diary = diaryService.findByDiaryId(diaryId);
         return diary;
+    }
+
+    @PostMapping("/api/main/diary/recent")
+    public Diary recentDiary(String nickname){
+        return diaryService.recentDiary(nickname);
     }
 }

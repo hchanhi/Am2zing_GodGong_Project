@@ -63,9 +63,9 @@ const User = () => {
             .then(function (response) {
                 console.log(response.status, '성공');
 
-                navigate('/mypage/user');
+                navigate('/');
                 console.log(response);
-                alert("저장 성공!");
+                alert("수정 완료!");
 
             })
             .catch(function (err) {
@@ -88,9 +88,9 @@ const User = () => {
             .then(function (response) {
                 console.log(response.status, '성공');
 
-                navigate('/mypage/user');
+                navigate('/');
                 console.log(response);
-                alert("저장 성공!");
+                alert("수정 완료!");
 
             })
             .catch(function (err) {
@@ -112,11 +112,16 @@ const User = () => {
         axios
             .post('/api/user/' + userId + '/password', pasBody)
             .then(function (response) {
-                console.log(response.status, '성공');
+                if (response.data == false) {
+                    alert("비밀번호 오류!");
+                } else {
+                    console.log(response.status, '성공');
 
-                navigate('/mypage/user');
-                console.log(response);
-                alert("저장 성공!");
+                    navigate('/');
+                    console.log(response);
+                    alert("수정 완료!");
+                }
+
 
             })
             .catch(function (err) {
@@ -179,6 +184,9 @@ const User = () => {
                         placeholder="작성자"
                         type="text"
 
+                        type="password"
+
+
 
                     />
                 </div>
@@ -189,7 +197,11 @@ const User = () => {
                         name="nickName"
                         onChange={event => setNewPas(event.target.value)}
                         placeholder="작성자"
+
                         type="text"
+
+                        type="password"
+
 
 
                     />

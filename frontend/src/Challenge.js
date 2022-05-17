@@ -6,8 +6,10 @@ import { isAuth, getNickName } from './jwtCheck';
 import ChallengeModal from './ChallengeModal.js';
 import * as tmPose from '@teachablemachine/pose';
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 
+var status = 0;
 
 function Challenge(props) {
 
@@ -21,7 +23,6 @@ function Challenge(props) {
   //not started = 0
   //started = 1
   //stopped = 2
-
   const start = () => {
     init();
     run();
@@ -52,7 +53,21 @@ function Challenge(props) {
   const reset = () => {
     clearInterval(interv);
     setStatus(0);
-    setTime({ s: 0, m: 0, h: 0 });
+    var time = updatedS + updatedM*60 + updatedH*3600;
+    let body = {
+      nickname: getNickName(token),
+      studytime: time
+    };
+    console.log(body);
+    axios
+        .post('/api/studylog/time', body)
+        .then(function (response) {
+          console.log(response.status, '성공');
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error)
+        });
   };
 
   const resume = () => start();
@@ -132,7 +147,15 @@ async function predict() {
   } = await model.estimatePose(webcam.canvas);
   // Prediction 2: run input through teachable machine classification model
   const prediction = await model.predict(posenetOutput);
+  if(prediction[0].probability>= 0.8){
+    status = 1;
 
+  } else if (prediction[1].probability>= 0.8){
+    status = 0;
+
+  }
+  console.log(status);
+/*
   //콘솔로 확인하는 코드
   console.log(prediction[0].probability);
   if (prediction[0].probability > 0.001) {
@@ -141,7 +164,7 @@ async function predict() {
     console.log('자리비움');
     // {props.stop};
   }
-
+*/
   //퍼센트 화면표시2
   // for (let i = 0; i < maxPredictions; i++) {
   //     const classPrediction =

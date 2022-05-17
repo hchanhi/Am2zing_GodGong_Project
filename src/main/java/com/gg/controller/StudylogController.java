@@ -5,21 +5,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-@Controller
+@RestController
 public class StudylogController {
 
     @Autowired
     StudylogService studylogService;
 
     //닉네임이랑 공부한시간(초) 받고 저장하기
-    @PostMapping("api/studylog/time")
-    public Boolean insertStudyTime(String nickname, int time){
+    @PostMapping("/api/studylog/time")
+    public Boolean insertStudyTime(@RequestBody HashMap<String, String> params){
         boolean check = true;
+        String nickname = params.get("nickname");
+        int time = Integer.parseInt(params.get("studytime"));
         int studytime = studylogService.insertStudyTime(nickname, time);
         if(studytime==0){
             check = false;
@@ -36,7 +41,6 @@ public class StudylogController {
         studytime.add(day);
         studytime.add(week);
         studytime.add(month);
-        System.out.println(studytime);
         return studytime;
     }
 

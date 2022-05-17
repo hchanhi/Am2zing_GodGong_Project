@@ -23,5 +23,22 @@ public class TodoService {
         return todoRepository.findByUserId(user.getId());
     }
 
+    public void insertTodo(String nickname, String content){
+        User user = userRepository.findByNickname(nickname);
+        Todo todo = new Todo();
+        todo.setUser(user);
+        todo.setTodoContent(content);
+        todoRepository.save(todo);
+    }
+
+    public void checkTodo(Long id, boolean check){
+        Todo todo = todoRepository.findById(id).get();
+        todo.setTodoCheck(check);
+        todoRepository.save(todo);
+    }
+
+    public void deleteTodo(Long id){
+        todoRepository.deleteById(id);
+    }
 
 }

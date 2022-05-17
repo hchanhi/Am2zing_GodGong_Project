@@ -2,11 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 let Wrapper = styled.div`
-    height: 20vh;
+    height: 25%;
+    margin-top: 5rem;
     padding: 3rem 5rem;
-    background-color: lightgray;
+    background-color: honeydew;
     font-size: 10pt;
-    color: gray;
+    color: saddlebrown;
     letter-spacing: 1px;
 `
 function Footer() {

@@ -19,7 +19,6 @@ import { isAuth, getNickName } from './jwtCheck.js';
 function App() {
 
     let [userNickName, setUserNickName] = useState('');
-    // isLogin : Header 리렌더링을 위한 state
     let [isLogin, setIsLogin] = useState(false);
 
     useEffect(() => {
@@ -33,16 +32,6 @@ function App() {
         }
     }, [isLogin]);
 
-    // axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data;
-
-    // const getUserInfo = () => {
-    //     return axios.get(API_URL + "user", { headers: authHeader() });
-    // };
-
-    // const isAdmin = () => {
-    //     return axios.get(API_URL + "admin", { headers: authHeader() });
-    // };
-
     return (
         <div className="App">
             <Header userNickName={userNickName} setUserNickName={setUserNickName} />
@@ -53,12 +42,11 @@ function App() {
                 <Route path="/Join" element={<Join />} />
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/mypage/diary" element={<DiaryList />} />
-                <Route path="/mypage/diaryDetail/:id/:diaryContent" element={<DiaryDetail />} />
+                <Route path="/mypage/diaryDetail/:id" element={<DiaryDetail />} />
                 <Route path="/challenge" element={<Challenge />} />
                 <Route path="/diary" element={<Diary />} />
                 <Route path='/mypage/user' element={<User />} />
                 <Route path="/todoList" element={<TodoList />} />
-
                 <Route path="/todoStudy/:id" element={<TodoStudy />} />
 
             </Routes>

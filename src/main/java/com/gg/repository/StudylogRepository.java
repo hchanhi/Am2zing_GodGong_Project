@@ -35,4 +35,6 @@ public interface StudylogRepository extends JpaRepository<Studylog, Long> {
     @Query(value="select user_id, sum(studylog_time) from studylog where date(studylog_created) >= date(now())" +
             "group by user_id order by studylog_time DESC limit 10", nativeQuery = true)
     List<Studylog> Daytop10studyTime();
+
+    Integer findTop1ByUserNicknameIsOrderByStudylogCreatedDesc(String nickname);
 }

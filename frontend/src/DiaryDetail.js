@@ -29,6 +29,7 @@ const DiaryDetail = () => {
 
     const [diaries, setDiaries] = useState();
     const [date, setDate] = useState();
+
     const edit = diaries;
     const getDiaries = async () => {
         const json = await axios.get('/api/diary/edit/' + id, { params: { diaryId: id } });
@@ -48,7 +49,7 @@ const DiaryDetail = () => {
 
 
     const navigate = useNavigate();
-
+    let dateEdit = "" + date;
     let body = {
         diaryId: id,
         content: edit
@@ -105,7 +106,7 @@ const DiaryDetail = () => {
                 </div>
                 <div>
                     <input
-                        value={date.substr(0, 10)}
+                        value={dateEdit.substring(0, 10)}
 
                         name="date"
                         placeholder="날짜"

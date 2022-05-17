@@ -178,7 +178,7 @@ const User = () => {
                         onChange={event => setOldPas(event.target.value)}
                         placeholder="작성자"
                         type="text"
-                        readOnly
+
 
                     />
                 </div>
@@ -190,7 +190,7 @@ const User = () => {
                         onChange={event => setNewPas(event.target.value)}
                         placeholder="작성자"
                         type="text"
-                        readOnly
+
 
                     />
                 </div>
@@ -200,7 +200,7 @@ const User = () => {
                         name="nickName"
                         placeholder="작성자"
                         type="text"
-                        readOnly
+
 
                     />
                 </div>

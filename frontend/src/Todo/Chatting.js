@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SockJs from "sockjs-client";
 import { Stomp } from '@stomp/stompjs';
-import { useNavigate } from "react-router-dom";
 
 let Receive = styled.div`
     height: 85vh;
@@ -25,42 +24,35 @@ let Text = styled.textarea`
     font-size: 11pt;
 `
 
-function Chatting(props) {
+function Chatting() {
 
-    let token = localStorage.getItem('access-token');
-    let navigate = useNavigate();
+    let token = JSON.parse(localStorage.getItem('accessToken'));
+    let userNickname = getNickName(token);
     let roomId = '';
-    let nickName = '';
 
     // 소켓 통신 객체
     let sock = new SockJs("url");
     let ws = Stomp.over(sock);
 
-    let [message, setMessage] = useState('');
+    let [myMessage, setMyMessage] = useState('');
     let [newMessage, setNewMessage] = useState([]);
-    let [writer, setWriter] = useState('');
 
     useEffect(() => {
         wsConnnect();
         return wsDisConnect();
+        // return () => wsDisConnect();
     }, [roomId])
 
     function wsConnnect() {
-        // token위치 위 아래 중 어디인지 정확한 공식문서 찾아보기...
+
         ws.connect(token,
+
             function () {
-                // subscribe는 채팅내용을 받을 때?
                 ws.subscribe(
-                    "/api/room/chat/" + roomId,
+                    "/sub/chat/room/" + roomId,
                     function (chat) {
-                        if (writer === nickName) {
-                            // 추가하는 복사 필요?
-                            setNewMessage(JSON.parse(chat.body));
-                            setWriter('');
-                        } else {
-                            setNewMessage(JSON.parse(chat.body));
-                            setWriter(newMessage.writer);
-                        }
+                        // push는 원본에 추가 (concat은 더 느리고 원본 유지)
+                        setNewMessage(newMessage.push(JSON.parse(chat.body)));
                     },
                     token
                 )
@@ -76,38 +68,40 @@ function Chatting(props) {
         );
     }
 
+    // send도 connect안에?
     function sendMessage() {
 
-        let chat = {
-            roomId: roomId,
-            writer: writer,
-            message: message
-        };
-
-        if (message === '') {
+        if (myMessage === '') {
             return;
         }
 
-        // 버전에 따라 publish라는 말을 쓰기도 하는 것 같음
         ws.send(
-            'url',
+            '/pub/chat/message',
             token, //header
-            JSON.stringify(chat)
+            JSON.stringify({
+                roomId: roomId,
+                writer: userNickname,
+                message: myMessage
+            })
         );
     }
     
 
     return (
         <div>
-            <Receive>
-                <div>{writer}</div>
-                <div>{newMessage}</div>
-            </Receive>
+            {
+                newMessage && newMessage.map(chat => (
+                    <Receive>
+                        <div>{chat.name}</div>
+                        <div>{chat.content}</div>
+                    </Receive>
+                ))
+            }
             <Send>
                 <div>닉네임</div>
                 <Text onKeyDown={(e) => {
-                    setMessage(e.target.value)
                     if (e.key == 'Enter') {
+                        setMyMessage(e.target.value);
                         sendMessage();
                     }
                 }}></Text>

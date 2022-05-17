@@ -57,7 +57,9 @@ const User = () => {
 
     const handleSubmitNic = () => {
         axios
+
             .post('/api/user/' + userId + '/nickname', nicBody)
+
             .then(function (response) {
                 console.log(response.status, '성공');
 

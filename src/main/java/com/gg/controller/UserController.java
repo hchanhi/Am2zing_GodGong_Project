@@ -8,17 +8,16 @@ import com.gg.payload.UserProfile;
 import com.gg.payload.UserSummary;
 import com.gg.repository.UserRepository;
 import com.gg.service.PrincipalDetails;
+import com.gg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 
 
 // UserController, API 작성
@@ -28,6 +27,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -56,13 +58,31 @@ public class UserController {
     }
 
     // 유저 프로필
-    @GetMapping("/users/{email}")
-    public UserProfile getUserProfile(@PathVariable(value = "email") String email) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
 
-        UserProfile userProfile = new UserProfile(user.getId(), user.getNickname(), user.getEmail());
+    @GetMapping("/users/{id}")
+    public UserProfile getUserProfile(@PathVariable(value = "id") Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+
+        UserProfile userProfile = new UserProfile(user.getId(), user.getNickname(), user.getEmail(), user.getBirth());
 
         return userProfile;
+    }
+
+    @PostMapping("/user/{id}/nickname")
+    public void editNickname(@RequestBody HashMap<String, String> param){
+       Long id = Long.parseLong(param.get("diaryId"));
+       String nickname = param.get("nickname");
+       userService.updateNickname(id, nickname);
+    }
+
+    @PostMapping("/user/{id}/password")
+    public void editPassword(@PathVariable Long id, String password){
+        userService.updatePassword(id, password);
+    }
+
+    @PostMapping("/user/{id}/delete")
+    public void deleteUser(@PathVariable Long id){
+        userService.deleteUser(id);
     }
 }

@@ -19,65 +19,109 @@ import './diary.css';
 const User = () => {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
-    const nickName = getNickName(token);
+    const nickname = getNickName(token);
     const userId = getId(token);
-    const { id, diaryContent } = useParams();
-
-    console.log(id);
-    console.log(diaryContent);
-    let today = new Date();
-    let year = today.getFullYear();
-    let month = today.getMonth() + 1;
-    let date = today.getDate();
-    var format = year + "-" + (("00" + month.toString()).slice(-2)) + "-" + (("00" + date.toString()).slice(-2));
-    const [state, setState] = useState({
-
-        content: diaryContent,
-
-    });
-
     const navigate = useNavigate();
-    const handleChangeState = (e) => {
-        setState({
-            ...state,
-            [e.target.name]: e.target.value
-        });
-    };
-    let body = {
-        diaryId: id,
-        content: state.content
 
+
+
+    const [user, setUser] = useState([]);
+    const [nic, setNick] = useState();
+    const [birth, setBirth] = useState();
+    const [state, setsState] = useState();
+    const [oldPas, setOldPas] = useState();
+    const [newPas, setNewPas] = useState();
+
+    const getDiaries = async () => {
+        const json = await axios.get('/api/users/' + userId, { params: { id: userId } });
+        console.log(json);
+        setUser(json.data);
+        setNick(json.data.nickname);
+        setBirth(json.data.birth);
+
+        console.log(user);
+        setsState(false);
     };
-    console.log(state.content);
-    console.log(id.diaryContent);
     useEffect(() => {
+        getDiaries();
         if (!isAuth(token)) {
             alert('로그인 후 이용하실 수 있어요😥');
             return navigate('/login');
         }
-    }, []);
+    }, [state == true]);
+    let nicBody = {
+        id: userId,
+        nickname: nic
 
-    const handleSubmit = () => {
+    };
+
+    const handleSubmitNic = () => {
         axios
-            .post('/api/diary/edit/' + id, body)
+
+            .post('/api/user/' + userId + '/nickname', nicBody)
+
             .then(function (response) {
                 console.log(response.status, '성공');
 
-                navigate('/mypage/diary');
+                navigate('/mypage/user');
                 console.log(response);
                 alert("저장 성공!");
-
 
             })
             .catch(function (err) {
                 console.log(err);
-                console.log(state);
                 console.log(origin);
-                console.log(err.response.data.message);
-                if (err.response.status === 400) {
-                    alert(err.response.data.message);
-                }
 
+            });
+
+
+
+    };
+    let birthBody = {
+        id: userId,
+        birth: birth
+
+    };
+    const handleSubmitBirth = () => {
+        axios
+            .post('/api/user/' + userId + '/birth', birthBody)
+            .then(function (response) {
+                console.log(response.status, '성공');
+
+                navigate('/mypage/user');
+                console.log(response);
+                alert("저장 성공!");
+
+            })
+            .catch(function (err) {
+                console.log(err);
+                console.log(origin);
+
+            });
+
+
+
+    };
+    let pasBody = {
+        id: userId,
+        oldPassword: oldPas,
+        newPassword: newPas
+
+    };
+    const handleSubmitPas = () => {
+        axios
+            .post('/api/user/' + userId + '/password', pasBody)
+            .then(function (response) {
+                console.log(response.status, '성공');
+
+                navigate('/mypage/user');
+                console.log(response);
+                alert("저장 성공!");
+
+            })
+            .catch(function (err) {
+                console.log(err);
+                console.log(origin);
 
             });
 
@@ -85,14 +129,16 @@ const User = () => {
 
     };
 
+    console.log(user.nickname);
     return (
         <Container className="DiaryEditor">
-            <h2>오늘의 일기</h2>
+            <h3>{getNickName(token)}님의 마이페이지💁🏻‍♀️</h3>
+            <h2>회원정보</h2>
             <Box component="form" sx={{ mt: 3 }}>
                 <div>
+                    <label>이메일</label>
                     <input
-                        value={nickName}
-                        onChange={handleChangeState}
+                        defaultValue={user.email}
                         name="nickName"
                         placeholder="작성자"
                         type="text"
@@ -101,27 +147,71 @@ const User = () => {
                     />
                 </div>
                 <div>
+                    <label>닉네임</label>
                     <input
-                        value={format}
-                        onChange={handleChangeState}
-                        name="date"
+                        defaultValue={nic}
+                        name="nickName"
+                        onChange={event => setNick(event.target.value)}
                         placeholder="작성자"
-                        type="date"
-                        readOnly
+                        type="text"
+
+
                     />
                 </div>
                 <div>
-                    <textarea
-                        value={state.content}
-                        onChange={handleChangeState}
-                        name="content"
-                        placeholder="일기"
+                    <label>생년월일</label>
+                    <input
+                        defaultValue={birth}
+                        name="birht"
+                        onChange={event => setBirth(event.target.value)}
+                        placeholder="작성자"
                         type="text"
+
+
                     />
                 </div>
+                <div>
+                    <label>현재 비밀번호</label>
+                    <input
+                        defaultValue={oldPas}
+                        name="nickName"
+                        placeholder="작성자"
+                        type="text"
+                        readOnly
+
+                    />
+                </div>
+                <div>
+                    <label>변경 비밀번호</label>
+                    <input
+                        defaultValue={newPas}
+                        name="nickName"
+                        placeholder="작성자"
+                        type="text"
+                        readOnly
+
+                    />
+                </div>
+                <div>
+                    <label>변경 비밀번호 확인</label>
+                    <input
+                        name="nickName"
+                        placeholder="작성자"
+                        type="text"
+                        readOnly
+
+                    />
+                </div>
+
             </Box>
             <div>
-                <button onClick={handleSubmit}>일기 저장하기</button>
+                <button onClick={handleSubmitNic}>닉네임 수정하기</button>
+            </div>
+            <div>
+                <button onClick={handleSubmitBirth}>생년월일 수정하기</button>
+            </div>
+            <div>
+                <button onClick={handleSubmitPas}>비밀번호 수정하기</button>
             </div>
         </Container>
     );

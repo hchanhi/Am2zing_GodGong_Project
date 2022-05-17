@@ -26,7 +26,7 @@ const Diary = () => {
     let year = today.getFullYear();
     let month = today.getMonth() + 1;
     let date = today.getDate();
-    var format = year + "-" + (("00" + month.toString()).slice(-2)) + "-" + (("00" + date.toString()).slice(-2));
+    var format = "날짜 : " + year + "-" + (("00" + month.toString()).slice(-2)) + "-" + (("00" + date.toString()).slice(-2));
     const [state, setState] = useState({
         nickname: nickName,
         content: "",
@@ -80,28 +80,21 @@ const Diary = () => {
 
 
     };
+    function move() {
+        navigate("/");
+    }
 
     return (
         <Container className="DiaryEditor">
-            <h2>오늘의 일기</h2>
+            <h2>공부 일기</h2>
             <Box component="form" sx={{ mt: 3 }}>
-                <div>
-                    <input
-                        value={nickName}
-                        onChange={handleChangeState}
-                        name="nickName"
-                        placeholder="작성자"
-                        type="text"
-                        readOnly
-                    />
-                </div>
                 <div>
                     <input
                         value={format}
                         onChange={handleChangeState}
                         name="date"
-                        placeholder="작성자"
-                        type="date"
+                        placeholder="날짜"
+                        type="text"
                         readOnly
                     />
                 </div>
@@ -115,8 +108,9 @@ const Diary = () => {
                     />
                 </div>
             </Box>
-            <div>
-                <button onClick={handleSubmit}>일기 저장하기</button>
+            <div className="btns">
+                <button className="saveBtn" onClick={handleSubmit}>저장하기</button>
+                <button className="deleteBtn" onClick={move}>취소하기</button>
             </div>
         </Container>
     );

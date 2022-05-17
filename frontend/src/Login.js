@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import './join.css';
 import {
 
     Button,
@@ -126,7 +126,7 @@ const Resigter = (props) => {
             >
 
                 <Typography component="h1" variant="h5">
-                    Log In
+                    로그인
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                     <TextField
@@ -155,10 +155,11 @@ const Resigter = (props) => {
                         label="Remember me"
                     />
                     <Button
+                        id="joinBtn"
                         type="submit"
                         fullWidth
                         variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
+                        sx={{ mt: 2, mb: 2 }}
                     >
                         로그인
                     </Button>

@@ -20,41 +20,43 @@ const DiaryDetail = () => {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const nickName = getNickName(token);
-    const { id, diaryContent } = useParams();
+    const { id } = useParams();
 
     console.log(id);
-    console.log(diaryContent);
+
     let today = new Date();
-    let year = today.getFullYear();
-    let month = today.getMonth() + 1;
-    let date = today.getDate();
-    var format = year + "-" + (("00" + month.toString()).slice(-2)) + "-" + (("00" + date.toString()).slice(-2));
-    const [state, setState] = useState({
 
-        content: diaryContent,
 
-    });
+    const [diaries, setDiaries] = useState();
+    const [date, setDate] = useState();
 
-    const navigate = useNavigate();
-    const handleChangeState = (e) => {
-        setState({
-            ...state,
-            [e.target.name]: e.target.value
-        });
-    };
-    let body = {
-        diaryId: id,
-        content: state.content
+    const edit = diaries;
+    const getDiaries = async () => {
+        const json = await axios.get('/api/diary/edit/' + id, { params: { diaryId: id } });
+        setDiaries(json.data.diaryContent);
+        setDate(json.data.diaryCreated);
+        console.log(json.data);
+
 
     };
-    console.log(state.content);
-    console.log(id.diaryContent);
     useEffect(() => {
+        getDiaries();
         if (!isAuth(token)) {
             alert('로그인 후 이용하실 수 있어요😥');
             return navigate('/login');
         }
     }, []);
+
+
+    const navigate = useNavigate();
+    let dateEdit = "" + date;
+    let body = {
+        diaryId: id,
+        content: edit
+
+    };
+    console.log(edit);
+
 
     const handleSubmit = () => {
         axios
@@ -70,12 +72,9 @@ const DiaryDetail = () => {
             })
             .catch(function (err) {
                 console.log(err);
-                console.log(state);
+
                 console.log(origin);
-                console.log(err.response.data.message);
-                if (err.response.status === 400) {
-                    alert(err.response.data.message);
-                }
+
 
 
             });
@@ -86,33 +85,23 @@ const DiaryDetail = () => {
 
     return (
         <Container className="DiaryEditor">
-            <h2>오늘의 일기</h2>
+            <h2>공부 일기</h2>
             <Box component="form" sx={{ mt: 3 }}>
-                <div>
-                    <input
-                        value={nickName}
-                        onChange={handleChangeState}
-                        name="nickName"
-                        placeholder="작성자"
-                        type="text"
-                        readOnly
 
-                    />
-                </div>
                 <div>
                     <input
-                        value={format}
-                        onChange={handleChangeState}
+                        value={dateEdit.substring(0, 10)}
+
                         name="date"
-                        placeholder="작성자"
-                        type="date"
+                        placeholder="날짜"
+                        type="text"
                         readOnly
                     />
                 </div>
                 <div>
                     <textarea
-                        value={state.content}
-                        onChange={handleChangeState}
+                        defaultValue={edit}
+                        onChange={event => setDiaries(event.target.value)}
                         name="content"
                         placeholder="일기"
                         type="text"
@@ -120,7 +109,7 @@ const DiaryDetail = () => {
                 </div>
             </Box>
             <div>
-                <button onClick={handleSubmit}>일기 저장하기</button>
+                <button onClick={handleSubmit}>일기 수정하기</button>
             </div>
         </Container>
     );

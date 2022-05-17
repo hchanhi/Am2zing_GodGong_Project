@@ -29,6 +29,9 @@ const User = () => {
     const [nic, setNick] = useState();
     const [birth, setBirth] = useState();
     const [state, setsState] = useState();
+    const [oldPas, setOldPas] = useState();
+    const [newPas, setNewPas] = useState();
+
     const getDiaries = async () => {
         const json = await axios.get('/api/users/' + userId, { params: { id: userId } });
         console.log(json);
@@ -46,15 +49,17 @@ const User = () => {
             return navigate('/login');
         }
     }, [state == true]);
-    let body = {
-        diaryId: userId,
+    let nicBody = {
+        id: userId,
         nickname: nic
 
     };
 
     const handleSubmitNic = () => {
         axios
-            .post('/api/user/' + userId + '/nickname', body)
+
+            .post('/api/user/' + userId + '/nickname', nicBody)
+
             .then(function (response) {
                 console.log(response.status, '성공');
 
@@ -62,14 +67,61 @@ const User = () => {
                 console.log(response);
                 alert("저장 성공!");
 
+            })
+            .catch(function (err) {
+                console.log(err);
+                console.log(origin);
+
+            });
+
+
+
+    };
+    let birthBody = {
+        id: userId,
+        birth: birth
+
+    };
+    const handleSubmitBirth = () => {
+        axios
+            .post('/api/user/' + userId + '/birth', birthBody)
+            .then(function (response) {
+                console.log(response.status, '성공');
+
+                navigate('/mypage/user');
+                console.log(response);
+                alert("저장 성공!");
 
             })
             .catch(function (err) {
                 console.log(err);
-
                 console.log(origin);
 
+            });
 
+
+
+    };
+    let pasBody = {
+        id: userId,
+        oldPassword: oldPas,
+        newPassword: newPas
+
+    };
+    const handleSubmitPas = () => {
+        axios
+            .post('/api/user/' + userId + '/password', pasBody)
+            .then(function (response) {
+                console.log(response.status, '성공');
+
+                navigate('/mypage/user');
+                console.log(response);
+                alert("저장 성공!");
+
+            })
+            .catch(function (err) {
+                console.log(err);
+                console.log(origin);
 
             });
 
@@ -121,6 +173,7 @@ const User = () => {
                 <div>
                     <label>현재 비밀번호</label>
                     <input
+                        defaultValue={oldPas}
                         name="nickName"
                         placeholder="작성자"
                         type="text"
@@ -131,6 +184,7 @@ const User = () => {
                 <div>
                     <label>변경 비밀번호</label>
                     <input
+                        defaultValue={newPas}
                         name="nickName"
                         placeholder="작성자"
                         type="text"
@@ -154,10 +208,10 @@ const User = () => {
                 <button onClick={handleSubmitNic}>닉네임 수정하기</button>
             </div>
             <div>
-                <button onClick={handleSubmitNic}>생년월일 수정하기</button>
+                <button onClick={handleSubmitBirth}>생년월일 수정하기</button>
             </div>
             <div>
-                <button onClick={handleSubmitNic}>비밀번호 수정하기</button>
+                <button onClick={handleSubmitPas}>비밀번호 수정하기</button>
             </div>
         </Container>
     );

@@ -28,18 +28,24 @@ function Challenge(props) {
     setInterv(setInterval(run, 1000));
   };
 
+
+
   var updatedS = time.s, updatedM = time.m, updatedH = time.h;
 
   const run = () => {
-    if (updatedM === 60) {
-      updatedH++;
-      updatedM = 0;
+    if(check=="공부중") {
+      if (updatedM === 60) {
+        updatedH++;
+        updatedM = 0;
+      }
+      if (updatedS === 60) {
+        updatedM++;
+        updatedS = 0;
+      }
+      updatedS++;
+    } else if(check=="자리비움"){
+      setStatus(1);
     }
-    if (updatedS === 60) {
-      updatedM++;
-      updatedS = 0;
-    }
-    updatedS++;
     return setTime({ s: updatedS, m: updatedM, h: updatedH });
   };
 
@@ -48,7 +54,7 @@ function Challenge(props) {
     setStatus(2);
   };
 
-  const reset = () => {
+   const reset = () => {
     clearInterval(interv);
     setStatus(0);
     var time = updatedS + updatedM*60 + updatedH*3600;
@@ -82,7 +88,6 @@ function Challenge(props) {
 
   const URL = "https://teachablemachine.withgoogle.com/models/pUdkMsW7A/";
   let model, webcam, ctx, labelContainer, maxPredictions = null;
-
   async function init() {
     const modelURL = URL + "model.json";
     const metadataURL = URL + "metadata.json";
@@ -107,6 +112,7 @@ function Challenge(props) {
     canvas.height = size;
     ctx = canvas.getContext("2d");
 
+
     //퍼센트 화면표시1
     // labelContainer = document.getElementById("label-container");
     // for (let i = 0; i < maxPredictions; i++) { // and class labels
@@ -114,12 +120,14 @@ function Challenge(props) {
     // }
   }
 
+
   async function loop(timestamp) {
     webcam.update(); // update the webcam frame
     await predict();
     window.requestAnimationFrame(loop);
   }
 
+  var check = "공부중";
   async function predict() {
     // Prediction #1: run input through posenet
     // estimatePose can take in an image, video or canvas html element
@@ -129,14 +137,12 @@ function Challenge(props) {
     } = await model.estimatePose(webcam.canvas);
     // Prediction 2: run input through teachable machine classification model
     const prediction = await model.predict(posenetOutput);
-    if(prediction[0].probability>= 0.8){
-      var check = 1;
-
-    } else if (prediction[1].probability>= 0.99){
-      var check = 0;
-      stop();
+    if(prediction[0].probability.toFixed(2)>= 0.50){
+      check = "공부중"
+    } else if (prediction[1].probability.toFixed(2)>= 0.90){
+      check = "자리비움"
     }
-    console.log(check);
+
     /*
       //콘솔로 확인하는 코드
       console.log(prediction[0].probability);
@@ -170,6 +176,7 @@ function Challenge(props) {
       // }
     }
   }
+
 
   return (
     <div className="main-secion">

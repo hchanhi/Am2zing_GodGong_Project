@@ -32,10 +32,8 @@ function Chatting() {
 
     let token = JSON.parse(localStorage.getItem('accessToken'));
     let userNickname = getNickName(token);
-    // room Number로 해야됨
     let roomNum = useContext(RoomNumContext);
 
-    let [myMessage, setMyMessage] = useState('');
     let [newMessage, setNewMessage] = useState([]);
 
     // 소켓 통신 객체
@@ -58,10 +56,12 @@ function Chatting() {
             ws.connect({},
                 function () {
                     ws.subscribe(
-                        "/sub/chat/room/" + roomNum,
+                        "/sub/room/" + roomNum,
                         function (chat) {
                             // push는 원본에 추가 (concat은 더 느리고 원본 유지)
-                            setNewMessage(newMessage.push(JSON.parse(chat.body)));
+                            setNewMessage(newMessage.concat(JSON.parse(chat.body)));
+                            console.log(chat.body);
+                            console.log('여기까지 왔니?');
                         },
                         {}
                     )
@@ -73,7 +73,7 @@ function Chatting() {
     }
 
     // send도 connect안에?
-    function sendMessage() {
+    function sendMessage(myMessage) {
 
         try {
             if (myMessage === '') {
@@ -84,8 +84,8 @@ function Chatting() {
                 '/pub/chat/message',
                 {}, //header
                 JSON.stringify({
-                    roomNum: roomNum,
-                    writer: userNickname,
+                    roomNumber: roomNum,
+                    userNickname: userNickname,
                     message: myMessage
                 })
             );
@@ -97,8 +97,9 @@ function Chatting() {
     // disconnect하지 않으면 계속 연결되어있어서 꼭 끊어줘야함. 방에서 나갈 때?
     function wsDisConnect() {
         ws.disconnect(
-            function () { ws.unsubscribe('sub-0') },
-            {}
+            // // unsubscribe는 서버와의 연결을 끊는게 아닌 특정 메시지의 send를 수신하지 않겠다는 것
+            // function () { ws.unsubscribe() },
+            // {}
         );
     }
 
@@ -110,19 +111,19 @@ function Chatting() {
             <Receive>
                 {
                     newMessage && newMessage.map(chat => (
-                        <div>
-                            <div>{chat.name}</div>
-                            <div>{chat.content}</div>
+                        <div key={chat.message}>
+                            <div>{chat.userNickname}</div>
+                            <div>{chat.message}</div>
                         </div>
                     ))
                 }
             </Receive>
             <Send>
                 <div>닉네임</div>
-                <Text onKeyDown={(e) => {
+                <Text onKeyUp={(e) => {
                     if (e.key == 'Enter') {
-                        setMyMessage(e.target.value);
-                        sendMessage();
+                        sendMessage(e.target.value);
+                        e.target.value = '';
                     }
                 }}></Text>
             </Send>

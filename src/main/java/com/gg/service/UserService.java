@@ -44,22 +44,24 @@ public class UserService {
         user.setNickname(nickname);
         userRepository.save(user);
         //토큰..refresh
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(
-//                        user.getEmail(),
-//                        user.getPassword()
-//                )
-//        );
-//
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//        String jwt = tokenProvider.generateToken(authentication);
-//        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
     }
 
-    public void updatePassword(Long id, String password){
+    public boolean updatePassword(Long id, String oldPassword, String newPassword){
+        boolean check = true;
         User user = userRepository.findById(id).get();
-        user.setPassword(passwordEncoder.encode(password));
-        //토큰..refresh
+        if(passwordEncoder.matches(oldPassword, user.getPassword())){
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+        } else {
+            check = false;
+        }
+        return check;
+
+    }
+
+    public void updateBirth(Long id, String birth){
+        User user = userRepository.findById(id).get();
+        user.setBirth(birth);
+        userRepository.save(user);
     }
 }

@@ -30,3 +30,13 @@ p {
   flex-direction: column;
   align-items: flex-end;
 }
+
+
+
+#joinBtn {
+  background-color: #009c99 !important;
+}
+
+#joinBtn:hover {
+  background-color: #018582 !important;
+}

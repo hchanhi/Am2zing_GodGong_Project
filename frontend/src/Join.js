@@ -18,6 +18,8 @@ import {
 import './join.css';
 import { useNavigate } from 'react-router-dom';
 
+
+
 const Register = () => {
 
     const [checked, setChecked] = useState(false);
@@ -223,15 +225,18 @@ const Register = () => {
                                 />
                             </Grid>
                         </Grid>
+
                         <Button
+                            id='joinBtn'
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 1 }}
                             size="large"
                         >
                             회원가입
                         </Button>
+
                     </FormControl>
                     <FormHelperText>{registerError}</FormHelperText>
                 </Box>

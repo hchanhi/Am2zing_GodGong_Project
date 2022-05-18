@@ -32,11 +32,19 @@ p {
 }
 
 
-
 #joinBtn {
   background-color: #009c99 !important;
 }
 
 #joinBtn:hover {
   background-color: #018582 !important;
+}
+
+.css-xr009-MuiTypography-root {
+  margin-bottom: 24px !important;
+  margin-top: 0px !important;
+}
+
+.css-ag7rrr-MuiTypography-root {
+  margin-bottom: 24px !important;
 }

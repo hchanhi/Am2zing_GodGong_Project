@@ -38,18 +38,16 @@ const Register = () => {
         const { email } = data;
         const postData = { email };
 
-        // post
-
         await axios
-            //여기에 url 수정하시면 됩니다요
             .post('/api/user/password', postData)
-            .then(function (response) {
-                console.log(response.status, '성공');
-
-                navigate('/login');
-
-
-
+            .then(function (res) {
+                if (res.success == true) {
+                    alert('메일함에서 비밀번호 변경 메일을 확인해주세요!');
+                    navigate('/login');
+                } else if (res.message == '사용자 정보를 조회할 수 없습니다.') {
+                    alert('등록되지 않은 이메일입니다😰');
+                } else
+                    alert(res.message);
             })
             .catch(function (err) {
                 console.log(err);
@@ -59,7 +57,6 @@ const Register = () => {
                 if (err.response.status === 400) {
                     alert(err.response.data.message);
                 }
-
             });
     };
     // useState 추가

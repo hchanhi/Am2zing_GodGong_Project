@@ -74,16 +74,15 @@ function Challenge(props) {
     await axios.post('/api/studylog/time', body)
       .then(function () {
         console.log(body);
-        console.log('백단으로 나의 공부시간 보냄');
       })
       .catch(function (error) {
         console.log(error)
       });
 
-    await axios.post('/api/studytime/recent', nickname)
+    await axios.get('/api/studytime/recent', { params: { nickname: nickname } })
       .then(res => {
         console.log(res.data);
-        setTimedata(res.data.studytime);
+        setTimedata(res.data);
       })
       .catch(error => {
         console.log(error);

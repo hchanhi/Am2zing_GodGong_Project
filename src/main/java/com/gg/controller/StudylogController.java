@@ -4,10 +4,7 @@ import com.gg.domain.Studylog;
 import com.gg.service.StudylogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -71,7 +68,7 @@ public class StudylogController {
         return studylogService.Daytop10Studytime();
     }
 
-    @PostMapping("/api/studytime/recent")
+    @GetMapping("/api/studytime/recent")
     public Integer recentStudyTime(String nickname){
         return studylogService.recentStudytime(nickname);
     }

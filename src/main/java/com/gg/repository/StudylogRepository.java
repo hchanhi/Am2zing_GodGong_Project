@@ -36,5 +36,6 @@ public interface StudylogRepository extends JpaRepository<Studylog, Long> {
             "group by user_id order by studylog_time DESC limit 10", nativeQuery = true)
     List<Studylog> Daytop10studyTime();
 
-    Integer findTop1ByUserNicknameIsOrderByStudylogCreatedDesc(String nickname);
+    @Query(value="select studylog_time from studylog where user_id=?1 order by studylog_created DESC limit 1", nativeQuery = true)
+    Integer recentStudyTime(Long id);
 }

@@ -6,7 +6,7 @@ import { Box, SwipeableDrawer } from '@mui/material/';
 import Chatting from "./Chatting";
 
 
-function ChattingBox() {
+function ChattingBox(props) {
 
     let [open, setOpen] = useState(false);
 
@@ -20,7 +20,7 @@ function ChattingBox() {
     return (
         <div>
             <IconButton color="inherit" onClick={toggleDrawer(true)}>
-                <Badge badgeContent={3} color="error">
+                <Badge badgeContent={props.messageNum} color="error">
                     <ChatBubbleIcon sx={{ fontSize: 50 }} />
                 </Badge>
             </IconButton>

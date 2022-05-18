@@ -23,6 +23,7 @@ function TodoList(props) {
         userNickname: userNickname
     });
     let [rooms, setRooms] = useState([]);
+    let [change, setChange] = useState(false);
 
     let [nowPage, setNowPage] = useState(1);
     let LastIndex = nowPage * 8;
@@ -33,6 +34,7 @@ function TodoList(props) {
         axios.post('/api/chat/room', null, { params: room })
             .then(res => {
                 alert('스터디룸을 성공적으로 만들었어요.');
+                setChange(!change);
                 console.log(res.data);
             })
             .catch((error) => {
@@ -48,7 +50,7 @@ function TodoList(props) {
             .catch(error => {
                 console.log(error);
             })
-    },[])
+    }, [change])
        
     return (
         <Wrapper>

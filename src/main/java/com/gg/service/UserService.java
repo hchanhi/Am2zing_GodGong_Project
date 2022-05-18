@@ -2,18 +2,12 @@ package com.gg.service;
 
 import com.gg.config.jwt.JwtTokenProvider;
 import com.gg.domain.User;
-import com.gg.payload.response.JwtAuthenticationResponse;
 import com.gg.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -39,10 +33,17 @@ public class UserService {
     }
 
 
-    public void updateNickname(Long id, String nickname){
-        User user = userRepository.findById(id).get();
-        user.setNickname(nickname);
-        userRepository.save(user);
+    public boolean updateNickname(Long id, String nickname){
+        boolean check = true;
+        if(userRepository.existsByNickname(nickname)){
+            check = false;
+            return check;
+        }else {
+            User user = userRepository.findById(id).get();
+            user.setNickname(nickname);
+            userRepository.save(user);
+            return check;
+        }
         //토큰..refresh
     }
 

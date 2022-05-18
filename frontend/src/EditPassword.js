@@ -41,13 +41,13 @@ const Register = () => {
         setsState(false);
     };
     useEffect(() => {
-
+        getUser();
     }, [state == true]);
 
 
     const onhandlePost = async (data) => {
-        const { password } = data;
-        const postData = { password };
+        const { email, password } = data;
+        const postData = { email, password };
 
         // post
 
@@ -81,12 +81,12 @@ const Register = () => {
 
         const data = new FormData(e.currentTarget);
         const joinData = {
-
+            email: data.get('email'),
             password: data.get('password'),
             rePassword: data.get('rePassword'),
 
         };
-        const { password, rePassword } = joinData;
+        const { email, password, rePassword } = joinData;
 
 
         // 비밀번호 유효성 체크
@@ -109,7 +109,7 @@ const Register = () => {
 
 
         if (
-
+            email != null &&
             passwordRegex.test(password) &&
             password === rePassword
 

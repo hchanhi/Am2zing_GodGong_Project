@@ -6,6 +6,7 @@ import com.gg.exception.ResourceNotFoundException;
 import com.gg.payload.UserIdentityAvailability;
 import com.gg.payload.UserProfile;
 import com.gg.payload.UserSummary;
+import com.gg.payload.request.PasswordRequest;
 import com.gg.payload.request.RequestChangePassword;
 import com.gg.payload.response.ApiResponse;
 import com.gg.repository.UserRepository;
@@ -135,5 +136,19 @@ public class UserController {
             apiResponse = new ApiResponse(false, "비밀번호 변경 요청을 할 수 없습니다.");
         }
         return apiResponse;
+    }
+
+    @PutMapping("/user/password")
+    public ApiResponse changePassword(@RequestBody PasswordRequest passwordRequest) {
+        ApiResponse apiResponse;
+        try{
+            User user = authService.findByEmail(passwordRequest.getEmail());
+            authService.changePassword(user,passwordRequest.getPassword());
+            apiResponse = new ApiResponse(true,"성공적으로 사용자의 비밀번호를 변경했습니다.");
+        }catch(Exception e){
+            apiResponse = new ApiResponse(false,"사용자의 비밀번호를 변경할 수 없었습니다.");
+        }
+        return apiResponse;
+
     }
 }

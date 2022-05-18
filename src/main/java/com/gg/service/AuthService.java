@@ -13,4 +13,7 @@ public interface AuthService {
     boolean isPasswordUuidValidate(String key);
 
     void requestChangePassword(User user) throws NotFoundException;
+
+    void changePassword(User user, String password) throws NotFoundException;
+
 }

@@ -107,3 +107,23 @@ h2 {
     border: none;
     border-radius: 10px;
 }
+
+.message {
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 24px;
+    letter-spacing: -1px;
+
+    bottom: -10px;
+    left: 0;
+
+
+}
+
+.success {
+    display: none;
+}
+
+.error {
+    color: #ff2727;
+}

@@ -11,9 +11,9 @@ import axios from "axios";
 
 function Challenge(props) {
 
-  
+
   let [timedata, setTimedata] = useState(0);
-    
+
 
   const token = JSON.parse(localStorage.getItem('accessToken'));
   let nickname = getNickName(token);
@@ -37,7 +37,7 @@ function Challenge(props) {
   var updatedS = time.s, updatedM = time.m, updatedH = time.h;
 
   const run = () => {
-    if(check=="공부중") {
+    if (check == "공부중") {
       if (updatedM === 60) {
         updatedH++;
         updatedM = 0;
@@ -47,7 +47,7 @@ function Challenge(props) {
         updatedS = 0;
       }
       updatedS++;
-    } else if(check=="자리비움"){
+    } else if (check == "자리비움") {
       setStatus(1);
     }
     return setTime({ s: updatedS, m: updatedM, h: updatedH });
@@ -58,41 +58,29 @@ function Challenge(props) {
     setStatus(2);
 
 
-  
+
   };
 
-   const reset = () => {
-     setTime({s:0, m:0, h:0});
+  const reset = async () => {
+    setTime({ s: 0, m: 0, h: 0 });
     clearInterval(interv);
     setStatus(0);
-    var time = updatedS + updatedM*60 + updatedH*3600;
+    var time = updatedS + updatedM * 60 + updatedH * 3600;
     let body = {
       nickname: nickname,
       studytime: time
     };
 
-    axios
-        .post('/api/studylog/time', body)
-        .then(function (response) {
-          console.log(response.status, '성공');
-        })
-        .then(function (){
-          axios.post('/api/studytime/recent', nickname)
-      .then(res => {
-        console.log(res.data);
-        setTimedata(res.data.studytime);
+    await axios.post('/api/studylog/time', body)
+      .then(function () {
+        console.log(body);
+        console.log('백단으로 나의 공부시간 보냄');
       })
-      .catch(error => {
-        console.log(error);
-      })
+      .catch(function (error) {
+        console.log(error)
+      });
 
-        })
-
-        .catch(function(error) {
-          console.log(error)
-        });
-
-        axios.post('/api/studytime/recent', nickname)
+    await axios.post('/api/studytime/recent', nickname)
       .then(res => {
         console.log(res.data);
         setTimedata(res.data.studytime);
@@ -165,9 +153,9 @@ function Challenge(props) {
     } = await model.estimatePose(webcam.canvas);
     // Prediction 2: run input through teachable machine classification model
     const prediction = await model.predict(posenetOutput);
-    if(prediction[0].probability.toFixed(2)>= 0.50){
+    if (prediction[0].probability.toFixed(2) >= 0.50) {
       check = "공부중"
-    } else if (prediction[1].probability.toFixed(2)>= 0.90){
+    } else if (prediction[1].probability.toFixed(2) >= 0.90) {
       check = "자리비움"
     }
 
@@ -206,7 +194,7 @@ function Challenge(props) {
   }
 
 
-      
+
 
 
 

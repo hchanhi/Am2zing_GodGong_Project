@@ -22,7 +22,10 @@ function BtnComponent(props) {
           <button className="stopwatch-btn stopwatch-btn-gre"
                   onClick={props.resume}>이어서하기</button>
           <button className="stopwatch-btn stopwatch-btn-yel"
-                  onClick={() => {props.reset(); props.setOpenModal(true);}}>완료</button>
+            onClick={async () => {
+              await props.reset();
+              props.setOpenModal(true);
+            }}>완료</button>
         </div> : ""
       }
      

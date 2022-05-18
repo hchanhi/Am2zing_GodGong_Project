@@ -178,13 +178,30 @@ function Challenge(props) {
     }
   }
 
+  let [timedata, setTimedata] = useState([]);
+
+      useEffect(() => {   
+      axios.post('/api/studytime/recent')
+      .then(res => {
+        console.log(res.data);
+        setTimedata(res.data.studytime);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    })
+  
+
+
+
+
 
   return (
     <div className="main-secion">
       <div className="clock-holder">
         <div className="clock-title1">{getNickName(token)} 님의 오늘의 챌린지</div>
         <div className="stopwatch">
-          {openModal && <ChallengeModal closeModal={setOpenModal} />}
+          {openModal && <ChallengeModal timedata={timedata} closeModal={setOpenModal} />}
           <DisplayComponent className="DisplayComponent" time={time} />
           <BtnComponent setOpenModal={setOpenModal} status={status} resume={resume} reset={reset} stop={stop} start={start} />
           <div><canvas id="canvas"></canvas></div>

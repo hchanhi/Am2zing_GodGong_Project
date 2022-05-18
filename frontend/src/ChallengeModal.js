@@ -3,26 +3,29 @@ import { Link, useNavigate } from "react-router-dom";
 import { isAuth, getNickName } from './jwtCheck';
 import "./ChallengeModal.css";
 
-function ChallengeModal({closeModal}){
+function ChallengeModal(props){
 
     let navigate = useNavigate();
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
 
+
+
     return (
     <div className="modalBackground">
         <div className="modalContainer">
             <div className="titleCloseBtn">
-                <button onClick={() => {closeModal(false);}}>
+                <button onClick={() => {props.closeModal(false);}}>
                     X
                 </button>
             </div>
             <div className="title">
                 <h2>{getNickName(token)} 님의 총 공부시간</h2>
-                <h1>00:00:00</h1>
+                <div>{props.timedata}</div>
             </div>
             <div className="body">
                 <h4>공부일기를 작성하시겠어요?</h4>
+                
             </div>
             <div className="footer">
                 <button id="cancelBtn" onClick={() => navigate("/Diary")}>작성하기</button>

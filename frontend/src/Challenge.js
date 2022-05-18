@@ -11,8 +11,12 @@ import axios from "axios";
 
 function Challenge(props) {
 
+  
+  let [timedata, setTimedata] = useState(0);
+    
+
   const token = JSON.parse(localStorage.getItem('accessToken'));
-  // let nickname = getNickName(token);
+  let nickname = getNickName(token);
   const navigate = useNavigate();
 
   const [time, setTime] = useState({ s: 0, m: 0, h: 0 });
@@ -52,6 +56,9 @@ function Challenge(props) {
   const stop = () => {
     clearInterval(interv);
     setStatus(2);
+
+
+  
   };
 
    const reset = () => {
@@ -60,19 +67,39 @@ function Challenge(props) {
     setStatus(0);
     var time = updatedS + updatedM*60 + updatedH*3600;
     let body = {
-      nickname: getNickName(token),
+      nickname: nickname,
       studytime: time
     };
-    console.log(body);
+
     axios
         .post('/api/studylog/time', body)
         .then(function (response) {
           console.log(response.status, '성공');
-          console.log(response);
         })
+        .then(function (){
+          axios.post('/api/studytime/recent', nickname)
+      .then(res => {
+        console.log(res.data);
+        setTimedata(res.data.studytime);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+
+        })
+
         .catch(function(error) {
           console.log(error)
         });
+
+        axios.post('/api/studytime/recent', nickname)
+      .then(res => {
+        console.log(res.data);
+        setTimedata(res.data.studytime);
+      })
+      .catch(error => {
+        console.log(error);
+      })
   };
 
   const resume = () => start();
@@ -178,19 +205,8 @@ function Challenge(props) {
     }
   }
 
-  let [timedata, setTimedata] = useState([]);
 
-      useEffect(() => {   
-      axios.post('/api/studytime/recent')
-      .then(res => {
-        console.log(res.data);
-        setTimedata(res.data.studytime);
-      })
-      .catch(error => {
-        console.log(error);
-      })
-    })
-  
+      
 
 
 

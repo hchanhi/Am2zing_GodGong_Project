@@ -1,6 +1,6 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { isAuth, getNickName } from './jwtCheck';
+import {useNavigate } from "react-router-dom";
+import {getNickName } from './jwtCheck';
 import "./ChallengeModal.css";
 
 function ChallengeModal(props){

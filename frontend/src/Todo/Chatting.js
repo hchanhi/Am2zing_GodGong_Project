@@ -75,7 +75,7 @@ function Chatting() {
                 {
                     newMessage && newMessage.map((chat, index) => (
                         <div key={index} style={{ padding: '10px', paddingBottom: 0 }} ref={scrollRef}>
-                            <div>{chat.userNickname}</div>
+                            <b>{chat.userNickname}</b><br/>
                             <NewText>{chat.message}</NewText>
                         </div>
                     ))

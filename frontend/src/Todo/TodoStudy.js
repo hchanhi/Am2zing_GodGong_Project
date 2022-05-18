@@ -70,6 +70,18 @@ function TodoStudy() {
 
         client.current.onConnect = () => {
             subscribe();
+            try {
+                client.current.publish({
+                    destination: '/pub/chat/enter',
+                    body: JSON.stringify({
+                        roomNumber: roomNum,
+                        userNickname: userNickname,
+                        message: ''
+                    })
+                });
+            } catch (err) {
+                console.log(err.message);
+            }
         }
 
         client.current.onStompError = function (frame) {
@@ -92,9 +104,10 @@ function TodoStudy() {
         )
     };
 
+
     function disConnect() {
         client.current.deactivate();
-    }
+    };
 
     // 입장을 하시겠습니까? 하면 그때 뜨게
 

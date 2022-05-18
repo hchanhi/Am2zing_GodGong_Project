@@ -48,7 +48,6 @@ function Chatting() {
                 {
                     behavior: 'smooth',
                     block: 'end',
-                    inline: 'nearest'
                 })
         }
     }, [newMessage]);
@@ -72,10 +71,10 @@ function Chatting() {
     return (
         <div style={{ height: '100vh' }}>
             <h2 style={{ height: '5%', padding: '10px 10px 12px 10px'}}>📢Chatting</h2>
-            <Receive ref={scrollRef}>
+            <Receive>
                 {
                     newMessage && newMessage.map((chat, index) => (
-                        <div key={index} style={{ padding: '10px', paddingBottom: 0}}>
+                        <div key={index} style={{ padding: '10px', paddingBottom: 0 }} ref={scrollRef}>
                             <div>{chat.userNickname}</div>
                             <NewText>{chat.message}</NewText>
                         </div>

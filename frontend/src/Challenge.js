@@ -100,6 +100,8 @@ function Challenge(props) {
       alert('로그인 후 이용하실 수 있어요😥');
       return navigate('/login');
     }
+
+    return () => camStop();
   }, []);
 
   const URL = "https://teachablemachine.withgoogle.com/models/pUdkMsW7A/";
@@ -193,12 +195,11 @@ function Challenge(props) {
     }
   }
 
-
-
-
-
-
-
+  function camStop() {
+    if (webcam == null)
+      return;
+    webcam.stop();
+  }
 
   return (
     <div className="main-secion">

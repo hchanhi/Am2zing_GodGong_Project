@@ -54,7 +54,7 @@ public class DiaryController {
         return check;
     }
 
-    @PostMapping("/api/diary/delete/{diaryId}")
+    @GetMapping("/api/diary/delete/{diaryId}")
     public Boolean deleteDiary(@PathVariable Long diaryId){
         Boolean check = false;
         diaryService.deleteDiary(diaryId);

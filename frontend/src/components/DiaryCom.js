@@ -16,43 +16,53 @@ import {
 function DiaryCom({ diaryId, diaryContent, diarySentiment, diaryCreated, handleSubmit }) {
 
     let navigate = useNavigate();
-    function move() {
+    function move_more() {
         navigate(`/mypage/diaryDetail/${diaryId}`);
     }
 
 
+
+
     return <div>
-        <Container >
+
+        <Container className="DiaryEditor">
+
             <Box component="form" sx={{ mt: 3 }}>
-                <div >
-
-                    <h2>{diaryId}</h2>
-                    <h5>{diaryCreated}</h5>
-                    <br></br>
-                    <div className="content">
-
-                        {diaryContent}
+                <div>
 
 
-                    </div>
-                    <br></br>
-                    {diarySentiment === 'neutral' ?
-                        <h5 >감정분석결과  : 기분이 보통입니다. 😐</h5> :
-                        diarySentiment === 'negative' ?
-                            <h5 >감정분석결과 : 기분이 나쁩니다. 👿</h5>
-                            : <h5 >감정분석결과 : 기분이 좋습니다. 🥰</h5>
-                    }
-                    <button type="submit" onClick={() => move()} >자세히보기</button>
-                    <button type="submit" onClick={() => handleSubmit(diaryId)}>삭제</button>
-                    <br></br>
+                    <Box className="d_list">
+                        <div className="flex">
+                            <h5>{diaryCreated}</h5>
+                            <button className="delBtn" type="submit" onClick={() => handleSubmit(diaryId)}>❌</button></div>
+                        <div className="content">
+
+                            <span>{diaryContent}</span>
+
+
+                        </div>
+                        <div className="flex">
+                            <div className="sentiment">
+                                {diarySentiment === 'neutral' ?
+                                    <h5 >감정분석결과  : 기분이 보통입니다. 😐</h5> :
+                                    diarySentiment === 'negative' ?
+                                        <h5 >감정분석결과 : 기분이 나쁩니다. 👿</h5>
+                                        : <h5 >감정분석결과 : 기분이 좋습니다. 🥰</h5>
+                                }
+                            </div>
+
+                            <div className="more" >    <button type="submit" onClick={() => move_more()} >더보기</button>  </div>
+                        </div>
+                    </Box>
+
                     <hr></hr>
-                    <br></br>
+
 
 
 
                 </div>
-            </Box>
-        </Container>
+            </Box >
+        </Container >
     </div >;
 }
 

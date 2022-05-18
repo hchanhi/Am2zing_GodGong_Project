@@ -32,7 +32,7 @@ let NewText = styled.div`
     display: inline-block;
 `
 
-function Chatting(props) {
+function Chatting() {
 
     let token = JSON.parse(localStorage.getItem('accessToken'));
     let userNickname = getNickName(token);
@@ -42,8 +42,8 @@ function Chatting(props) {
     let scrollRef = useRef();
 
     useEffect(() => {
-        scrollRef.current.scrollIntoView({ behavior: "smooth" });
-    }, [props.change]);
+        scrollRef.current.scrollIntoView();
+    }, [newMessage]);
 
     function sendMessage(myMessage) {
         try {
@@ -64,7 +64,7 @@ function Chatting(props) {
     return (
         <div style={{ height: '100vh' }}>
             <h2 style={{ height: '5%', padding: '10px 10px 12px 10px'}}>📢Chatting</h2>
-            <Receive ref={scrollRef}>
+            <Receive ref={el => { scrollRef = el; }}>
                 {
                     newMessage && newMessage.map((chat, index) => (
                         <div key={index} style={{ padding: '10px', paddingBottom: 0}}>

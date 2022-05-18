@@ -42,7 +42,7 @@ function ChattingBox(props) {
                 onOpen={toggleDrawer(true)}
             >
                 <Box sx={{ width: 350 }}>
-                    <Chatting change={props.messageNum}/>
+                    <Chatting />
                 </Box>
             </SwipeableDrawer>
         </div>

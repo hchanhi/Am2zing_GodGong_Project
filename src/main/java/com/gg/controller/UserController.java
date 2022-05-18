@@ -10,7 +10,6 @@ import com.gg.repository.UserRepository;
 import com.gg.service.PrincipalDetails;
 import com.gg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -70,10 +69,10 @@ public class UserController {
     }
 
     @PostMapping("/user/{id}/nickname")
-    public void editNickname(@RequestBody HashMap<String, String> param){
+    public boolean editNickname(@RequestBody HashMap<String, String> param){
        Long id = Long.parseLong(param.get("id"));
        String nickname = param.get("nickname");
-       userService.updateNickname(id, nickname);
+       return userService.updateNickname(id, nickname);
     }
 
     @PostMapping("/user/{id}/password")

@@ -47,7 +47,7 @@ const User = (props) => {
     const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
 
-    const getDiaries = async () => {
+    const getUser = async () => {
         const json = await axios.get('/api/users/' + userId, { params: { id: userId } });
         console.log(json);
         setUser(json.data);
@@ -58,7 +58,7 @@ const User = (props) => {
         setsState(false);
     };
     useEffect(() => {
-        getDiaries();
+        getUser();
         if (!isAuth(token)) {
             alert('로그인 후 이용하실 수 있어요😥');
             return navigate('/login');
@@ -201,7 +201,7 @@ const User = (props) => {
     const handleSubmitDel = () => {
         if (window.confirm("정말 탈퇴하시겠습니까?") == true) {
             axios
-                .get('/api/user/' + userId + '/delete', delBody)
+                .post('/api/user/' + userId + '/delete', delBody)
                 .then(function (response) {
                     console.log(response.status, '성공');
                     localStorage.clear();
@@ -210,6 +210,7 @@ const User = (props) => {
                     console.log(response);
                 })
                 .catch(function (err) {
+                    console.log(delBody);
                     console.log(err);
                     console.log(origin);
 

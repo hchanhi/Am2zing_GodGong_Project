@@ -42,7 +42,7 @@ const Register = () => {
 
         await axios
             //여기에 url 수정하시면 됩니다요
-            .post('/api/auth/signup', postData)
+            .post('/api/user/password', postData)
             .then(function (response) {
                 console.log(response.status, '성공');
 

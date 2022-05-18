@@ -6,9 +6,14 @@ import com.gg.exception.ResourceNotFoundException;
 import com.gg.payload.UserIdentityAvailability;
 import com.gg.payload.UserProfile;
 import com.gg.payload.UserSummary;
+import com.gg.payload.request.PasswordRequest;
+import com.gg.payload.request.RequestChangePassword;
+import com.gg.payload.response.ApiResponse;
 import com.gg.repository.UserRepository;
+import com.gg.service.AuthService;
 import com.gg.service.PrincipalDetails;
 import com.gg.service.UserService;
+import com.gg.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +31,12 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private UserService userService;
+    @Autowired
+    private AuthService authService;
+    @Autowired
+    private RedisUtil redisUtil;
 
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -68,6 +76,7 @@ public class UserController {
         return userProfile;
     }
 
+    //닉네임 변경
     @PostMapping("/user/{id}/nickname")
     public boolean editNickname(@RequestBody HashMap<String, String> param){
        Long id = Long.parseLong(param.get("id"));
@@ -75,6 +84,7 @@ public class UserController {
        return userService.updateNickname(id, nickname);
     }
 
+    //비밀번호 번경
     @PostMapping("/user/{id}/password")
     public boolean editPassword(@RequestBody HashMap<String, String> param){
         Long id = Long.parseLong(param.get("id"));
@@ -83,8 +93,10 @@ public class UserController {
         return userService.updatePassword(id, oldPassword, newPassword);
     }
 
-    @GetMapping("/user/{id}/delete")
-    public void deleteUser(@PathVariable Long id){
+    //회원 삭제
+    @PostMapping("/user/{id}/delete")
+    public void deleteUser(@RequestBody HashMap<String, Long> param){
+        long id = param.get("id");
         userService.deleteUser(id);
     }
 
@@ -93,5 +105,51 @@ public class UserController {
         Long id = Long.parseLong(param.get("id"));
         String birth = param.get("birth");
         userService.updateBirth(id, birth);
+    }
+
+    // 비밀번호 찾기
+    @GetMapping("/user/password/{key}")
+    public ApiResponse isPasswordUUIdValidate(@PathVariable String key) {
+        ApiResponse apiResponse;
+        try {
+            if (authService.isPasswordUuidValidate(key))
+                apiResponse = new ApiResponse(true, "success정상적인 접근입니다.");
+            else
+                apiResponse = new ApiResponse(false, "유효하지 않은 Key값입니다.");
+        } catch (Exception e) {
+            apiResponse = new ApiResponse(false, "유효하지 않은 key값입니다.");
+        }
+        return apiResponse;
+    }
+
+    @PostMapping("/user/password")
+        public ApiResponse requestChangePassword(@RequestBody RequestChangePassword requestChangePassword) {
+            ApiResponse apiResponse;
+            try {
+                User user = authService.findByEmail(requestChangePassword.getEmail());
+                System.out.println(user);
+                if (!user.getEmail().equals(requestChangePassword.getEmail())) throw new NoSuchFieldException("");
+                authService.requestChangePassword(user);
+                apiResponse = new ApiResponse(true, "success 성공적으로 사용자의 비밀번호 변경요청을 수행했습니다.");
+            } catch (NoSuchFieldException e) {
+                apiResponse = new ApiResponse(false, "사용자 정보를 조회할 수 없습니다.");
+            } catch (Exception e) {
+                apiResponse = new ApiResponse(false, "비밀번호 변경 요청을 할 수 없습니다.");
+            }
+        return apiResponse;
+    }
+
+    @PutMapping("/user/password")
+    public ApiResponse changePassword(@RequestBody PasswordRequest passwordRequest) {
+        ApiResponse apiResponse;
+        try{
+            User user = authService.findByEmail(passwordRequest.getEmail());
+            authService.changePassword(user, passwordRequest.getPassword());
+            apiResponse = new ApiResponse(true,"성공적으로 사용자의 비밀번호를 변경했습니다.");
+        }catch(Exception e){
+            apiResponse = new ApiResponse(false,"사용자의 비밀번호를 변경할 수 없었습니다.");
+        }
+        return apiResponse;
+
     }
 }

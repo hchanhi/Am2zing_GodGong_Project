@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DiaryButton from './components/DiaryButton';
+
 import axios from 'axios';
 
 import DiaryCom from "./components/DiaryCom";
@@ -95,11 +95,10 @@ function DiaryList(diary) {
                 <div>
                     <h3>{getNickName(token)}님의 마이페이지💁🏻‍♀️</h3>
                     <Container className='diary_header'>
-                        <Box>
-                            <div > <h2>공부일기📆</h2>
-                                <button className="diary" type="submit" onClick={() => move_dairy()}>일기쓰기</button
-                                ></div>
-                        </Box>
+
+                        <div > <h2>공부일기📆</h2></div>
+                        <div >   <button className="diary" type="submit" onClick={() => move_dairy()}>일기쓰기</button></div>
+
                     </Container>
                     <div >
 

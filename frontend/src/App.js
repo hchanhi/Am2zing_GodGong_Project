@@ -7,6 +7,7 @@ import Challenge from './Challenge.js';
 import Login from './Login.js';
 import Join from './Join.js';
 import FindPassword from './FindPassword';
+import EditPassword from './EditPassword';
 import MyPage from './MyPage.js';
 import Diary from './Diary.js';
 import DiaryDetail from './DiaryDetail';
@@ -42,6 +43,7 @@ function App() {
                 <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin} />} />
                 <Route path="/Join" element={<Join />} />
                 <Route path="/findPassword" element={<FindPassword />} />
+                <Route path="/editPassword" element={<EditPassword />} />
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/mypage/diary" element={<DiaryList />} />
                 <Route path="/mypage/diaryDetail/:id" element={<DiaryDetail />} />

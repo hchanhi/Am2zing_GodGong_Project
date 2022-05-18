@@ -3,12 +3,18 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DiaryButton from './components/DiaryButton';
 import axios from 'axios';
-import './diary.css';
+
 import DiaryCom from "./components/DiaryCom";
 
 import { isAuth, getNickName } from './jwtCheck';
+import {
+
+    Box,
+    Container,
 
 
+} from '@mui/material/';
+import './DiaryList.css';
 function DiaryList(diary) {
 
 
@@ -68,7 +74,9 @@ function DiaryList(diary) {
 
 
 
-
+    function move_dairy() {
+        navigate("/diary");
+    }
 
 
 
@@ -86,12 +94,13 @@ function DiaryList(diary) {
             ) : (
                 <div>
                     <h3>{getNickName(token)}님의 마이페이지💁🏻‍♀️</h3>
-
-                    <h2>공부일기📆</h2>
-
-                    <DiaryButton text={'버튼'} onClick={() => alert("버튼 클릭")} type={'positive'} />
-                    <DiaryButton text={'버튼'} onClick={() => alert("버튼 클릭")} type={'negative'} />
-                    <DiaryButton text={'버튼'} onClick={() => alert("버튼 클릭")} />
+                    <Container className='diary_header'>
+                        <Box>
+                            <div > <h2>공부일기📆</h2>
+                                <button className="diary" type="submit" onClick={() => move_dairy()}>일기쓰기</button
+                                ></div>
+                        </Box>
+                    </Container>
                     <div >
 
                         {diaries.map((diary) => (

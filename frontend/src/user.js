@@ -84,11 +84,16 @@ const User = () => {
                 .post('/api/user/' + userId + '/nickname', nicBody)
 
                 .then(function (response) {
-                    console.log(response.status, '성공');
+                    if (response.data == false) {
+                        alert("중복된 닉네임입니다!");
+                    } else {
+                        console.log(response.status, '성공');
 
-                    navigate('/');
-                    console.log(response);
-                    alert("수정 완료!");
+                        navigate('/');
+                        console.log(response);
+                        alert("수정 완료되었습니다!");
+                    }
+
 
                 })
                 .catch(function (err) {
@@ -118,10 +123,9 @@ const User = () => {
                 .post('/api/user/' + userId + '/birth', birthBody)
                 .then(function (response) {
                     console.log(response.status, '성공');
-
                     navigate('/');
                     console.log(response);
-                    alert("수정 완료!");
+                    alert("수정 완료되었습니다!");
 
                 })
                 .catch(function (err) {
@@ -171,7 +175,7 @@ const User = () => {
 
                         navigate('/');
                         console.log(response);
-                        alert("수정 완료!");
+                        alert("수정 완료되었습니다!");
                     }
 
 
@@ -195,7 +199,7 @@ const User = () => {
 
     };
     const handleSubmitDel = () => {
-        if (window.confirm("정말 탈퇴하시겠습니까 ?") == true) {
+        if (window.confirm("정말 탈퇴하시겠습니까?") == true) {
             axios
                 .get('/api/user/' + userId + '/delete', delBody)
                 .then(function (response) {
@@ -211,7 +215,7 @@ const User = () => {
                     console.log(origin);
 
                 });
-            alert("탈퇴되었습니다");
+            alert("탈퇴되었습니다!");
         }
         else {
             return;

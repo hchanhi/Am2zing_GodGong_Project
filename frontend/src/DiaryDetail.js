@@ -57,16 +57,16 @@ const DiaryDetail = () => {
     };
     console.log(edit);
 
-
+    function move() {
+        navigate("/mypage/diary");
+    }
     const handleSubmit = () => {
         axios
             .post('/api/diary/edit/' + id, body)
             .then(function (response) {
-                console.log(response.status, '성공');
-
                 navigate('/mypage/diary');
                 console.log(response);
-                alert("저장 성공!");
+                alert("수정되었습니다!");
 
 
             })
@@ -108,8 +108,9 @@ const DiaryDetail = () => {
                     />
                 </div>
             </Box>
-            <div>
-                <button onClick={handleSubmit}>일기 수정하기</button>
+            <div className="btns">
+                <button className="saveBtn" onClick={handleSubmit}>수정하기</button>
+                <button className="deleteBtn" onClick={move}>취소하기</button>
             </div>
         </Container>
     );

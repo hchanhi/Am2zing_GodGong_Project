@@ -47,7 +47,7 @@ const User = () => {
     const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
 
-    const getDiaries = async () => {
+    const getUser = async () => {
         const json = await axios.get('/api/users/' + userId, { params: { id: userId } });
         console.log(json);
         setUser(json.data);
@@ -58,7 +58,7 @@ const User = () => {
         setsState(false);
     };
     useEffect(() => {
-        getDiaries();
+        getUser();
         if (!isAuth(token)) {
             alert('로그인 후 이용하실 수 있어요😥');
             return navigate('/login');

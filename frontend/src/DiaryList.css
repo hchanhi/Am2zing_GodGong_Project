@@ -2,8 +2,8 @@
 
 
     padding: 20px;
-    border: 1px solid violet;
-    width: 60% !important;
+
+    width: 50% !important;
 }
 
 .DiaryEditor input,
@@ -88,12 +88,17 @@ textarea {
     width: 100%;
     height: 55px;
     padding: 10px;
+
     margin: 0 auto;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     vertical-align: top;
 
+}
+
+.css-178yklu {
+    margin: 0 !important;
 }
 
 .content>span {
@@ -125,6 +130,10 @@ textarea {
 }
 
 .diary {
+    width: 120%;
+    cursor: pointer;
+
+    height: 40px;
     justify-content: center !important;
     background-color: #2f72be;
     border: none;
@@ -193,8 +202,14 @@ textarea {
 }
 
 .diary_header {
+    display: flex !important;
+    justify-content: space-between;
     text-align: center;
     padding: 20px;
-    border: 1px solid violet;
-    width: 60% !important;
+
+    width: 50% !important;
+}
+
+hr {
+    margin-bottom: -30px;
 }

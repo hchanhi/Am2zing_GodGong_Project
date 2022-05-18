@@ -47,7 +47,7 @@ function App() {
                 <Route path="/mypage/diaryDetail/:id" element={<DiaryDetail />} />
                 <Route path="/challenge" element={<Challenge />} />
                 <Route path="/diary" element={<Diary />} />
-                <Route path='/mypage/user' element={<User />} />
+                <Route path='/mypage/user' element={<User setUserNickName={setUserNickName}/>} />
                 <Route path="/todoList" element={<TodoList />} />
                 <Route path="/todoStudy/:roomNum" element={<TodoStudy />} />
 

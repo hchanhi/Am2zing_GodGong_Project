@@ -16,7 +16,7 @@ import './diary.css';
 
 
 
-const User = () => {
+const User = (props) => {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const userId = getId(token);
@@ -204,11 +204,10 @@ const User = () => {
                 .get('/api/user/' + userId + '/delete', delBody)
                 .then(function (response) {
                     console.log(response.status, '성공');
-
+                    localStorage.clear();
+                    props.setUserNickName('');
                     navigate('/');
                     console.log(response);
-
-
                 })
                 .catch(function (err) {
                     console.log(err);

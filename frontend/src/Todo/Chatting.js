@@ -42,7 +42,15 @@ function Chatting() {
     let scrollRef = useRef();
 
     useEffect(() => {
-        scrollRef.current.scrollIntoView();
+        // scrollRef.current.scrollIntoView(false);
+        if (scrollRef.current) {
+            scrollRef.current.scrollIntoView(
+                {
+                    behavior: 'smooth',
+                    block: 'end',
+                    inline: 'nearest'
+                })
+        }
     }, [newMessage]);
 
     function sendMessage(myMessage) {
@@ -64,7 +72,7 @@ function Chatting() {
     return (
         <div style={{ height: '100vh' }}>
             <h2 style={{ height: '5%', padding: '10px 10px 12px 10px'}}>📢Chatting</h2>
-            <Receive ref={el => { scrollRef = el; }}>
+            <Receive ref={scrollRef}>
                 {
                     newMessage && newMessage.map((chat, index) => (
                         <div key={index} style={{ padding: '10px', paddingBottom: 0}}>

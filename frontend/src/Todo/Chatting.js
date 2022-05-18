@@ -1,24 +1,23 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
-import SockJs from "sockjs-client";
 import { getNickName } from '../jwtCheck.js';
 import { RoomNumContext, NewMessageContext, ClientContext } from './TodoStudy.js'
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
 
 let Receive = styled.div`
-    height: 78vh;
-    width: 100%
+    height: 75%;
+    overflow: auto;
+    width: 100%;
+    padding: 10px;
 `
 let Send = styled.div`
-    height: 15vh;
-    padding: 0.5rem;
+    height: 20%;
+    padding: 0.7rem;
     border-top: 1px solid lightgray;
 `
 let Text = styled.textarea`
     width: 100%;
     height: 80%;
-    margin-top: 3px;
+    margin: 0;
     padding: 10px;
     background-color: #e9e7e7;
     border: none;
@@ -26,14 +25,25 @@ let Text = styled.textarea`
     font-family: 'Pretendard-Medium';
     font-size: 11pt;
 `
+let NewText = styled.div`
+    background-color: #f0f0f0;
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+`
 
-function Chatting() {
+function Chatting(props) {
 
     let token = JSON.parse(localStorage.getItem('accessToken'));
     let userNickname = getNickName(token);
     let roomNum = useContext(RoomNumContext);
     let newMessage = useContext(NewMessageContext);
     let client = useContext(ClientContext);
+    let scrollRef = useRef();
+
+    useEffect(() => {
+        scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    }, [props.change]);
 
     function sendMessage(myMessage) {
         try {
@@ -52,19 +62,20 @@ function Chatting() {
     }
 
     return (
-        <div>
-            <Receive>
+        <div style={{ height: '100vh' }}>
+            <h2 style={{ height: '5%', padding: '10px 10px 12px 10px'}}>📢Chatting</h2>
+            <Receive ref={scrollRef}>
                 {
-                    newMessage && newMessage.map(chat => (
-                        <div key={chat.message}>
+                    newMessage && newMessage.map((chat, index) => (
+                        <div key={index} style={{ padding: '10px', paddingBottom: 0}}>
                             <div>{chat.userNickname}</div>
-                            <div>{chat.message}</div>
+                            <NewText>{chat.message}</NewText>
                         </div>
                     ))
                 }
             </Receive>
             <Send>
-                <div>닉네임</div>
+                <div style={{ height: '20%' }}>{userNickname}</div>
                 <Text onKeyUp={(e) => {
                     if (e.key == 'Enter') {
                         sendMessage(e.target.value);

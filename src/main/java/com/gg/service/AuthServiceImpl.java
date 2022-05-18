@@ -56,7 +56,7 @@ public class AuthServiceImpl implements AuthService {
         String key = REDIS_CHANGE_PASSWORD_PREFIX+UUID.randomUUID();
         System.out.println(key);
         redisUtil.setDataExpire(key, user.getEmail(),60 * 30L);
-        emailService.sendMail(user.getEmail(),"[Godgong] 회원 비밀번호 안내 메일",CHANGE_PASSWORD_LINK+key);
+        emailService.sendMail(user.getEmail(),"[Godgong] 회원 비밀번호 변경 안내 메일","비밀번호 재설정을 위한 링크를 전송했습니다.\n\n 아래의 링크로 접속해 비밀번호를 재설정해 주세요!\n\n" +  CHANGE_PASSWORD_LINK+key + "\n\n\n\n 같이 공부해요 GodGong!!");
     }
 
     @Override

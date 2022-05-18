@@ -1,5 +1,6 @@
 package com.gg.controller;
 
+import com.gg.domain.Studylog;
 import com.gg.service.StudylogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,5 +54,25 @@ public class StudylogController {
     @PostMapping("/api/mypage/studytime/total")
     public Integer totalStudyTime(String nickname){
         return studylogService.totalTime(nickname);
+    }
+
+    @PostMapping("/api/main/studytime/month")
+    public List<Studylog> Monthtop10StudyTime(){
+        return studylogService.Monthtop10Studytime();
+    }
+
+    @PostMapping("/api/main/studytime/week")
+    public List<Studylog> Weektop10StudyTime(){
+        return studylogService.Weektop10Studytime();
+    }
+
+    @PostMapping("/api/main/studytime/day")
+    public List<Studylog> Daytop10StudyTime(){
+        return studylogService.Daytop10Studytime();
+    }
+
+    @PostMapping("/api/studytime/recent")
+    public Integer recentStudyTime(String nickname){
+        return studylogService.recentStudytime(nickname);
     }
 }

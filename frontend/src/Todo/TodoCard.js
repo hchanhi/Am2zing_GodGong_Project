@@ -23,7 +23,7 @@ function TodoCard({ studyRoom }) {
 
     return (
         <Grid item xs={3} onClick={() => {
-            navigate("/todoStudy/" + studyRoom.roomId);
+            navigate("/todoStudy/" + studyRoom.roomNumber);
             
         }}>
             <Wrapper>

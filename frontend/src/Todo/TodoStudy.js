@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from 'axios';
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import CheckboxTodo from "./CheckboxTodo.js";
 import ChattingBox from "./ChattingBox.js";
-import { isAuth } from '../jwtCheck.js';
+import { isAuth, getNickName } from '../jwtCheck.js';
 import { Grid, Chip } from '@mui/material/';
+import SockJs from "sockjs-client";
 
 let Wrapper = styled.div`
     margin: auto;
@@ -18,15 +19,23 @@ let Wrapper = styled.div`
     }
 `;
 
+export let RoomNumContext = React.createContext();
+export let NewMessageContext = React.createContext();
+export let ClientContext = React.createContext();
+
 function TodoStudy() {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
-    // const nickName = getNickName(token);
+    const userNickname = getNickName(token);
     const navigate = useNavigate();
 
     let myId = "";
-    let { id } = useParams();
+    let { roomNum } = useParams();
     let [isMember, setIsMember] = useState(false);
+
+    let [newMessage, setNewMessage] = useState([]);
+    let StompJs = require('@stomp/stompjs');
+    let client = useRef({});
 
     let [study, setStudy] = useState({
         roomCategory: "",
@@ -41,22 +50,67 @@ function TodoStudy() {
         if (!isAuth(token)) {
             alert('로그인 후 이용하실 수 있어요😥');
             return navigate('/login');
-        }
+        };
+        connect();
+        return () => disConnect();
     }, []);
 
-    useEffect(() => {
-        axios.get('/api/todoStudy/', { params: { roomId: id } })
-            .then((res) => {
-                setStudy(res.data);
-                if (res.data((x) => x.memberId == myId).length != 0) {
-                    setIsMember(true);
+    function connect() {
+        client.current = new StompJs.Client({
+            // brokerURL: "ws://localhost:8080/api/ws", // 웹소켓 서버로 직접 접속하는 것
+            webSocketFactory: () => { return new SockJs("http://localhost:8080/api/ws") },
+            connectHeaders: {},
+            debug: function (str) {
+                console.log(str);
+            },
+            // reconnectDelay: 5000,
+            heartbeatIncoming: 4000,
+            heartbeatOutgoing: 4000,
+        })
+
+        client.current.onConnect = () => {
+            subscribe();
+        }
+
+        client.current.onStompError = function (frame) {
+            console.log('Broker reported error: ' + frame.headers['message']);
+            console.log('Additional details: ' + frame.body);
+        };
+
+        client.current.activate();
+    }
+
+    function subscribe() {
+        client.current.subscribe("/sub/room/" + roomNum,
+            function (chat) {
+                if (chat.body) {
+                    setNewMessage(newMessage => [...newMessage, JSON.parse(chat.body)]);
+                } else {
+                    alert('got empty message!')
                 }
-                // todo list작성하는 모달
-            }).catch((error) => {
-                // alert('Todo study방의 정보를 가져오는 데 실패했습니다.');
-                console.log(error);
-            });
-    }, [study]);
+            }
+        )
+    };
+
+    function disConnect() {
+        client.current.deactivate();
+    }
+
+    // 입장을 하시겠습니까? 하면 그때 뜨게
+
+    // useEffect(() => {
+    //     axios.get('/api/todoStudy/', { params: { roomNum: roomNum } })
+    //         .then((res) => {
+    //             setStudy(res.data);
+    //             if (res.data((x) => x.memberId == myId).length != 0) {
+    //                 setIsMember(true);
+    //             }
+    //             // todo list작성하는 모달
+    //         }).catch((error) => {
+    //             // alert('Todo study방의 정보를 가져오는 데 실패했습니다.');
+    //             console.log(error);
+    //         });
+    // }, [study]);
     // 다른 스터디원의 실시간 투두 진행상황 보려면 양방향 데이터 통신 필요
 
     return (
@@ -70,7 +124,13 @@ function TodoStudy() {
                     <h3>현재인원 : 4/5명</h3>
                 </Grid>
                 <Grid item xs={6} sx={{ textAlign: 'right' }}>
-                    <ChattingBox />
+                    <RoomNumContext.Provider value={roomNum}>
+                        <NewMessageContext.Provider value={newMessage}>
+                            <ClientContext.Provider value={client.current}>
+                                <ChattingBox messageNum={newMessage.length}/>
+                            </ClientContext.Provider>
+                        </NewMessageContext.Provider>
+                    </RoomNumContext.Provider>
                 </Grid>
                 <Grid item xs={12}>
                     <CheckboxTodo />
@@ -83,9 +143,6 @@ function TodoStudy() {
                     }
                 </Grid>
             </Grid>
-
-
-
         </Wrapper>
     );
 }

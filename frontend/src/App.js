@@ -6,6 +6,7 @@ import Home from './Home.js';
 import Challenge from './Challenge.js';
 import Login from './Login.js';
 import Join from './Join.js';
+import FindPassword from './FindPassword';
 import MyPage from './MyPage.js';
 import Diary from './Diary.js';
 import DiaryDetail from './DiaryDetail';
@@ -40,6 +41,7 @@ function App() {
                 <Route exact path="" element={<Home />} />
                 <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin} />} />
                 <Route path="/Join" element={<Join />} />
+                <Route path="/findPassword" element={<FindPassword />} />
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/mypage/diary" element={<DiaryList />} />
                 <Route path="/mypage/diaryDetail/:id" element={<DiaryDetail />} />
@@ -47,7 +49,7 @@ function App() {
                 <Route path="/diary" element={<Diary />} />
                 <Route path='/mypage/user' element={<User />} />
                 <Route path="/todoList" element={<TodoList />} />
-                <Route path="/todoStudy/:id" element={<TodoStudy />} />
+                <Route path="/todoStudy/:roomNum" element={<TodoStudy />} />
 
             </Routes>
 

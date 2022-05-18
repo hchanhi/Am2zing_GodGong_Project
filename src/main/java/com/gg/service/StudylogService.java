@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.List;
 
 @Service
 public class StudylogService {
@@ -52,5 +53,20 @@ public class StudylogService {
     public Integer selectDayTime(String nickname, Date date){
         User user = userRepository.findByNickname(nickname);
         return studylogRepository.selectDayTime(user.getId(), date);
+    }
+
+    public List<Studylog> Monthtop10Studytime(){
+        return studylogRepository.Monthtop10studyTime();
+    }
+
+    public List<Studylog> Weektop10Studytime(){
+        return studylogRepository.Weektop10studyTime();
+    }
+    public List<Studylog> Daytop10Studytime(){
+        return studylogRepository.Daytop10studyTime();
+    }
+
+    public Integer recentStudytime(String nickname){
+        return studylogRepository.findTop1ByUserNicknameIsOrderByStudylogCreatedDesc(nickname);
     }
 }

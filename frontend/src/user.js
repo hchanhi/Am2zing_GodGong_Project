@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import { isAuth, getNickName, getId } from './jwtCheck';
 import axios from 'axios';
 
@@ -19,7 +19,6 @@ import './diary.css';
 const User = () => {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
-    const nickname = getNickName(token);
     const userId = getId(token);
     const navigate = useNavigate();
 
@@ -31,6 +30,22 @@ const User = () => {
     const [state, setsState] = useState();
     const [oldPas, setOldPas] = useState();
     const [newPas, setNewPas] = useState();
+    const [passwordConfirm, setPasswordConfirm] = useState('');
+
+    //오류메시지 상태저장
+    const [nameMessage, setNameMessage] = useState('');
+    const [birthMessage, setBirthMessage] = useState('');
+    const [passwordOldMessage, setPasswordOldMessage] = useState('');
+    const [passwordNewMessage, setPasswordNewMessage] = useState('');
+    const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('');
+
+    // 유효성 검사
+    const [isName, setIsName] = useState(true);
+    const [isBirth, setIsBirth] = useState(true);
+    const [isOldPassword, setIsOldPassword] = useState(false);
+    const [isNewPassword, setIsNewPassword] = useState(false);
+    const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+
 
     const getDiaries = async () => {
         const json = await axios.get('/api/users/' + userId, { params: { id: userId } });
@@ -55,24 +70,39 @@ const User = () => {
 
     };
 
-    const handleSubmitNic = () => {
-        axios
+    const handleSubmitNic = (e) => {
+        const nameRegex = /^[가-힣|a-zA-Z|0-9]+$/;
 
-            .post('/api/user/' + userId + '/nickname', nicBody)
+        if (!nameRegex.test(nic) || nic.length < 1) {
+            e.preventDefault();
+            setNameMessage('올바른 닉네임을 입력해주세요!');
+            setIsName(false);
+        } else {
+            setIsName(true);
+            axios
 
-            .then(function (response) {
-                console.log(response.status, '성공');
+                .post('/api/user/' + userId + '/nickname', nicBody)
 
-                navigate('/mypage/user');
-                console.log(response);
-                alert("저장 성공!");
+                .then(function (response) {
+                    if (response.data == false) {
+                        alert("중복된 닉네임입니다!");
+                    } else {
+                        console.log(response.status, '성공');
 
-            })
-            .catch(function (err) {
-                console.log(err);
-                console.log(origin);
+                        navigate('/');
+                        console.log(response);
+                        alert("수정 완료되었습니다!");
+                    }
 
-            });
+
+                })
+                .catch(function (err) {
+                    console.log(err);
+                    console.log(origin);
+
+                });
+
+        }
 
 
 
@@ -83,21 +113,29 @@ const User = () => {
 
     };
     const handleSubmitBirth = () => {
-        axios
-            .post('/api/user/' + userId + '/birth', birthBody)
-            .then(function (response) {
-                console.log(response.status, '성공');
+        const birthRegex = /^[0-9]{6}$/;
+        if (!birthRegex.test(birth)) {
+            setBirthMessage('생년월일을 6자리로 입력해주세요!');
+            setIsBirth(false);
+        } else {
+            setIsBirth(true);
+            axios
+                .post('/api/user/' + userId + '/birth', birthBody)
+                .then(function (response) {
+                    console.log(response.status, '성공');
+                    navigate('/');
+                    console.log(response);
+                    alert("수정 완료되었습니다!");
 
-                navigate('/mypage/user');
-                console.log(response);
-                alert("저장 성공!");
+                })
+                .catch(function (err) {
+                    console.log(err);
+                    console.log(origin);
 
-            })
-            .catch(function (err) {
-                console.log(err);
-                console.log(origin);
+                });
 
-            });
+        }
+
 
 
 
@@ -108,27 +146,154 @@ const User = () => {
         newPassword: newPas
 
     };
-    const handleSubmitPas = () => {
-        axios
-            .post('/api/user/' + userId + '/password', pasBody)
-            .then(function (response) {
-                console.log(response.status, '성공');
+    const handleSubmitPas = useCallback(() => {
+        const passwordRegex = /^.{4,20}$/;
+        if (!passwordRegex.test(oldPas)) {
+            setPasswordOldMessage('4~20글자를 입력해주세요!');
+            setIsOldPassword(false);
 
-                navigate('/mypage/user');
-                console.log(response);
-                alert("저장 성공!");
+        } else if (!passwordRegex.test(newPas)) {
+            setPasswordNewMessage('4~20글자를 입력해주세요!');
+            setIsOldPassword(true);
+            setIsNewPassword(false);
+        } else if (passwordConfirm != newPas) {
+            setIsPasswordConfirm(false);
+            setPasswordConfirmMessage('비밀번호가 다릅니다!');
+            setIsOldPassword(true);
+            setIsNewPassword(true);
+        } else {
+            setIsOldPassword(true);
+            setIsNewPassword(true);
+            setIsPasswordConfirm(true);
+            axios
+                .post('/api/user/' + userId + '/password', pasBody)
+                .then(function (response) {
+                    if (response.data == false) {
+                        alert("비밀번호 오류!");
+                    } else {
+                        console.log(response.status, '성공');
 
-            })
-            .catch(function (err) {
-                console.log(err);
-                console.log(origin);
+                        navigate('/');
+                        console.log(response);
+                        alert("수정 완료되었습니다!");
+                    }
 
-            });
 
+                })
+                .catch(function (err) {
+                    console.log(err);
+                    console.log(origin);
+
+                });
+
+        }
+
+
+
+    }, [oldPas, newPas, passwordConfirm]
+    );
+
+    let delBody = {
+        id: userId,
 
 
     };
+    const handleSubmitDel = () => {
+        if (window.confirm("정말 탈퇴하시겠습니까?") == true) {
+            axios
+                .get('/api/user/' + userId + '/delete', delBody)
+                .then(function (response) {
+                    console.log(response.status, '성공');
 
+                    navigate('/');
+                    console.log(response);
+
+
+                })
+                .catch(function (err) {
+                    console.log(err);
+                    console.log(origin);
+
+                });
+            alert("탈퇴되었습니다!");
+        }
+        else {
+            return;
+        }
+
+    };
+    // 닉네임
+    const onChangeName = useCallback((e) => {
+        const nameRegex = /^[가-힣|a-zA-Z|0-9]+$/;
+        const nameCurrent = e.target.value;
+        setNick(nameCurrent);
+
+        if (!nameRegex.test(nameCurrent) || nameCurrent.length < 1) {
+            setNameMessage('올바른 닉네임을 입력해주세요!');
+            setIsName(false);
+        } else {
+
+            setIsName(true);
+        }
+    }, []);
+    // 생년월일
+    const onChangeBirth = useCallback((e) => {
+        const birthRegex = /^[0-9]{6}$/;
+        const birthCurrent = e.target.value;
+        setBirth(birthCurrent);
+
+        if (!birthRegex.test(birthCurrent)) {
+            setBirthMessage('생년월일을 6자리로 입력해주세요!');
+            setIsBirth(false);
+        } else {
+
+            setIsBirth(true);
+        }
+    }, []);
+    // 현재 비밀번호
+    const onChangeOldPassword = useCallback((e) => {
+        const passwordRegex = /^.{4,20}$/;
+        const passwordOldCurrent = e.target.value;
+        setOldPas(passwordOldCurrent);
+
+        if (!passwordRegex.test(passwordOldCurrent)) {
+            setPasswordOldMessage('4~20글자를 입력해주세요!');
+            setIsOldPassword(false);
+        } else {
+
+            setIsOldPassword(true);
+        }
+    }, []);
+    // 변경 비밀번호
+    const onChangeNewPassword = useCallback((e) => {
+        const passwordRegex = /^.{4,20}$/;
+        const passwordNewCurrent = e.target.value;
+        setNewPas(passwordNewCurrent);
+
+        if (!passwordRegex.test(passwordNewCurrent)) {
+            setPasswordNewMessage('4~20글자를 입력해주세요!');
+            setIsNewPassword(false);
+        } else {
+
+            setIsNewPassword(true);
+        }
+    }, []);
+    //비번 확인
+    const onChangePasswordConfirm = useCallback(
+        (e) => {
+            const passwordConfirmCurrent = e.target.value;
+            setPasswordConfirm(passwordConfirmCurrent);
+
+            if (newPas === passwordConfirmCurrent) {
+
+                setIsPasswordConfirm(true);
+            } else {
+                setPasswordConfirmMessage('비밀번호가 다릅니다!');
+                setIsPasswordConfirm(false);
+            }
+        },
+        [newPas]
+    );
     console.log(user.nickname);
     return (
         <Container className="DiaryEditor">
@@ -145,64 +310,84 @@ const User = () => {
                         readOnly
 
                     />
+
                 </div>
                 <div>
                     <label>닉네임</label>
                     <input
                         defaultValue={nic}
                         name="nickName"
-                        onChange={event => setNick(event.target.value)}
-                        placeholder="작성자"
+                        onChange={onChangeName}
+                        placeholder="닉네임"
                         type="text"
 
 
                     />
+                    {<span className={`message ${isName ? 'success' : 'error'}`}>{nameMessage}</span>}
                 </div>
                 <div>
                     <label>생년월일</label>
                     <input
                         defaultValue={birth}
                         name="birht"
-                        onChange={event => setBirth(event.target.value)}
-                        placeholder="작성자"
+                        onChange={onChangeBirth}
+                        placeholder="생년월일"
                         type="text"
 
 
                     />
+                    {<span className={`message ${isBirth ? 'success' : 'error'}`}>{birthMessage}</span>}
                 </div>
                 <div>
                     <label>현재 비밀번호</label>
                     <input
                         defaultValue={oldPas}
-                        name="nickName"
-                        onChange={event => setOldPas(event.target.value)}
-                        placeholder="작성자"
-                        type="text"
-                        readOnly
+                        name="old"
+                        onChange={onChangeOldPassword}
+                        placeholder="현재 비밀번호"
+
+
+                        type="password"
+
+
 
                     />
+                    {(
+                        <span className={`message ${isOldPassword ? 'success' : 'error'}`}>{passwordOldMessage}</span>
+                    )}
                 </div>
                 <div>
                     <label>변경 비밀번호</label>
                     <input
                         defaultValue={newPas}
-                        name="nickName"
-                        onChange={event => setNewPas(event.target.value)}
-                        placeholder="작성자"
-                        type="text"
-                        readOnly
+                        name="new"
+                        onChange={onChangeNewPassword}
+                        placeholder="변경 비밀번호"
+
+
+                        type="password"
+
+
 
                     />
+                    {(
+                        <span className={`message ${isNewPassword ? 'success' : 'error'}`}>{passwordNewMessage}</span>
+                    )}
                 </div>
                 <div>
                     <label>변경 비밀번호 확인</label>
                     <input
-                        name="nickName"
-                        placeholder="작성자"
-                        type="text"
-                        readOnly
+                        defaultValue={passwordConfirm}
+                        onChange={onChangePasswordConfirm}
+                        name="confirm"
+                        placeholder="비밀번호 확인"
+                        type="password"
+
 
                     />
+                    {(
+                        <span className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</span>
+                    )}
                 </div>
 
             </Box>
@@ -214,6 +399,9 @@ const User = () => {
             </div>
             <div>
                 <button onClick={handleSubmitPas}>비밀번호 수정하기</button>
+            </div>
+            <div>
+                <button onClick={handleSubmitDel}>탈퇴하기</button>
             </div>
         </Container>
     );

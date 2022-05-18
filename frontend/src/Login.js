@@ -53,14 +53,14 @@ const Resigter = (props) => {
                 localStorage.setItem('accessToken', JSON.stringify(response.data));
 
                 if (response.status === 200) {
-                    alert('로그인 되었습니다');
+                    alert('로그인 되었습니다!');
                     props.setIsLogin(!props.isLogin);
                     navigate('/');
                 }
             })
             .catch(function (err) {
                 console.log(err);
-                alert("이메일 혹은 비밀번호가 틀렸습니다.");
+                alert("이메일 혹은 비밀번호가 틀렸습니다!");
             });
     };
 
@@ -81,7 +81,7 @@ const Resigter = (props) => {
         // 이메일 유효성 체크
         // 이메일 유효성 체크
         const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-        if (!emailRegex.test(email)) setEmailError('올바른 이메일 형식이 아닙니다.');
+        if (!emailRegex.test(email)) setEmailError('올바른 이메일 형식이 아닙니다!');
         else setEmailError('');
 
         // 비밀번호 유효성 체크
@@ -165,7 +165,7 @@ const Resigter = (props) => {
                     </Button>
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2">
+                            <Link href="/findPassword" variant="body2">
                                 Forgot password?
                             </Link>
                         </Grid>

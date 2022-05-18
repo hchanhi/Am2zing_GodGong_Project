@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import styled from "styled-components";
 import SockJs from "sockjs-client";
-import { Stomp } from '@stomp/stompjs';
-import { useNavigate } from "react-router-dom";
+import { getNickName } from '../jwtCheck.js';
+import { RoomNumContext, NewMessageContext, ClientContext } from './TodoStudy.js'
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 let Receive = styled.div`
-    height: 85vh;
+    height: 78vh;
     width: 100%
 `
 let Send = styled.div`
@@ -25,90 +27,48 @@ let Text = styled.textarea`
     font-size: 11pt;
 `
 
-function Chatting(props) {
+function Chatting() {
 
-    let token = localStorage.getItem('access-token');
-    let navigate = useNavigate();
-    let roomId = '';
-    let nickName = '';
+    let token = JSON.parse(localStorage.getItem('accessToken'));
+    let userNickname = getNickName(token);
+    let roomNum = useContext(RoomNumContext);
+    let newMessage = useContext(NewMessageContext);
+    let client = useContext(ClientContext);
 
-    // 소켓 통신 객체
-    let sock = new SockJs("url");
-    let ws = Stomp.over(sock);
-
-    let [message, setMessage] = useState('');
-    let [newMessage, setNewMessage] = useState([]);
-    let [writer, setWriter] = useState('');
-
-    useEffect(() => {
-        wsConnnect();
-        return wsDisConnect();
-    }, [roomId])
-
-    function wsConnnect() {
-        // token위치 위 아래 중 어디인지 정확한 공식문서 찾아보기...
-        ws.connect(token,
-            function () {
-                // subscribe는 채팅내용을 받을 때?
-                ws.subscribe(
-                    "/api/room/chat/" + roomId,
-                    function (chat) {
-                        if (writer === nickName) {
-                            // 추가하는 복사 필요?
-                            setNewMessage(JSON.parse(chat.body));
-                            setWriter('');
-                        } else {
-                            setNewMessage(JSON.parse(chat.body));
-                            setWriter(newMessage.writer);
-                        }
-                    },
-                    token
-                )
-            }
-        )
-    }
-
-    // disconnect하지 않으면 계속 연결되어있어서 꼭 끊어줘야함. 방에서 나갈 때?
-    function wsDisConnect () {
-        ws.disconnect(
-            function () { ws.unsubscribe('sub-0') },
-            token
-        );
-    }
-
-    function sendMessage() {
-
-        let chat = {
-            roomId: roomId,
-            writer: writer,
-            message: message
-        };
-
-        if (message === '') {
-            return;
+    function sendMessage(myMessage) {
+        try {
+            if (myMessage == '\n') return alert('채팅을 입력하세요!');
+            client.publish({
+                destination: '/pub/chat/message',
+                body: JSON.stringify({
+                    roomNumber: roomNum,
+                    userNickname: userNickname,
+                    message: myMessage
+                })
+            });
+        } catch(err) {
+            console.log(err.message);
         }
-
-        // 버전에 따라 publish라는 말을 쓰기도 하는 것 같음
-        ws.send(
-            'url',
-            token, //header
-            JSON.stringify(chat)
-        );
     }
-    
 
     return (
         <div>
             <Receive>
-                <div>{writer}</div>
-                <div>{newMessage}</div>
+                {
+                    newMessage && newMessage.map(chat => (
+                        <div key={chat.message}>
+                            <div>{chat.userNickname}</div>
+                            <div>{chat.message}</div>
+                        </div>
+                    ))
+                }
             </Receive>
             <Send>
                 <div>닉네임</div>
-                <Text onKeyDown={(e) => {
-                    setMessage(e.target.value)
+                <Text onKeyUp={(e) => {
                     if (e.key == 'Enter') {
-                        sendMessage();
+                        sendMessage(e.target.value);
+                        e.target.value = '';
                     }
                 }}></Text>
             </Send>

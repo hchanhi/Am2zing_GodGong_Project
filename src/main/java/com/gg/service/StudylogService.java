@@ -67,6 +67,7 @@ public class StudylogService {
     }
 
     public Integer recentStudytime(String nickname){
-        return studylogRepository.findTop1ByUserNicknameIsOrderByStudylogCreatedDesc(nickname);
+        User user = userRepository.findByNickname(nickname);
+        return studylogRepository.recentStudyTime(user.getId());
     }
 }

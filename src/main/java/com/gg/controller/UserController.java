@@ -94,8 +94,9 @@ public class UserController {
     }
 
     //회원 삭제
-    @GetMapping("/user/{id}/delete")
-    public void deleteUser(@PathVariable Long id){
+    @PostMapping("/user/{id}/delete")
+    public void deleteUser(@RequestBody HashMap<String, Long> param){
+        long id = param.get("id");
         userService.deleteUser(id);
     }
 

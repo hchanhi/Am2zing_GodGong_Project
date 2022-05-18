@@ -201,7 +201,7 @@ const User = () => {
     const handleSubmitDel = () => {
         if (window.confirm("정말 탈퇴하시겠습니까?") == true) {
             axios
-                .get('/api/user/' + userId + '/delete', delBody)
+                .post('/api/user/' + userId + '/delete', delBody)
                 .then(function (response) {
                     console.log(response.status, '성공');
 
@@ -211,6 +211,7 @@ const User = () => {
 
                 })
                 .catch(function (err) {
+                    console.log(delBody);
                     console.log(err);
                     console.log(origin);
 

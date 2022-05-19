@@ -31,8 +31,8 @@ public class TodoController {
     }
 
     @GetMapping("/todo/room")
-    public List<Todo> todoListInRoom(@RequestParam String roomId) {
-        return todoService.findTodos(Long.parseLong(roomId));
+    public List<Todo> todoListInRoom(@RequestParam String roomNumber) {
+        return todoService.findTodos(roomNumber);
     }
 
     @PostMapping("/todo/delete/{id}")

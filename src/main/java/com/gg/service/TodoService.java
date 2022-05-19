@@ -56,8 +56,9 @@ public class TodoService {
         return todoRepository.findAllByUserAndRoom(user, room);
     }
 
-    public List<Todo> findTodos(Long roomId){
-        return todoRepository.findTodos(roomId);
+    public List<Todo> findTodos(String roomNumber){
+        Room room = roomRepository.findRoomByRoomNumber(roomNumber);
+        return todoRepository.findTodos(room.getRoomId());
     }
 
     public void deleteTodo(Long id){

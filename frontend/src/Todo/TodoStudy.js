@@ -34,7 +34,7 @@ function TodoStudy() {
     let [isMember, setIsMember] = useState(false);
 
     let [newMessage, setNewMessage] = useState([]);
-    let [badgeNum, setBadgeNum] = useState(0);
+    let [badgeNum, setBadgeNum] = useState(-1);
     let StompJs = require('@stomp/stompjs');
     let client = useRef({});
 

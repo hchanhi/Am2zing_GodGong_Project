@@ -22,36 +22,25 @@ const Register = () => {
     const [passwordState, setPasswordState] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [email, setEmail] = useState([]);
-    const [state, setsState] = useState();
     const navigate = useNavigate();
     let { key } = useParams();
 
     useEffect(() => {
-        axios.get('/user/password/' + key)
+        axios.get('/api/user/password/' + key)
             .then(res => {
-                if (res.success == true) {
+                if (res.data.success == true) {
                     alert('이메일이 인증되었습니다. 비밀번호를 변경해주세요.');
+                    setEmail(res.data.message);
                 }
-                else if (res.message == '유효하지 않은 Key값입니다.')
+                else if (res.data.message == '유효하지 않은 Key값입니다.') {
                     alert('잘못된 접근입니다.');
-                return navigate('/login');
+                    navigate('/login');
+                }
             })
             .catch(err => {
                 console.log(err);
             })
     }, []);
-
-    const getUser = async () => {
-        const json = await axios.get('/api/users/');
-        console.log(json);
-        setEmail(json.data);
-
-        setsState(false);
-    };
-
-    useEffect(() => {
-        getUser();
-    }, [state == true]);
 
     const onhandlePost = async (data) => {
         const { email, password } = data;

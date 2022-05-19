@@ -90,8 +90,8 @@ const User = (props) => {
                         console.log(response.status, '성공');
                         localStorage.clear();
                         props.setUserNickName('');
-                        navigate('/');
                         alert("닉네임이 수정되었습니다. 다시 로그인해주세요!");
+                        navigate('/');
                     }
 
 
@@ -125,8 +125,8 @@ const User = (props) => {
                     console.log(response.status, '성공');
                     localStorage.clear();
                     props.setUserNickName('');
-                    navigate('/');
                     alert("생년월일이 수정되었습니다. 다시 로그인해주세요!");
+                    navigate('/');
 
                 })
                 .catch(function (err) {
@@ -175,8 +175,8 @@ const User = (props) => {
                         console.log(response.status, '성공');
                         localStorage.clear();
                         props.setUserNickName('');
-                        navigate('/');
                         alert("비밀번호가 수정되었습니다. 다시 로그인해주세요!");
+                        navigate('/');
                     }
 
 

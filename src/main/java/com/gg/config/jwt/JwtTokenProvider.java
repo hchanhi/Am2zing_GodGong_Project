@@ -19,9 +19,6 @@ public class JwtTokenProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
-    private static final String SECRET_KEY = "Q4NSl604sgyHJj1qwEkR3ycUeR4uUAt7WJraD7EN3O9DVM4yyYuHxMEbSF4XXyYJkal13eqgB0F7Bq4H";
-
-
     @Value("${gg.app.jwtSecret}")
     private String jwtSecret;
 
@@ -69,13 +66,13 @@ public class JwtTokenProvider {
             Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(authToken);
             return true;
         } catch (MalformedJwtException ex) {
-            logger.error("Invalid JWT token");
+            logger.error("JWT 토큰이 유효하지 않습니다.");
         } catch (ExpiredJwtException ex) {
-            logger.error("Expired JWT token");
+            logger.error("JWT 토큰이 만료되었습니다.");
         } catch (UnsupportedJwtException ex) {
-            logger.error("Unsupported JWT token");
+            logger.error("JWT 토큰이 지원되지 않습니다.");
         } catch (IllegalArgumentException ex) {
-            logger.error("JWT claims string is empty.");
+            logger.error("JWT 클레임이 비어 있습니다.");
         }
         return false;
     }

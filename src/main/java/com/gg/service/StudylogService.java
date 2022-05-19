@@ -2,6 +2,7 @@ package com.gg.service;
 
 import com.gg.domain.Studylog;
 import com.gg.domain.User;
+import com.gg.dto.StudylogInterface;
 import com.gg.repository.StudylogRepository;
 import com.gg.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,9 @@ public class StudylogService {
 
     //총 공부시간
     public Integer totalTime(String nickname){
-        Studylog studylog = studylogRepository.findByUserNickname(nickname);
-        return studylog.getStudylogTime();
+        User user = userRepository.findByNickname(nickname);
+        int studylog = studylogRepository.totalStudyTime(user.getId());
+        return studylog;
     }
 
     public Integer oneDayTime(String nickname){
@@ -55,14 +57,14 @@ public class StudylogService {
         return studylogRepository.selectDayTime(user.getId(), date);
     }
 
-    public List<Studylog> Monthtop10Studytime(){
+    public List<StudylogInterface> Monthtop10Studytime(){
         return studylogRepository.Monthtop10studyTime();
     }
 
-    public List<Studylog> Weektop10Studytime(){
+    public List<StudylogInterface> Weektop10Studytime(){
         return studylogRepository.Weektop10studyTime();
     }
-    public List<Studylog> Daytop10Studytime(){
+    public List<StudylogInterface> Daytop10Studytime(){
         return studylogRepository.Daytop10studyTime();
     }
 

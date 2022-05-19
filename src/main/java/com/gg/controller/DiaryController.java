@@ -71,7 +71,7 @@ public class DiaryController {
         return diary;
     }
 
-    @PostMapping("/api/main/diary/recent")
+    @GetMapping("/api/main/diary/recent")
     public Diary recentDiary(String nickname){
         return diaryService.recentDiary(nickname);
     }

@@ -19,7 +19,7 @@ public class Diary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long diaryId;
 
-
+    @Column(length = 1000)
     private String diaryContent;
 
 

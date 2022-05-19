@@ -9,7 +9,13 @@ function ChallengeModal(props){
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
 
-
+    function test(data){
+        var h = parseInt(data/3600);
+        var m = parseInt((data%3600)/60);
+        var s = (data%3600)%60;
+        var time = h+"시간 "+m+"분 "+s+"초";
+        return time;
+    }
 
     return (
     <div className="modalBackground">
@@ -21,7 +27,7 @@ function ChallengeModal(props){
             </div>
             <div className="title">
                 <h2>{getNickName(token)} 님의 총 공부시간</h2>
-                <h3>{props.timedata}</h3>
+                <h3>{test(props.timedata)}</h3>
             </div>
             <div className="body">
                 <h4>공부일기를 작성하시겠어요?</h4>

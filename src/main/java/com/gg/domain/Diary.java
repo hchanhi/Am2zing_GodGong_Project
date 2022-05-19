@@ -20,7 +20,7 @@ public class Diary {
     private Long diaryId;
 
     @Column(length = 1000)
-    public String diaryContent;
+    private String diaryContent;
 
 
 

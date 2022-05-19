@@ -43,6 +43,9 @@ let StudyDiary = styled(Grid)`
     span {
         font-size: 13pt;
         margin-left: 0;
+    
+        white-space:pre;
+      
     }
     div {
         background-color: mintcream;
@@ -68,7 +71,7 @@ function Home() {
     const [recentDate, setRecentDate] = useState();
     let navigate = useNavigate();
     const getRecentDiary = async () => {
-        const json = await axios.get('/api/main/diary/recent', {params: {nickname: nickname}});
+        const json = await axios.get('/api/main/diary/recent', { params: { nickname: nickname } });
         console.log(json, '성공');
         if (json.data.diaryContent == null) {
             console.log("널");
@@ -95,25 +98,25 @@ function Home() {
                 </StudyTime>
                 <StudyDiary item xs={7} sx={{ textAlign: 'left' }}>
 
-                        <span>오늘의 공부일기</span>
-                        <div>
-                            <span>{recentDate}</span>
-                            <br></br>
-                            <br></br>
-                            {recentDiary.diaryContent == null ?
-                                <h3>일기를 한번도 작성하지 않으셨어요!</h3> :
-                                <h3>{recentDiary.diaryContent}</h3>}
-                                <br></br>
-                                <br></br>
-                                {recentDiary.diarySentiment == null ?
-                                    <h5></h5> :
-                                    recentDiary.diarySentiment === 'neutral' ?
-                                        <h5>감정분석결과 : 기분이 보통입니다. 😐</h5> :
-                                        recentDiary.diarySentiment === 'negative' ?
-                                            <h5>감정분석결과 : 기분이 나쁩니다. 👿</h5>
-                                            : <h5>감정분석결과 : 기분이 좋습니다. 🥰</h5>
-                            }
-                        </div>
+                    <span>오늘의 공부일기</span>
+                    <div>
+                        <span>{recentDate}</span>
+                        <br></br>
+                        <br></br>
+                        {recentDiary.diaryContent == null ?
+                            <h3>일기를 한번도 작성하지 않으셨어요!</h3> :
+                            <h3>{recentDiary.diaryContent}</h3>}
+                        <br></br>
+                        <br></br>
+                        {recentDiary.diarySentiment == null ?
+                            <h5></h5> :
+                            recentDiary.diarySentiment === 'neutral' ?
+                                <h5>감정분석결과 : 기분이 보통입니다. 😐</h5> :
+                                recentDiary.diarySentiment === 'negative' ?
+                                    <h5>감정분석결과 : 기분이 나쁩니다. 👿</h5>
+                                    : <h5>감정분석결과 : 기분이 좋습니다. 🥰</h5>
+                        }
+                    </div>
 
 
                 </StudyDiary>

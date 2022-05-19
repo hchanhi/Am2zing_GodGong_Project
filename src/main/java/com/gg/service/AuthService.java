@@ -16,4 +16,6 @@ public interface AuthService {
 
     void changePassword(User user, String password) throws NotFoundException;
 
+    String getUserEmailByCode(String key);
+
 }

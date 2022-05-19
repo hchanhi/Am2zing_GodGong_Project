@@ -74,5 +74,13 @@ font-size:70px;
 }
 
 #cancelBtn {
-  background-color: cornflowerblue;
+  background-color: rgb(78, 173, 188);
+}
+
+.title h2{
+  text-align: center;
+}
+
+.title h3{
+  font-size:25pt;
 }

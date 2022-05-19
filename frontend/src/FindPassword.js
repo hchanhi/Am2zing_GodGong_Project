@@ -22,15 +22,10 @@ import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
 
-    const [checked, setChecked] = useState(false);
     const [emailError, setEmailError] = useState('');
 
     const navigate = useNavigate();
 
-    // 동의 체크
-    const handleAgree = (event) => {
-        setChecked(event.target.checked);
-    };
 
 
 

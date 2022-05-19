@@ -203,12 +203,13 @@ function Challenge(props) {
   return (
     <div className="main-secion">
       <div className="clock-holder">
+        <div className="canvas-holder"><canvas id="canvas"></canvas></div>
         <div className="clock-title1">{getNickName(token)} 님의 오늘의 챌린지</div>
         <div className="stopwatch">
           {openModal && <ChallengeModal timedata={timedata} closeModal={setOpenModal} />}
           <DisplayComponent className="DisplayComponent" time={time} />
           <BtnComponent setOpenModal={setOpenModal} status={status} resume={resume} reset={reset} stop={stop} start={start} />
-          <div><canvas id="canvas"></canvas></div>
+          
           <div id="label-container"></div>
         </div>
       </div>

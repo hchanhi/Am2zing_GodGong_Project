@@ -29,7 +29,7 @@ function FindPw() {
         <div>
             왜 json만 나와아악
         </div>
-    )
+    );
 }
 
 export default FindPw;

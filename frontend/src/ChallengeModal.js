@@ -21,7 +21,7 @@ function ChallengeModal(props){
             </div>
             <div className="title">
                 <h2>{getNickName(token)} 님의 총 공부시간</h2>
-                <div>{props.timedata}</div>
+                <h3>{props.timedata}</h3>
             </div>
             <div className="body">
                 <h4>공부일기를 작성하시겠어요?</h4>

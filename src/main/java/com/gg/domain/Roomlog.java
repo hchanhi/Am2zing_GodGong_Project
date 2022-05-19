@@ -1,8 +1,10 @@
 package com.gg.domain;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -21,5 +23,8 @@ public class Roomlog {
 
     @ManyToOne
     private Room room;
+
+    @CreationTimestamp
+    private Timestamp roomlogCreated;
 
 }

@@ -19,7 +19,7 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository2 userRepository2;
 
     @Autowired
     private EmailService emailService;
@@ -34,8 +34,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public User findByEmail(String email) throws NotFoundException {
-        User user = userRepository.findByEmail(email).get();
-        if(userRepository.findByEmail(email).isEmpty()) throw new NotFoundException("멤버가 조회되지 않음");
+        User user = userRepository2.findByEmail(email);
+        if(user == null) throw new NotFoundException("멤버가 조회되지 않음");
         return user;
     }
 //    @Override

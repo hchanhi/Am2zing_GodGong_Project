@@ -117,7 +117,7 @@ const Resigter = (props) => {
                     marginTop: 8,
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'center',
+
                     borderRadius: '10px',
                     padding: '32px',
                     backgroundColor: '#fff',
@@ -125,35 +125,38 @@ const Resigter = (props) => {
                 }}
             >
 
-                <Typography component="h1" variant="h5">
+                <Typography component="h1" variant="h5" >
                     로그인
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                    />
+                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+                    <Grid item xs={12}>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="이메일"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
+                            error={emailError !== '' || false}
+                        />
+                    </Grid>
                     <FormHelperText>{emailError}</FormHelperText>
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
+                    <Grid item xs={16}>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="비밀번호"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                            error={passwordState !== '' || false}
+                        />
+                    </Grid>
+                    <FormHelperText>{passwordState}</FormHelperText>
                     <Button
                         id="joinBtn"
                         type="submit"
@@ -166,14 +169,14 @@ const Resigter = (props) => {
                     <Grid container>
                         <Grid item xs>
                             <Link href="/findPassword" variant="body2">
-                                Forgot password?
+                                비밀번호를 잊어버리셨나요?
                             </Link>
                         </Grid>
 
                     </Grid>
                     <Grid item>
                         <Link href="/join" variant="body2">
-                            {"Don't have an account? Sign Up"}
+                            {"계정이 없으신가요? 회원가입"}
                         </Link>
                     </Grid>
                 </Box>

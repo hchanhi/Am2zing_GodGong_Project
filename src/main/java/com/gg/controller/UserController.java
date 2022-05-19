@@ -108,7 +108,7 @@ public class UserController {
     }
 
     // 비밀번호 찾기
-    @GetMapping("/user/password/{key}")
+    @GetMapping("/user/passwordChange/{key}")
     public ApiResponse isPasswordUUIdValidate(@PathVariable String key) {
         ApiResponse apiResponse;
         try {

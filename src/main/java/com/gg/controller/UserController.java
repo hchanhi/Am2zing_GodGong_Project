@@ -115,13 +115,14 @@ public class UserController {
             if (authService.isPasswordUuidValidate(key))
                 apiResponse = new ApiResponse(true, authService.getUserEmailByCode(key));
             else
-                apiResponse = new ApiResponse(false, "유효하지 않은 Key값입니다.");
+                apiResponse = new ApiResponse(false, "1");
         } catch (Exception e) {
-            apiResponse = new ApiResponse(false, "유효하지 않은 key값입니다.");
+            apiResponse = new ApiResponse(false, "1");
         }
         return apiResponse;
     }
 
+    // 이메일 주소로 비밀번호 변경 링크 전송
     @PostMapping("/user/password")
         public ApiResponse requestChangePassword(@RequestBody RequestChangePassword requestChangePassword) {
             ApiResponse apiResponse;
@@ -130,24 +131,25 @@ public class UserController {
                 System.out.println(user);
                 if (!user.getEmail().equals(requestChangePassword.getEmail())) throw new NoSuchFieldException("");
                 authService.requestChangePassword(user);
-                apiResponse = new ApiResponse(true, "success 성공적으로 사용자의 비밀번호 변경요청을 수행했습니다.");
+                apiResponse = new ApiResponse(true, "가입한 이메일 주소로 비밀번호 변경 메일을 보냈습니다.");
             } catch (NoSuchFieldException e) {
-                apiResponse = new ApiResponse(false, "사용자 정보를 조회할 수 없습니다.");
+                apiResponse = new ApiResponse(false, "1");
             } catch (Exception e) {
-                apiResponse = new ApiResponse(false, "비밀번호 변경 요청을 할 수 없습니다.");
+                apiResponse = new ApiResponse(false, "1");
             }
         return apiResponse;
     }
 
+    // 이메일 링크 검증 후 비밀번호 변경
     @PutMapping("/user/password")
     public ApiResponse changePassword(@RequestBody PasswordRequest passwordRequest) {
         ApiResponse apiResponse;
         try{
             User user = authService.findByEmail(passwordRequest.getEmail());
             authService.changePassword(user, passwordRequest.getPassword());
-            apiResponse = new ApiResponse(true,"성공적으로 사용자의 비밀번호를 변경했습니다.");
+            apiResponse = new ApiResponse(true,"회원님의 비밀번호가 성공적으로 변경 되었습니다. ");
         }catch(Exception e){
-            apiResponse = new ApiResponse(false,"사용자의 비밀번호를 변경할 수 없었습니다.");
+            apiResponse = new ApiResponse(false,"비밀번호 변경에 실패했습니다. 다시 시도해 주세요.");
         }
         return apiResponse;
 

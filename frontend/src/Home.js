@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -63,25 +63,23 @@ let RankingText = styled(Grid)`
 function Home() {
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const nickname = getNickName(token);
+
+    const [recentDiary, setRecentDiary] = useState([]);
     let navigate = useNavigate();
     const getRecentDiary = async () => {
-        const json = await axios.get('/api/main/diary/recent', { nickname: nickname })
-            .then(function (response) {
-                console.log(response, '성공');
-                console.log(response.data.diaryContent);
-                console.log(nickname);
+        const json = await axios.get('/api/main/diary/recent', { params: { nickname: nickname } });
+        console.log(json, '성공');
+        console.log(json.data.diaryContent);
+        console.log(nickname);
+        setRecentDiary(json.data);
 
-
-            })
-            .catch(function (err) {
-                console.log(err);
-
-            });
     };
     useEffect(() => {
         getRecentDiary();
 
     }, []);
+    console.log(recentDiary.diaryId);
+    const editdate = recentDiary.diaryCreated;
     return (
         <Wrapper>
             <TodayStyle container spacing={1}>
@@ -93,9 +91,17 @@ function Home() {
                 <StudyDiary item xs={7} sx={{ textAlign: 'left' }}>
                     <Link to="/diary">
                         <span>오늘의 공부일기</span>
-                        <div>여기에도 일기 띄우기 </div>
+                        <div>
+                            <span>{editdate}</span>
+                            <br></br>
+                            <br></br>
+                            <h3>{recentDiary.diaryContent}</h3>
+                            <br></br>
+                            <br></br>
+                            <h5>감정분석 결과 : {recentDiary.diarySentiment}</h5>
+                        </div>
                     </Link>
-                    <button >{getNickName(token)} </button>
+
                 </StudyDiary>
             </TodayStyle>
 

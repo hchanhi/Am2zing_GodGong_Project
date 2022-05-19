@@ -6,6 +6,7 @@ import styled from "styled-components";
 import TodoList from "./Todo/TodoList.js";
 import axios from 'axios';
 import { isAuth, getNickName } from './jwtCheck';
+import DiaryCom from "./components/DiaryCom";
 let Wrapper = styled.div`
     margin: auto;
     width: 65%;
@@ -65,23 +66,52 @@ function Home() {
     const nickname = getNickName(token);
 
     const [recentDiary, setRecentDiary] = useState([]);
+    const [MonthTime, setMonthTime] = useState([]);
+    const [WeekTime, setWeekTime] = useState([]);
+    const [DayTime, setDayTime] = useState([]);
     const [recentDate, setRecentDate] = useState();
     let navigate = useNavigate();
     const getRecentDiary = async () => {
         const json = await axios.get('/api/main/diary/recent', {params: {nickname: nickname}});
-        console.log(json, '성공');
         if (json.data.diaryContent == null) {
-            console.log("널");
         } else {
-            console.log(json.data.diaryContent);
-            console.log(nickname);
             setRecentDiary(json.data);
             setRecentDate(json.data.diaryCreated.substr(0, 10));
         }
     };
+    function test(data){
+        var h = parseInt(data/3600);
+        var m = parseInt((data%3600)/60);
+        var s = (data%3600)%60;
+        var time = h+"시간 "+m+"분 "+s+"초";
+        return time;
+    }
+    const getMonthTime = async () => {
+        const json = await axios.get('/api/main/studytime/month');
+        if (json.data == null) {
+        } else {
+            setMonthTime(json.data);
+        }
+    };
+    const getWeekTime = async () => {
+        const json = await axios.get('/api/main/studytime/week');
+        if (json.data == null) {
+        } else {
+            setWeekTime(json.data);
+        }
+    };
+    const getDayTime = async () => {
+        const json = await axios.get('/api/main/studytime/day');
+        if (json.data == null) {
+        } else {
+            setDayTime(json.data);
+        }
+    };
     useEffect(() => {
         getRecentDiary();
-
+        getMonthTime();
+        getWeekTime();
+        getDayTime();
     }, []);
     console.log(recentDiary.diaryId);
     const editdate = recentDiary.diaryCreated;
@@ -121,9 +151,41 @@ function Home() {
 
             <Grid container spacing={1} sx={{ marginTop: '3vh' }}>
                 <RankingText item xs={4} sx={{ margin: '5vh 0 10vh' }}>
-                    <div><h1 style={{ color: 'darkcyan' }}>하루 전 ▾</h1></div>
                     <div><h1>누적 공부 시간 랭킹</h1></div>
-                    <div>2022.05.25(수) 오전 06:00 기준</div>
+                    <div>현재시간 기준</div>
+                    <div><h1 style={{ color: 'darkcyan' }}>한 달 ▾</h1></div>
+                    <table>
+                        <tbody>
+                        {MonthTime.map((mt) =>(
+                            <tr key={mt.nickname}>
+                                <td>{mt.nickname}</td>
+                                <td>{test(mt.time)}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                    <div><h1 style={{ color: 'darkcyan' }}>한 주 ▾</h1></div>
+                    <table>
+                        <tbody>
+                        {WeekTime.map((wt) =>(
+                            <tr key={wt.nickname}>
+                                <td>{wt.nickname}</td>
+                                <td>{test(wt.time)}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                    <div><h1 style={{ color: 'darkcyan' }}>오늘 ▾</h1></div>
+                    <table>
+                        <tbody>
+                        {DayTime.map((dt) =>(
+                            <tr key={dt.nickname}>
+                                <td>{dt.nickname}</td>
+                                <td>{test(dt.time)}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
                 </RankingText>
                 <Grid item xs={8} sx={{ textAlign: 'left' }}>
                     <div><b>1~10위</b> 누적 공부시간 랭킹에서 다른 사용자와 공부시간을 비교할 수 있습니다.</div>

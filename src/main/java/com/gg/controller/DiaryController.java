@@ -27,7 +27,8 @@ public class DiaryController {
         Boolean check = true;
         String content = param.get("content");
         String nickname = param.get("nickname");
-        String sentiment = diaryService.sentiment(content);
+        String content2 = content.replaceAll("\n", " ");
+        String sentiment = diaryService.sentiment(content2);
         diaryService.postDiary(content,nickname,sentiment);
         if(sentiment.isEmpty()){
             check = false;

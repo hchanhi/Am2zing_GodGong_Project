@@ -8,5 +8,9 @@ import lombok.Setter;
 public class StudyRankDTO {
     String Nickname;
 
-    Integer Time;
+    Integer day;
+
+    Integer week;
+
+    Integer month;
 }

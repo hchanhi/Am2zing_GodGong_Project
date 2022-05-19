@@ -61,8 +61,11 @@ public class TodoService {
         return todoRepository.findTodos(room.getRoomId());
     }
 
-    public void deleteTodo(Long id){
-        todoRepository.deleteById(id);
+    public void deleteTodo(String userNickname, String roomNumber) {
+        User user = userRepository.findByNickname(userNickname);
+        Room room = roomRepository.findRoomByRoomNumber(roomNumber);
+
+        todoRepository.deleteAllByUserAndRoom(user, room);
     }
 
 }

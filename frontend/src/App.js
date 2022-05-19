@@ -51,7 +51,7 @@ function App() {
                 <Route path='/mypage/user' element={<User setUserNickName={setUserNickName}/>} />
                 <Route path="/todoList" element={<TodoList />} />
                 <Route path="/todoStudy/:roomNum" element={<TodoStudy />} />
-                <Route path="/api/user/password/:key" element={<EditPassword />} />
+                <Route path="/api/user/passwordChange/:key" element={<EditPassword />} />
             </Routes>
 
             <Footer />

@@ -1,6 +1,8 @@
 package com.gg.repository;
 
+import com.gg.domain.Diary;
 import com.gg.domain.Studylog;
+import com.gg.dto.StudylogInterface;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -22,19 +24,20 @@ public interface StudylogRepository extends JpaRepository<Studylog, Long> {
     @Query(value= "select studylog_time from studylog where user_id=?1 and date(studylog_created) = ?2 group by user_id", nativeQuery = true)
     Integer selectDayTime(Long userId, Date date);
 
-    Studylog findByUserNickname(String nickname);
+    @Query(value="select sum(studylog_time) from studylog where user_id=?1 group by user_id", nativeQuery = true)
+    Integer totalStudyTime(long id);
 
-    @Query(value="select user_id, sum(studylog_time) from studylog where date(studylog_created) >= date_format(now(), '%Y-%m-01')" +
+    @Query(value="select user_id as id, sum(studylog_time) as time from studylog where date(studylog_created) >= date_format(now(), '%Y-%m-01')" +
             "group by user_id order by studylog_time DESC limit 10", nativeQuery = true)
-    List<Studylog> Monthtop10studyTime();
+    List<StudylogInterface> Monthtop10studyTime();
 
-    @Query(value="select user_id, sum(studylog_time) from studylog where date(studylog_created) >= DATE_SUB(now(), interval 7 day)" +
+    @Query(value="select user_id as id, sum(studylog_time) as time from studylog where date(studylog_created) >= DATE_SUB(now(), interval 7 day)" +
             "group by user_id order by studylog_time DESC limit 10", nativeQuery = true)
-    List<Studylog> Weektop10studyTime();
+    List<StudylogInterface> Weektop10studyTime();
 
-    @Query(value="select user_id, sum(studylog_time) from studylog where date(studylog_created) >= date(now())" +
+    @Query(value="select user_id as id, sum(studylog_time) as time from studylog where date(studylog_created) >= date(now())" +
             "group by user_id order by studylog_time DESC limit 10", nativeQuery = true)
-    List<Studylog> Daytop10studyTime();
+    List<StudylogInterface> Daytop10studyTime();
 
     @Query(value="select studylog_time from studylog where user_id=?1 order by studylog_created DESC limit 1", nativeQuery = true)
     Integer recentStudyTime(Long id);

@@ -56,7 +56,7 @@ public class DiaryService {
     }
 
     public Diary recentDiary(String nickname){
-        return diaryRepository.findTop1ByUserNicknameIsOrderByDiaryCreatedDesc(nickname);
+        return diaryRepository.findTop1ByUserNicknameOrderByDiaryCreatedDesc(nickname);
     }
 
     ///네이버 api 시작

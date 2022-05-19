@@ -1,6 +1,7 @@
 package com.gg.controller;
 
 import com.gg.domain.Studylog;
+import com.gg.dto.StudylogInterface;
 import com.gg.service.StudylogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,15 +31,18 @@ public class StudylogController {
         return check;
     }
 
-    @GetMapping("/api/mypage/studytime")
-    public List<Integer> studyTime(String nickname){
+    @PostMapping("/api/mypage/studytime")
+    public List<Integer> studyTime(@RequestBody HashMap<String, String> param){
         List<Integer> studytime = new ArrayList<>();
+        String nickname = param.get("nickname");
         int day = studylogService.oneDayTime(nickname);
         int week = studylogService.oneWeekTime(nickname);
         int month = studylogService.oneMonthTime(nickname);
+        int total = studylogService.totalTime(nickname);
         studytime.add(day);
         studytime.add(week);
         studytime.add(month);
+        studytime.add(total);
         return studytime;
     }
 
@@ -48,23 +52,18 @@ public class StudylogController {
         return time;
     }
 
-    @PostMapping("/api/mypage/studytime/total")
-    public Integer totalStudyTime(String nickname){
-        return studylogService.totalTime(nickname);
-    }
-
-    @PostMapping("/api/main/studytime/month")
-    public List<Studylog> Monthtop10StudyTime(){
+    @GetMapping("/api/main/studytime/month")
+    public List<StudylogInterface> Monthtop10StudyTime(){
         return studylogService.Monthtop10Studytime();
     }
 
-    @PostMapping("/api/main/studytime/week")
-    public List<Studylog> Weektop10StudyTime(){
+    @GetMapping("/api/main/studytime/week")
+    public List<StudylogInterface> Weektop10StudyTime(){
         return studylogService.Weektop10Studytime();
     }
 
-    @PostMapping("/api/main/studytime/day")
-    public List<Studylog> Daytop10StudyTime(){
+    @GetMapping("/api/main/studytime/day")
+    public List<StudylogInterface> Daytop10StudyTime(){
         return studylogService.Daytop10Studytime();
     }
 

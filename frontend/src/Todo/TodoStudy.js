@@ -34,6 +34,7 @@ function TodoStudy() {
     let [isMember, setIsMember] = useState(false);
 
     let [newMessage, setNewMessage] = useState([]);
+    let [badgeNum, setBadgeNum] = useState(0);
     let StompJs = require('@stomp/stompjs');
     let client = useRef({});
 
@@ -54,6 +55,10 @@ function TodoStudy() {
         connect();
         return () => disConnect();
     }, []);
+
+    useEffect(() => {
+        setBadgeNum(++badgeNum);
+    }, [newMessage])
 
     function connect() {
         client.current = new StompJs.Client({
@@ -141,7 +146,7 @@ function TodoStudy() {
                     <RoomNumContext.Provider value={roomNum}>
                         <NewMessageContext.Provider value={newMessage}>
                             <ClientContext.Provider value={client.current}>
-                                <ChattingBox messageNum={newMessage.length}/>
+                                <ChattingBox badgeNum={badgeNum} setBadgeNum={setBadgeNum}/>
                             </ClientContext.Provider>
                         </NewMessageContext.Provider>
                     </RoomNumContext.Provider>

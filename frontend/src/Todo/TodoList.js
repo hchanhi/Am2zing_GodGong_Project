@@ -31,6 +31,7 @@ function TodoList(props) {
     sliceTodoList = rooms.slice(0, LastIndex);
 
     function makeRoom() {
+
         axios.post('/api/chat/room', null, { params: room })
             .then(res => {
                 alert('스터디룸을 성공적으로 만들었어요.');
@@ -55,7 +56,7 @@ function TodoList(props) {
     return (
         <Wrapper>
             {
-                props.isHome
+                props.isHome || !userNickname
                     ? null 
                     : <button onClick={() => makeRoom()}>study 만들기</button>
             }

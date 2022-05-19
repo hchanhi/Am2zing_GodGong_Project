@@ -10,6 +10,7 @@ function MyPage(props) {
     let [userNickName, setUserNickName] = useState('');
     let [isLogin, setIsLogin] = useState(false);
 
+
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('accessToken'));
 

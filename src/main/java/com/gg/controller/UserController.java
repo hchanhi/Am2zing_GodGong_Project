@@ -113,7 +113,7 @@ public class UserController {
         ApiResponse apiResponse;
         try {
             if (authService.isPasswordUuidValidate(key))
-                apiResponse = new ApiResponse(true, "success정상적인 접근입니다.");
+                apiResponse = new ApiResponse(true, authService.getUserEmailByCode(key));
             else
                 apiResponse = new ApiResponse(false, "유효하지 않은 Key값입니다.");
         } catch (Exception e) {

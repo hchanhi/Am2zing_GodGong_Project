@@ -41,13 +41,14 @@ const Register = () => {
         await axios
             .post('/api/user/password', postData)
             .then(function (res) {
-                if (res.success == true) {
+                if (res.data.success == true) {
                     alert('메일함에서 비밀번호 변경 메일을 확인해주세요!');
                     navigate('/login');
-                } else if (res.message == '사용자 정보를 조회할 수 없습니다.') {
+                } else if (res.data.message == '사용자 정보를 조회할 수 없습니다.') {
                     alert('등록되지 않은 이메일입니다😰');
-                } else
-                    alert(res.message);
+                } else {
+                    alert(res.data.message);
+                }
             })
             .catch(function (err) {
                 console.log(err);

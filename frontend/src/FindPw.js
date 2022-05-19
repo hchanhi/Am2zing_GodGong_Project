@@ -23,7 +23,7 @@ function FindPw() {
             .catch(err => {
                 console.log(err);
             })
-    }, [key]);
+    }, []);
     
     return (
         <div>

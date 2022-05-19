@@ -91,7 +91,7 @@ function Home() {
                 </Grid>
             </Grid>
 
-            <h1 style={{ textAlign: 'left' }}>같이 TODO 해요 ❗</h1>
+            <h1 style={{ textAlign: 'left' }}>함께하는 Todo✅</h1>
             <TodoList isHome={true}/>
             <Link to="/todoList" style={{ textDecoration: 'underline', textAlign: 'right' }}>
                 더 보러가기

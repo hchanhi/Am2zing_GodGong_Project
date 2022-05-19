@@ -57,7 +57,7 @@ const Diary = () => {
         axios
             .post('/api/diary/post', body)
             .then(function (response) {
-                navigate('/mypage/diary');
+                navigate('/mypage');
                 console.log(response);
                 alert("일기가 작성되었습니다!");
 

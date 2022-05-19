@@ -16,6 +16,11 @@ public class RoomlogService {
     private final RoomRepository roomRepository;
     private final UserRepository userRepository;
 
+
+    public Roomlog checkRoomlog(String nickName) {
+        User user = userRepository.findByNickname(nickName);
+        return roomlogRepository.findByUser(user);
+    }
     public Roomlog enterRoom(String userNickname, String roomNumber){
         Roomlog roomlog = new Roomlog();
         roomlog.setRoom(roomRepository.findRoomByRoomNumber(roomNumber));
@@ -28,6 +33,6 @@ public class RoomlogService {
 
     public void exitRoom(String nickName) {
         User user = userRepository.findByNickname(nickName);
-        roomlogRepository.deleteRoomlogByUser(user);
+        roomlogRepository.deleteByUser(user);
     }
 }

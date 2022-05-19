@@ -18,14 +18,14 @@ function FindPw() {
             })
             .catch(err => {
                 console.log(err);
-            })
+            });
     }, [key]);
-    
+
     return (
         <div>
             왜 json만 나와아악
         </div>
-    )
+    );
 }
 
 export default FindPw;

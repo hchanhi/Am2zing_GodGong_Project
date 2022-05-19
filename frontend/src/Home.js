@@ -65,7 +65,7 @@ function Home() {
     const nickname = getNickName(token);
     let navigate = useNavigate();
     const getRecentDiary = async () => {
-        const json = await axios.post('/api/main/diary/recent', { nickname: nickname })
+        const json = await axios.get('/api/main/diary/recent', { nickname: nickname })
             .then(function (response) {
                 console.log(response, '성공');
                 console.log(response.data.diaryContent);

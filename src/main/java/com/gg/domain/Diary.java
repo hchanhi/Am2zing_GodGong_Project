@@ -23,6 +23,7 @@ public class Diary {
     private String diaryContent;
 
 
+
     private String diarySentiment;
 
     @CreationTimestamp

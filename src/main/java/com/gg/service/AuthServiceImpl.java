@@ -62,7 +62,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void requestChangePassword(User user) throws NotFoundException{
-        String CHANGE_PASSWORD_LINK = "http://localhost:8080/api/user/password/";
+        String CHANGE_PASSWORD_LINK = "http://localhost:3000/api/user/passwordChange/";
         if(user == null) throw new NotFoundException("잘못된 경로입니다. 다시 시도해 주세요.");
         String key = REDIS_CHANGE_PASSWORD_PREFIX+UUID.randomUUID();
         System.out.println(key);

@@ -144,7 +144,7 @@ function Challenge(props) {
     window.requestAnimationFrame(loop);
   }
 
-  var check = "공부중";
+  var check = "자리비움";
   async function predict() {
     // Prediction #1: run input through posenet
     // estimatePose can take in an image, video or canvas html element

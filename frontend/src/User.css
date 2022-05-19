@@ -1,0 +1,169 @@
+.UserEditor {
+
+
+    padding: 20px;
+
+    width: 60% !important;
+}
+
+
+
+.UserEditor label {
+    margin-right: 10px;
+    width: 30%;
+}
+
+.UserEditor form {
+    text-align: left !important;
+}
+
+.UserEditor input {
+    padding-bottom: 5px;
+    text-align: left !important;
+    border: none;
+    border-bottom: 3px solid #2fbe9f;
+    outline: none;
+    background: none;
+    font-size: medium;
+    font-weight: 600;
+    width: 100% !important;
+}
+
+.UserEditor textarea {
+    padding: 10px;
+    height: 200px;
+    width: 100% !important;
+    border: 3px solid #2fbe9f;
+    border-radius: 20px;
+
+}
+
+.UserEditor select {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.UserEditor button {
+    width: 60px;
+    cursor: pointer;
+    margin-left: 10px;
+    height: 40px;
+    background-color: #2fbe9f;
+    border: none;
+    border-radius: 10px;
+    color: #ececec;
+    font-weight: 600;
+}
+
+.DiaryButton {
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    font-size: 18px;
+    white-space: nowrap;
+}
+
+.DiaryButton_default {
+    background-color: #ececec;
+    color: black;
+}
+
+.DiaryButton_positive {
+    background-color: #2fbe9f;
+    color: white;
+}
+
+.DiaryButton_negative {
+    background-color: #fd565f;
+    color: white;
+}
+
+.userFlex {
+    display: flex;
+    position: relative;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+
+h2 {
+    text-align: left;
+}
+
+.btns {
+    text-align: right;
+
+
+}
+
+.saveBtn {
+    background-color: #2fbe9f;
+    border: none;
+    border-radius: 10px;
+    color: #ececec;
+    font-weight: 600;
+}
+
+.deleteBtn {
+    background-color: #fd565f;
+    border: none;
+    border-radius: 10px;
+    color: #ececec;
+    font-weight: 600;
+}
+
+.message {
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 24px;
+    letter-spacing: -1px;
+    width: 70%;
+    top: 50%;
+    left: 22%;
+    position: absolute;
+
+
+}
+
+.modify {
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 24px;
+    letter-spacing: -1px;
+    width: 2%;
+    top: 130%;
+    left: 92%;
+    position: absolute;
+
+}
+
+.success {
+    display: none;
+}
+
+.error {
+    color: #ff2727;
+}
+
+.userDelBtn {
+    display: flex !important;
+    justify-content: flex-start !important;
+    text-align: none !important;
+    background: transparent !important;
+}
+
+.userDelBtn button {
+    background: transparent !important;
+    color: #fd565f;
+    text-decoration: underline;
+    padding: 0;
+    margin: 0;
+}

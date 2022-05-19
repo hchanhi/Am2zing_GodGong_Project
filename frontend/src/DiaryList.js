@@ -93,7 +93,7 @@ function DiaryList(diary) {
                 </div>
             ) : (
                 <div>
-                    <h3>{getNickName(token)}님의 마이페이지💁🏻‍♀️</h3>
+
                     <Container className='diary_header'>
 
                         <div > <h2>공부일기📆</h2></div>

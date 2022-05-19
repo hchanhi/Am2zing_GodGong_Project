@@ -306,7 +306,7 @@ const User = (props) => {
     );
     console.log(user.nickname);
     return (<div>
-        <h3>{getNickName(token)}님의 마이페이지💁🏻‍♀️</h3>
+
         <Container className="UserEditor">
 
             <h2>회원정보🔎</h2>

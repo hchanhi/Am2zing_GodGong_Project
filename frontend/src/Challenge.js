@@ -58,7 +58,6 @@ function Challenge(props) {
     setStatus(2);
 
 
-
   };
 
   const reset = async () => {
@@ -130,11 +129,6 @@ function Challenge(props) {
     ctx = canvas.getContext("2d");
 
 
-    //퍼센트 화면표시1
-    // labelContainer = document.getElementById("label-container");
-    // for (let i = 0; i < maxPredictions; i++) { // and class labels
-    //     labelContainer.appendChild(document.createElement("div"));
-    // }
   }
 
 
@@ -170,12 +164,7 @@ function Challenge(props) {
         // {props.stop};
       }
     */
-    //퍼센트 화면표시2
-    // for (let i = 0; i < maxPredictions; i++) {
-    //     const classPrediction =
-    //         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-    //     labelContainer.childNodes[i].innerHTML = classPrediction;
-    // }
+    
 
     // finally draw the poses
     drawPose(pose);

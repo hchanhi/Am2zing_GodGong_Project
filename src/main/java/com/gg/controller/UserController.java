@@ -115,9 +115,9 @@ public class UserController {
             if (authService.isPasswordUuidValidate(key))
                 apiResponse = new ApiResponse(true, authService.getUserEmailByCode(key));
             else
-                apiResponse = new ApiResponse(false, "1");
+                apiResponse = new ApiResponse(false, "잘못된 경로입니다. 다시 확인해 주세요.");
         } catch (Exception e) {
-            apiResponse = new ApiResponse(false, "1");
+            apiResponse = new ApiResponse(false, "잘못된 경로입니다. 다시 확인해 주세요.");
         }
         return apiResponse;
     }
@@ -133,9 +133,9 @@ public class UserController {
                 authService.requestChangePassword(user);
                 apiResponse = new ApiResponse(true, "가입한 이메일 주소로 비밀번호 변경 메일을 보냈습니다.");
             } catch (NoSuchFieldException e) {
-                apiResponse = new ApiResponse(false, "1");
+                apiResponse = new ApiResponse(false, "회원 정보를 찾을 수 없습니다. 다시 시도해 주세요.");
             } catch (Exception e) {
-                apiResponse = new ApiResponse(false, "1");
+                apiResponse = new ApiResponse(false, "비밀번호를 변경할 수 없습니다. 다시 시도해 주세요.");
             }
         return apiResponse;
     }

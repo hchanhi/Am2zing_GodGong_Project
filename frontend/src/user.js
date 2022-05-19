@@ -87,12 +87,16 @@ const User = (props) => {
                     if (response.data == false) {
                         alert("중복된 닉네임입니다!");
                     } else {
-                        alert("수정 완료되었습니다!");
-                        localStorage.clear();
-                        navigate('/');
 
+                          localStorage.clear();
+                        props.setUserNickName('');
+                        navigate('/');
+                        alert("닉네임이 수정되었습니다. 다시 로그인해주세요!");
+                     
                     }
 
+
+                    
                 })
                 .catch(function (err) {
                     console.log(err);
@@ -120,10 +124,10 @@ const User = (props) => {
             axios
                 .post('/api/user/' + userId + '/birth', birthBody)
                 .then(function (response) {
-
-                    alert("수정 완료되었습니다!");
-                    localStorage.clear();
+ localStorage.clear();
+props.setUserNickName('');
                     navigate('/');
+                    alert("생년월일이 수정되었습니다. 다시 로그인해주세요!");
 
 
 
@@ -171,9 +175,11 @@ const User = (props) => {
                     if (response.data == false) {
                         alert("비밀번호 오류!");
                     } else {
-                        alert("수정 완료되었습니다!");
+
                         localStorage.clear();
+                        props.setUserNickName('');
                         navigate('/');
+                        alert("비밀번호가 수정되었습니다. 다시 로그인해주세요!");
 
                     }
 

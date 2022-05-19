@@ -1,10 +1,10 @@
 package com.gg.controller;
 
-import com.gg.domain.Studylog;
+import com.gg.dto.StudyRankDTO;
 import com.gg.dto.StudylogInterface;
 import com.gg.service.StudylogService;
+import com.gg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -17,6 +17,9 @@ public class StudylogController {
 
     @Autowired
     StudylogService studylogService;
+
+    @Autowired
+    UserService userService;
 
     //닉네임이랑 공부한시간(초) 받고 저장하기
     @PostMapping("/api/studylog/time")
@@ -53,18 +56,51 @@ public class StudylogController {
     }
 
     @GetMapping("/api/main/studytime/month")
-    public List<StudylogInterface> Monthtop10StudyTime(){
-        return studylogService.Monthtop10Studytime();
+    public List<StudyRankDTO> Monthtop10StudyTime(){
+        List<StudyRankDTO> ranks = new ArrayList<>();
+        int length = studylogService.Monthtop10Studytime().size();
+        for(int i=0;i<length;i++) {
+            Long id = studylogService.Monthtop10Studytime().get(i).getId();
+            int time = studylogService.Monthtop10Studytime().get(i).getTime();
+            String nickname = userService.findNickname(id);
+            StudyRankDTO sr = new StudyRankDTO();
+            sr.setTime(time);
+            sr.setNickname(nickname);
+            ranks.add(i, sr);
+        }
+        return ranks;
     }
 
     @GetMapping("/api/main/studytime/week")
-    public List<StudylogInterface> Weektop10StudyTime(){
-        return studylogService.Weektop10Studytime();
+    public List<StudyRankDTO> Weektop10StudyTime(){
+        List<StudyRankDTO> ranks = new ArrayList<>();
+        int length = studylogService.Weektop10Studytime().size();
+        for(int i=0;i<length;i++) {
+            Long id = studylogService.Weektop10Studytime().get(i).getId();
+            int time = studylogService.Weektop10Studytime().get(i).getTime();
+            String nickname = userService.findNickname(id);
+            StudyRankDTO sr = new StudyRankDTO();
+            sr.setTime(time);
+            sr.setNickname(nickname);
+            ranks.add(i, sr);
+        }
+        return ranks;
     }
 
     @GetMapping("/api/main/studytime/day")
-    public List<StudylogInterface> Daytop10StudyTime(){
-        return studylogService.Daytop10Studytime();
+    public List<StudyRankDTO> Daytop10StudyTime(){
+        List<StudyRankDTO> ranks = new ArrayList<>();
+        int length = studylogService.Daytop10Studytime().size();
+        for(int i=0;i<length;i++) {
+            Long id = studylogService.Daytop10Studytime().get(i).getId();
+            int time = studylogService.Daytop10Studytime().get(i).getTime();
+            String nickname = userService.findNickname(id);
+            StudyRankDTO sr = new StudyRankDTO();
+            sr.setTime(time);
+            sr.setNickname(nickname);
+            ranks.add(i, sr);
+        }
+        return ranks;
     }
 
     @GetMapping("/api/studytime/recent")

@@ -69,4 +69,7 @@ public class UserService {
         user.setBirth(birth);
         userRepository.save(user);
     }
+    public String findNickname(Long id){
+        return userRepository.findById(id).get().getNickname();
+    }
 }

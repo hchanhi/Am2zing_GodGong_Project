@@ -69,9 +69,8 @@ function Home() {
     const nickname = getNickName(token);
 
     const [recentDiary, setRecentDiary] = useState([]);
-    const [MonthTime, setMonthTime] = useState([]);
-    const [WeekTime, setWeekTime] = useState([]);
-    const [DayTime, setDayTime] = useState([]);
+    const [TotalTime, setTotalTime] = useState([]);
+    const [MyTime, setMyTime] = useState([]);
     const [recentDate, setRecentDate] = useState();
     let navigate = useNavigate();
     const getRecentDiary = async () => {
@@ -90,33 +89,29 @@ function Home() {
         var s = (data%3600)%60;
         var time = h+"시간 "+m+"분 "+s+"초";
         return time;
-    }
-    const getMonthTime = async () => {
-        const json = await axios.get('/api/main/studytime/month');
+    };
+    const getTotalTime = async () => {
+        const json = await axios.get('/api/main/studytime/summary');
         if (json.data == null) {
         } else {
-            setMonthTime(json.data);
+            setTotalTime(json.data);
         }
     };
-    const getWeekTime = async () => {
-        const json = await axios.get('/api/main/studytime/week');
-        if (json.data == null) {
-        } else {
-            setWeekTime(json.data);
-        }
+    let body = {
+        nickname : nickname
     };
-    const getDayTime = async () => {
-        const json = await axios.get('/api/main/studytime/day');
+    const getMyTime = async () => {
+        const json = await axios.post('/api/mypage/studytime', body);
         if (json.data == null) {
         } else {
-            setDayTime(json.data);
+            console.log(json.data);
+            setMyTime(json.data);
         }
     };
     useEffect(() => {
         getRecentDiary();
-        getMonthTime();
-        getWeekTime();
-        getDayTime();
+        getTotalTime();
+        getMyTime();
     }, []);
     console.log(recentDiary.diaryId);
     const editdate = recentDiary.diaryCreated;
@@ -125,7 +120,7 @@ function Home() {
             <TodayStyle container spacing={1}>
                 <StudyTime item xs={5}>
                     <div style={{ textAlign: 'left' }}>오늘의 공부시간</div>
-                    <div><h1>09:34</h1></div>
+                    <div><h1>{test(MyTime[0])}</h1></div>
                     <div><Button variant="contained" size="large" onClick={() => navigate("/challenge")}>공부 시작</Button></div>
                 </StudyTime>
                 <StudyDiary item xs={7} sx={{ textAlign: 'left' }}>
@@ -161,32 +156,12 @@ function Home() {
                     <div><h1 style={{ color: 'darkcyan' }}>한 달 ▾</h1></div>
                     <table>
                         <tbody>
-                        {MonthTime.map((mt) =>(
-                            <tr key={mt.nickname}>
-                                <td>{mt.nickname}</td>
-                                <td>{test(mt.time)}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                    <div><h1 style={{ color: 'darkcyan' }}>한 주 ▾</h1></div>
-                    <table>
-                        <tbody>
-                        {WeekTime.map((wt) =>(
-                            <tr key={wt.nickname}>
-                                <td>{wt.nickname}</td>
-                                <td>{test(wt.time)}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                    <div><h1 style={{ color: 'darkcyan' }}>오늘 ▾</h1></div>
-                    <table>
-                        <tbody>
-                        {DayTime.map((dt) =>(
-                            <tr key={dt.nickname}>
-                                <td>{dt.nickname}</td>
-                                <td>{test(dt.time)}</td>
+                        {TotalTime.map((tt) =>(
+                            <tr key={tt.nickname}>
+                                <td>{tt.nickname}</td>
+                                <td>{test(tt.day)}</td>
+                                <td>{test(tt.week)}</td>
+                                <td>{test(tt.month)}</td>
                             </tr>
                         ))}
                         </tbody>

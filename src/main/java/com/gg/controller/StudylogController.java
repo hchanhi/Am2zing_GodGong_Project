@@ -55,48 +55,20 @@ public class StudylogController {
         return time;
     }
 
-    @GetMapping("/api/main/studytime/month")
-    public List<StudyRankDTO> Monthtop10StudyTime(){
-        List<StudyRankDTO> ranks = new ArrayList<>();
-        int length = studylogService.Monthtop10Studytime().size();
-        for(int i=0;i<length;i++) {
-            Long id = studylogService.Monthtop10Studytime().get(i).getId();
-            int time = studylogService.Monthtop10Studytime().get(i).getTime();
-            String nickname = userService.findNickname(id);
-            StudyRankDTO sr = new StudyRankDTO();
-            sr.setTime(time);
-            sr.setNickname(nickname);
-            ranks.add(i, sr);
-        }
-        return ranks;
-    }
-
-    @GetMapping("/api/main/studytime/week")
-    public List<StudyRankDTO> Weektop10StudyTime(){
-        List<StudyRankDTO> ranks = new ArrayList<>();
-        int length = studylogService.Weektop10Studytime().size();
-        for(int i=0;i<length;i++) {
-            Long id = studylogService.Weektop10Studytime().get(i).getId();
-            int time = studylogService.Weektop10Studytime().get(i).getTime();
-            String nickname = userService.findNickname(id);
-            StudyRankDTO sr = new StudyRankDTO();
-            sr.setTime(time);
-            sr.setNickname(nickname);
-            ranks.add(i, sr);
-        }
-        return ranks;
-    }
-
-    @GetMapping("/api/main/studytime/day")
-    public List<StudyRankDTO> Daytop10StudyTime(){
+    @GetMapping("/api/main/studytime/summary")
+    public List<StudyRankDTO> Ranking(){
         List<StudyRankDTO> ranks = new ArrayList<>();
         int length = studylogService.Daytop10Studytime().size();
         for(int i=0;i<length;i++) {
             Long id = studylogService.Daytop10Studytime().get(i).getId();
-            int time = studylogService.Daytop10Studytime().get(i).getTime();
+            int day = studylogService.Daytop10Studytime().get(i).getTime();
+            int week = studylogService.Weektop10Studytime().get(i).getTime();
+            int month = studylogService.Monthtop10Studytime().get(i).getTime();
             String nickname = userService.findNickname(id);
             StudyRankDTO sr = new StudyRankDTO();
-            sr.setTime(time);
+            sr.setDay(day);
+            sr.setWeek(week);
+            sr.setMonth(month);
             sr.setNickname(nickname);
             ranks.add(i, sr);
         }

@@ -22,15 +22,10 @@ import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
 
-    const [checked, setChecked] = useState(false);
     const [emailError, setEmailError] = useState('');
 
     const navigate = useNavigate();
 
-    // 동의 체크
-    const handleAgree = (event) => {
-        setChecked(event.target.checked);
-    };
 
 
 
@@ -48,6 +43,7 @@ const Register = () => {
                     alert('등록되지 않은 이메일입니다😰');
                 } else
                     alert(res.message);
+                alert('다른오류');
             })
             .catch(function (err) {
                 console.log(err);

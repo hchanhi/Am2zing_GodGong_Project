@@ -30,11 +30,6 @@ public class TodoController {
         return todoService.findUserTodos(userNickname, roomNumber);
     }
 
-    @GetMapping("/todo/room")
-    public List<Todo> todoListInRoom(@RequestParam String roomId) {
-        return todoService.findTodos(Long.parseLong(roomId));
-    }
-
     @PostMapping("/todo/delete/{id}")
     public void deleteTodo(@PathVariable Long id){
         todoService.deleteTodo(id);

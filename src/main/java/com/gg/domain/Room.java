@@ -30,8 +30,6 @@ public class Room {
 
     private String roomTitle;
 
-    private boolean roomValid;
-
     @CreationTimestamp
     private Timestamp roomCreated;
 
@@ -44,7 +42,6 @@ public class Room {
         room.roomNumber = UUID.randomUUID().toString();
         room.roomCategory = roomCategory;
         room.roomTitle = roomTitle;
-        room.roomValid = true;
         room.user = user;
 
         return room;

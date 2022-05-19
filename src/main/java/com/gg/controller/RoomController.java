@@ -50,4 +50,5 @@ public class RoomController {
         return roomlogService.enterRoom(roomNumber, userNickname);
     }
 
+
 }

@@ -56,10 +56,6 @@ public class TodoService {
         return todoRepository.findAllByUserAndRoom(user, room);
     }
 
-    public List<Todo> findTodos(Long roomId){
-        return todoRepository.findTodos(roomId);
-    }
-
     public void deleteTodo(Long id){
         todoRepository.deleteById(id);
     }

@@ -25,6 +25,11 @@ public class TodoController {
        return todoService.insertTodo(nickname, content, roomNumber);
     }
 
+    @GetMapping("/todo/user_todos")
+    public List<Todo> findUserTodos(@RequestParam String userNickname, @RequestParam String roomNumber) {
+        return todoService.findUserTodos(userNickname, roomNumber);
+    }
+
     @PostMapping("/todo/delete/{id}")
     public void deleteTodo(@PathVariable Long id){
         todoService.deleteTodo(id);

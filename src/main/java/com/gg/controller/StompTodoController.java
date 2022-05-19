@@ -18,6 +18,8 @@ public class StompTodoController {
     @MessageMapping("/todo/check")
     public void check(Todo todo){
         todoService.checkTodo(todo);
-        simpMessageSendingOperations.convertAndSend("/sub/chat/room/" + todo.getRoom().getRoomNumber(), todo);
+        simpMessageSendingOperations.convertAndSend("/sub/room/" + todo.getRoom().getRoomNumber(), todo);
     }
+
+
 }

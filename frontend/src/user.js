@@ -12,7 +12,7 @@ import {
 
 
 } from '@mui/material/';
-import './diary.css';
+import './User.css';
 
 
 
@@ -87,14 +87,16 @@ const User = (props) => {
                     if (response.data == false) {
                         alert("중복된 닉네임입니다!");
                     } else {
-                        console.log(response.status, '성공');
-                        localStorage.clear();
+
+                          localStorage.clear();
                         props.setUserNickName('');
                         navigate('/');
                         alert("닉네임이 수정되었습니다. 다시 로그인해주세요!");
+                     
                     }
 
 
+                    
                 })
                 .catch(function (err) {
                     console.log(err);
@@ -122,11 +124,12 @@ const User = (props) => {
             axios
                 .post('/api/user/' + userId + '/birth', birthBody)
                 .then(function (response) {
-                    console.log(response.status, '성공');
-                    localStorage.clear();
-                    props.setUserNickName('');
+ localStorage.clear();
+props.setUserNickName('');
                     navigate('/');
                     alert("생년월일이 수정되었습니다. 다시 로그인해주세요!");
+
+
 
                 })
                 .catch(function (err) {
@@ -172,11 +175,12 @@ const User = (props) => {
                     if (response.data == false) {
                         alert("비밀번호 오류!");
                     } else {
-                        console.log(response.status, '성공');
+
                         localStorage.clear();
                         props.setUserNickName('');
                         navigate('/');
                         alert("비밀번호가 수정되었습니다. 다시 로그인해주세요!");
+
                     }
 
 
@@ -296,12 +300,14 @@ const User = (props) => {
         [newPas]
     );
     console.log(user.nickname);
-    return (
-        <Container className="DiaryEditor">
-            <h3>{getNickName(token)}님의 마이페이지💁🏻‍♀️</h3>
-            <h2>회원정보</h2>
+    return (<div>
+        <h3>{getNickName(token)}님의 마이페이지💁🏻‍♀️</h3>
+        <Container className="UserEditor">
+
+            <h2>회원정보🔎</h2>
+            <br></br>
             <Box component="form" sx={{ mt: 3 }}>
-                <div>
+                <div className="userFlex">
                     <label>이메일</label>
                     <input
                         defaultValue={user.email}
@@ -313,7 +319,9 @@ const User = (props) => {
                     />
 
                 </div>
-                <div>
+                <h3>닉네임 수정</h3>
+                <br></br>
+                <div className="userFlex">
                     <label>닉네임</label>
                     <input
                         defaultValue={nic}
@@ -325,8 +333,14 @@ const User = (props) => {
 
                     />
                     {<span className={`message ${isName ? 'success' : 'error'}`}>{nameMessage}</span>}
+                    <div className='modify'>
+                        <button onClick={handleSubmitNic}>수정하기</button>
+                    </div>
+
                 </div>
-                <div>
+                <h3>생년월일 수정</h3>
+                <br></br>
+                <div className="userFlex">
                     <label>생년월일</label>
                     <input
                         defaultValue={birth}
@@ -337,9 +351,15 @@ const User = (props) => {
 
 
                     />
+                    <div className="modify" >
+                        <button onClick={handleSubmitBirth}>수정하기</button>
+                    </div>
                     {<span className={`message ${isBirth ? 'success' : 'error'}`}>{birthMessage}</span>}
+
                 </div>
-                <div>
+                <h3>비밀번호 수정</h3>
+                <br></br>
+                <div className="userFlex">
                     <label>현재 비밀번호</label>
                     <input
                         defaultValue={oldPas}
@@ -357,7 +377,8 @@ const User = (props) => {
                         <span className={`message ${isOldPassword ? 'success' : 'error'}`}>{passwordOldMessage}</span>
                     )}
                 </div>
-                <div>
+
+                <div className="userFlex">
                     <label>변경 비밀번호</label>
                     <input
                         defaultValue={newPas}
@@ -375,7 +396,8 @@ const User = (props) => {
                         <span className={`message ${isNewPassword ? 'success' : 'error'}`}>{passwordNewMessage}</span>
                     )}
                 </div>
-                <div>
+
+                <div className="userFlex">
                     <label>변경 비밀번호 확인</label>
                     <input
                         defaultValue={passwordConfirm}
@@ -389,22 +411,20 @@ const User = (props) => {
                     {(
                         <span className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</span>
                     )}
+                    <div className='modify'>
+                        <button onClick={handleSubmitPas}>수정하기</button>
+                    </div>
                 </div>
 
             </Box>
-            <div>
-                <button onClick={handleSubmitNic}>닉네임 수정하기</button>
-            </div>
-            <div>
-                <button onClick={handleSubmitBirth}>생년월일 수정하기</button>
-            </div>
-            <div>
-                <button onClick={handleSubmitPas}>비밀번호 수정하기</button>
-            </div>
-            <div>
+
+
+
+            <div className="userDelBtn">
                 <button onClick={handleSubmitDel}>탈퇴하기</button>
             </div>
         </Container>
+    </div>
     );
 
 };

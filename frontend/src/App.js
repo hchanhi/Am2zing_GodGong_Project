@@ -40,7 +40,7 @@ function App() {
             <Header userNickName={userNickName} setUserNickName={setUserNickName} />
 
             <Routes>
-                <Route exact path="" element={<Home />} />
+                <Route exact path="/" element={<Home />} />
                 <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin} />} />
                 <Route path="/Join" element={<Join />} />
                 <Route path="/findPassword" element={<FindPassword />} />

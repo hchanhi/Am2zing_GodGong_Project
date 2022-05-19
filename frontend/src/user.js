@@ -88,10 +88,10 @@ const User = (props) => {
                         alert("중복된 닉네임입니다!");
                     } else {
                         console.log(response.status, '성공');
-
+                        localStorage.clear();
+                        props.setUserNickName('');
                         navigate('/');
-                        console.log(response);
-                        alert("수정 완료되었습니다!");
+                        alert("닉네임이 수정되었습니다. 다시 로그인해주세요!");
                     }
 
 
@@ -123,9 +123,10 @@ const User = (props) => {
                 .post('/api/user/' + userId + '/birth', birthBody)
                 .then(function (response) {
                     console.log(response.status, '성공');
+                    localStorage.clear();
+                    props.setUserNickName('');
                     navigate('/');
-                    console.log(response);
-                    alert("수정 완료되었습니다!");
+                    alert("생년월일이 수정되었습니다. 다시 로그인해주세요!");
 
                 })
                 .catch(function (err) {
@@ -172,10 +173,10 @@ const User = (props) => {
                         alert("비밀번호 오류!");
                     } else {
                         console.log(response.status, '성공');
-
+                        localStorage.clear();
+                        props.setUserNickName('');
                         navigate('/');
-                        console.log(response);
-                        alert("수정 완료되었습니다!");
+                        alert("비밀번호가 수정되었습니다. 다시 로그인해주세요!");
                     }
 
 

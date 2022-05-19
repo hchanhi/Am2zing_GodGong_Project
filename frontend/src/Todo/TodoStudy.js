@@ -72,6 +72,7 @@ function TodoStudy() {
             subscribe();
             try {
                 client.current.publish({
+                    // message로 입장메시지 직접 넣는걸로 변경해도 무방
                     destination: '/pub/chat/enter',
                     body: JSON.stringify({
                         roomNumber: roomNum,

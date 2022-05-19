@@ -53,8 +53,9 @@ function Chatting() {
     }, [newMessage]);
 
     function sendMessage(myMessage) {
+        if (myMessage.length == 1)
+            return alert('글자를 입력해주세요!');
         try {
-            if (myMessage == '\n') return alert('채팅을 입력하세요!');
             client.publish({
                 destination: '/pub/chat/message',
                 body: JSON.stringify({

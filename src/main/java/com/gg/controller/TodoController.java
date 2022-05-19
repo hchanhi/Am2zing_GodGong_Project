@@ -21,8 +21,8 @@ public class TodoController {
     }
 
     @PostMapping("/todo/insert")
-    public Todo insertTodo(@RequestParam String nickname, @RequestParam String content, @RequestParam String roomNumber){
-       return todoService.insertTodo(nickname, content, roomNumber);
+    public Todo insertTodo(@RequestParam String userNickname, @RequestParam String content, @RequestParam String roomNumber){
+       return todoService.insertTodo(userNickname, content, roomNumber);
     }
 
     @GetMapping("/todo/user_todos")
@@ -35,8 +35,8 @@ public class TodoController {
         return todoService.findTodos(roomNumber);
     }
 
-    @PostMapping("/todo/delete/{id}")
-    public void deleteTodo(@PathVariable Long id){
-        todoService.deleteTodo(id);
+    @DeleteMapping("/todo/delete")
+    public void deleteTodo(@RequestParam String userNickname, String roomNumber){
+        todoService.deleteTodo(userNickname, roomNumber);
     }
 }

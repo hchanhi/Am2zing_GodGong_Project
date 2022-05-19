@@ -46,8 +46,13 @@ public class RoomController {
     }
 
     @PostMapping(value = "/room/enter")
-    public Roomlog enterRoom(@RequestParam String roomNumber, @RequestParam String userNickname) {
-        return roomlogService.enterRoom(roomNumber, userNickname);
+    public Roomlog enterRoom(@RequestParam String userNickname, @RequestParam String roomNumber) {
+        return roomlogService.enterRoom(userNickname, roomNumber);
+    }
+
+    @DeleteMapping(value = "/room/exit")
+    public void exitRoom(@RequestParam String userNickname) {
+        roomlogService.exitRoom(userNickname);
     }
 
 }

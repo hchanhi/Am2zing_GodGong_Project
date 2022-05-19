@@ -104,7 +104,6 @@ function Home() {
         const json = await axios.post('/api/mypage/studytime', body);
         if (json.data == null) {
         } else {
-            console.log(json.data);
             setMyTime(json.data);
         }
     };
@@ -113,14 +112,12 @@ function Home() {
         getTotalTime();
         getMyTime();
     }, []);
-    console.log(recentDiary.diaryId);
-    const editdate = recentDiary.diaryCreated;
     return (
         <Wrapper>
             <TodayStyle container spacing={1}>
                 <StudyTime item xs={5}>
                     <div style={{ textAlign: 'left' }}>오늘의 공부시간</div>
-                    <div><h1>{test(MyTime[0])}</h1></div>
+                    <div><h1>{test(MyTime[0])=="NaN시간 NaN분 NaN초" ? "0시간 0분 0초":test(MyTime[0])}</h1></div>
                     <div><Button variant="contained" size="large" onClick={() => navigate("/challenge")}>공부 시작</Button></div>
                 </StudyTime>
                 <StudyDiary item xs={7} sx={{ textAlign: 'left' }}>

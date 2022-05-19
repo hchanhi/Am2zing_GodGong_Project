@@ -71,10 +71,11 @@ const User = (props) => {
     };
 
     const handleSubmitNic = (e) => {
+        e.preventDefault();
+
         const nameRegex = /^[가-힣|a-zA-Z|0-9]+$/;
 
         if (!nameRegex.test(nic) || nic.length < 1) {
-            e.preventDefault();
             setNameMessage('올바른 닉네임을 입력해주세요!');
             setIsName(false);
         } else {
@@ -87,16 +88,14 @@ const User = (props) => {
                     if (response.data == false) {
                         alert("중복된 닉네임입니다!");
                     } else {
-
-                          localStorage.clear();
+                        localStorage.clear();
                         props.setUserNickName('');
-                        navigate('/');
                         alert("닉네임이 수정되었습니다. 다시 로그인해주세요!");
-                     
+                        navigate('/');
                     }
 
 
-                    
+
                 })
                 .catch(function (err) {
                     console.log(err);
@@ -114,7 +113,9 @@ const User = (props) => {
         birth: birth
 
     };
-    const handleSubmitBirth = () => {
+    const handleSubmitBirth = (e) => {
+        e.preventDefault();
+
         const birthRegex = /^[0-9]{6}$/;
         if (!birthRegex.test(birth)) {
             setBirthMessage('생년월일을 6자리로 입력해주세요!');
@@ -124,10 +125,11 @@ const User = (props) => {
             axios
                 .post('/api/user/' + userId + '/birth', birthBody)
                 .then(function (response) {
- localStorage.clear();
-props.setUserNickName('');
-                    navigate('/');
+                    console.log(response.status, '성공');
+                    localStorage.clear();
+                    props.setUserNickName('');
                     alert("생년월일이 수정되었습니다. 다시 로그인해주세요!");
+                    navigate('/');
 
 
 
@@ -150,7 +152,9 @@ props.setUserNickName('');
         newPassword: newPas
 
     };
-    const handleSubmitPas = useCallback(() => {
+    const handleSubmitPas = useCallback((e) => {
+        e.preventDefault();
+
         const passwordRegex = /^.{4,20}$/;
         if (!passwordRegex.test(oldPas)) {
             setPasswordOldMessage('4~20글자를 입력해주세요!');
@@ -178,9 +182,8 @@ props.setUserNickName('');
 
                         localStorage.clear();
                         props.setUserNickName('');
-                        navigate('/');
                         alert("비밀번호가 수정되었습니다. 다시 로그인해주세요!");
-
+                        navigate('/');
                     }
 
 
@@ -203,16 +206,19 @@ props.setUserNickName('');
 
 
     };
-    const handleSubmitDel = () => {
+    const handleSubmitDel = (e) => {
+        e.preventDefault();
+
         if (window.confirm("정말 탈퇴하시겠습니까?") == true) {
             axios
                 .post('/api/user/' + userId + '/delete', delBody)
                 .then(function (response) {
                     console.log(response.status, '성공');
+
                     localStorage.clear();
                     props.setUserNickName('');
+                    alert("탈퇴되었습니다!");
                     navigate('/');
-                    console.log(response);
                 })
                 .catch(function (err) {
                     console.log(delBody);
@@ -220,7 +226,6 @@ props.setUserNickName('');
                     console.log(origin);
 
                 });
-            alert("탈퇴되었습니다!");
         }
         else {
             return;

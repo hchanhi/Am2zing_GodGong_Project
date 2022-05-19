@@ -17,7 +17,6 @@ import TodoList from './Todo/TodoList.js';
 import TodoStudy from './Todo/TodoStudy.js';
 import Footer from './Footer.js';
 import { isAuth, getNickName } from './jwtCheck.js';
-import FindPw from './FindPw.js';
 
 function App() {
 
@@ -44,7 +43,6 @@ function App() {
                 <Route path="/login" element={<Login isLogin={isLogin} setIsLogin={setIsLogin} />} />
                 <Route path="/Join" element={<Join />} />
                 <Route path="/findPassword" element={<FindPassword />} />
-                <Route path="/editPassword" element={<EditPassword />} />
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/mypage/diary" element={<DiaryList />} />
                 <Route path="/mypage/diaryDetail/:id" element={<DiaryDetail />} />
@@ -53,7 +51,7 @@ function App() {
                 <Route path='/mypage/user' element={<User setUserNickName={setUserNickName}/>} />
                 <Route path="/todoList" element={<TodoList />} />
                 <Route path="/todoStudy/:roomNum" element={<TodoStudy />} />
-                <Route path="/api/user/password/:key" element={<FindPw />} />
+                <Route path="/api/user/password/:key" element={<EditPassword />} />
             </Routes>
 
             <Footer />

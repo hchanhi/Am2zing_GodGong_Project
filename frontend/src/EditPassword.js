@@ -1,6 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams, useNavigate } from "react-router-dom";
 
 import {
     Button,
@@ -16,22 +16,30 @@ import {
 } from '@mui/material/';
 
 import './join.css';
-import { useNavigate } from 'react-router-dom';
-
-
 
 const Register = () => {
 
-    const [checked, setChecked] = useState(false);
-
     const [passwordState, setPasswordState] = useState('');
     const [passwordError, setPasswordError] = useState('');
-
     const [email, setEmail] = useState([]);
-
     const [state, setsState] = useState();
     const navigate = useNavigate();
+    let { key } = useParams();
 
+    useEffect(() => {
+        axios.get('/user/password/' + key)
+            .then(res => {
+                if (res.success == true) {
+                    alert('이메일이 인증되었습니다. 비밀번호를 변경해주세요.');
+                }
+                else if (res.message == '유효하지 않은 Key값입니다.')
+                    alert('잘못된 접근입니다.');
+                return navigate('/login');
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, []);
 
     const getUser = async () => {
         const json = await axios.get('/api/users/');
@@ -40,10 +48,10 @@ const Register = () => {
 
         setsState(false);
     };
+
     useEffect(() => {
         getUser();
     }, [state == true]);
-
 
     const onhandlePost = async (data) => {
         const { email, password } = data;

@@ -1,6 +1,5 @@
 package com.gg.repository;
 
-import com.gg.domain.Diary;
 import com.gg.domain.Studylog;
 import com.gg.dto.StudylogInterface;
 import org.springframework.data.jpa.repository.JpaRepository;

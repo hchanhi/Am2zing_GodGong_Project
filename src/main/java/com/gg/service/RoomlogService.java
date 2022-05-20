@@ -1,6 +1,5 @@
 package com.gg.service;
 
-import com.gg.domain.Room;
 import com.gg.domain.Roomlog;
 import com.gg.domain.User;
 import com.gg.repository.RoomRepository;

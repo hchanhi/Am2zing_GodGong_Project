@@ -50,8 +50,22 @@ public class TodoService {
         todoRepository.save(todo);
     }
 
-    public void deleteTodo(Long id){
-        todoRepository.deleteById(id);
+    public List<Todo> findUserTodos(String userNickname, String roomNumber){
+        User user = userRepository.findByNickname(userNickname);
+        Room room = roomRepository.findRoomByRoomNumber(roomNumber);
+        return todoRepository.findAllByUserAndRoom(user, room);
+    }
+
+    public List<Todo> findTodos(String roomNumber){
+        Room room = roomRepository.findRoomByRoomNumber(roomNumber);
+        return todoRepository.findTodos(room.getRoomId());
+    }
+
+    public void deleteTodo(String userNickname, String roomNumber) {
+        User user = userRepository.findByNickname(userNickname);
+        Room room = roomRepository.findRoomByRoomNumber(roomNumber);
+
+        todoRepository.deleteAllByUserAndRoom(user, room);
     }
 
 }

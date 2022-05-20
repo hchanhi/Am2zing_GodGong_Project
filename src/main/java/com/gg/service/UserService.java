@@ -28,11 +28,13 @@ public class UserService {
        return userRepository.findByNickname(nickname);
     }
 
+    // 회원 정보 삭제
     public void deleteUser(Long id){
         userRepository.deleteById(id);
     }
 
 
+    // 회원 닉네임 변경
     public boolean updateNickname(Long id, String nickname){
         boolean check = true;
         if(userRepository.existsByNickname(nickname)){
@@ -47,6 +49,7 @@ public class UserService {
         //토큰..refresh
     }
 
+    // 회원 비밀번호 변경
     public boolean updatePassword(Long id, String oldPassword, String newPassword){
         boolean check = true;
         User user = userRepository.findById(id).get();
@@ -60,9 +63,13 @@ public class UserService {
 
     }
 
+    // 회원 생년월일 변경
     public void updateBirth(Long id, String birth){
         User user = userRepository.findById(id).get();
         user.setBirth(birth);
         userRepository.save(user);
+    }
+    public String findNickname(Long id){
+        return userRepository.findById(id).get().getNickname();
     }
 }

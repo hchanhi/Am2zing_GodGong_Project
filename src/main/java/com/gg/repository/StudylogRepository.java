@@ -12,13 +12,13 @@ import java.util.List;
 
 public interface StudylogRepository extends JpaRepository<Studylog, Long> {
 
-    @Query(value= "select studylog_time from studylog where user_id=?1 and date(studylog_created) = date(now()) group by user_id", nativeQuery = true)
+    @Query(value= "select sum(studylog_time) from studylog where user_id=?1 and date(studylog_created) = date(now()) group by user_id", nativeQuery = true)
     Integer oneDayTime(Long userId);
 
-    @Query(value= "select studylog_time from studylog where user_id=?1 and date(studylog_created) >= DATE_SUB(now(), interval 7 day) group by user_id", nativeQuery = true)
+    @Query(value= "select sum(studylog_time) from studylog where user_id=?1 and date(studylog_created) >= DATE_SUB(now(), interval 7 day) group by user_id", nativeQuery = true)
     Integer oneWeekTime(Long userId);
 
-    @Query(value= "select studylog_time from studylog where user_id=?1 and date(studylog_created) >= date_format(now(), '%Y-%m-01') group by user_id", nativeQuery = true)
+    @Query(value= "select sum(studylog_time) from studylog where user_id=?1 and date(studylog_created) >= date_format(now(), '%Y-%m-01') group by user_id", nativeQuery = true)
     Integer oneMonthTime(Long userId);
 
     @Query(value= "select studylog_time from studylog where user_id=?1 and date(studylog_created) = ?2 group by user_id", nativeQuery = true)
@@ -35,7 +35,7 @@ public interface StudylogRepository extends JpaRepository<Studylog, Long> {
             "group by user_id order by studylog_time DESC limit 10", nativeQuery = true)
     List<StudylogInterface> Weektop10studyTime();
 
-    @Query(value="select user_id as id, sum(studylog_time) as time from studylog where date(studylog_created) >= date(now())" +
+    @Query(value="select user_id as id, sum(studylog_time) as time from studylog where date(studylog_created) = date(now())" +
             "group by user_id order by studylog_time DESC limit 10", nativeQuery = true)
     List<StudylogInterface> Daytop10studyTime();
 

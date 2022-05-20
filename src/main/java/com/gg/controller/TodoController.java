@@ -21,12 +21,22 @@ public class TodoController {
     }
 
     @PostMapping("/todo/insert")
-    public Todo insertTodo(@RequestParam String nickname, @RequestParam String content, @RequestParam String roomNumber){
-       return todoService.insertTodo(nickname, content, roomNumber);
+    public Todo insertTodo(@RequestParam String userNickname, @RequestParam String content, @RequestParam String roomNumber){
+       return todoService.insertTodo(userNickname, content, roomNumber);
     }
 
-    @PostMapping("/todo/delete/{id}")
-    public void deleteTodo(@PathVariable Long id){
-        todoService.deleteTodo(id);
+    @GetMapping("/todo/user_todos")
+    public List<Todo> findUserTodos(@RequestParam String userNickname, @RequestParam String roomNumber) {
+        return todoService.findUserTodos(userNickname, roomNumber);
+    }
+
+    @GetMapping("/todo/room")
+    public List<Todo> todoListInRoom(@RequestParam String roomNumber) {
+        return todoService.findTodos(roomNumber);
+    }
+
+    @DeleteMapping("/todo/delete")
+    public void deleteTodo(@RequestParam String userNickname, String roomNumber){
+        todoService.deleteTodo(userNickname, roomNumber);
     }
 }

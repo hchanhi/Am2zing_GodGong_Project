@@ -3,20 +3,20 @@ import styled from "styled-components";
 import { Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import axios from "axios";
-import { RoomNumContext, SetMemberContext } from './TodoStudyRoom.js'
+import { RoomNumContext, SetMemberContext, ClientContext } from './TodoStudyRoom.js'
 import { getNickName } from '../jwtCheck.js';
 
 let Wrapper = styled.div`
     h4 {
         color: dimgrey;
         margin: 15px 0;
-        // padding: 15px 0;
     }
 `
 function MakeTodo({ setOpen, task }) {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const userNickname = getNickName(token);
+    let client = useContext(ClientContext);
     let roomNum = useContext(RoomNumContext);
     let setIsMember = useContext(SetMemberContext);
     let [todos, setTodos] = useState([]);
@@ -51,20 +51,20 @@ function MakeTodo({ setOpen, task }) {
     }
 
     function joinStudy() {
-        // 메시지 매핑으로 변경하기
-        axios.post('/api/chat/room/enter', null, {
-            params: {
-                userNickname: userNickname,
-                roomNumber: roomNum
-            }
-        })
-            .then(res => {
-                setIsMember(true);
-                alert('스터디원이 되셨어요. 같이 열심히 Todo해요!')
-                console.log(res.data);
-            }).catch(err => {
-                console.log(err);
-            })
+        try {
+            client.publish({
+                destination: '/pub/chat/enter',
+                body: JSON.stringify({
+                    roomNumber: roomNum,
+                    userNickname: userNickname,
+                    message: ''
+                })
+            });
+            setIsMember(true);
+            alert('스터디원이 되셨어요. 같이 열심히 Todo해요!')
+        } catch (err) {
+            console.log(err.message);
+        }
     }
 
     return (

@@ -6,9 +6,9 @@ import CheckboxTodo from "./CheckboxTodo.js";
 import ChattingBox from "./ChattingBox.js";
 import JoinStudyBtn from "./JoinStudyBtn.js";
 import ExitStudyBtn from "./ExitStudyBtn.js";
+import DeleteTodoBtn from "./DeleteTodoBtn.js"
 import { isAuth, getNickName } from '../jwtCheck.js';
 import { Grid, Chip } from '@mui/material/';
-import Button from '@mui/material/Button';
 import { connect, disConnect } from './chattingConnect.js';
 
 let Wrapper = styled.div`
@@ -17,9 +17,7 @@ let Wrapper = styled.div`
     width: 70%;
     text-align: left;
 
-    h3 {
-        margin-top: 1rem;
-    }
+    h3 { margin-top: 1rem }
 
     button {
         font-family: 'Pretendard-Medium';
@@ -42,7 +40,6 @@ function TodoStudy() {
         userNickname: userNickname
     }
     const navigate = useNavigate();
-
     let { roomNum } = useParams();
     let roomNumber = {
         roomNumber: roomNum
@@ -78,13 +75,14 @@ function TodoStudy() {
                 console.log(err);
             })
         
-        // axios.get('/api/todo/room', {params: roomNumber})
-        //     .then(res => {
-        //         console.log(res.data);
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     })
+        // message가 입장, 퇴장, done일때 리렌더링되야함
+        axios.get('/api/todo/room', {params: roomNumber})
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
 
         // axios /room/enter 몇명들어가있는지 roomlog > return : 인원수세는거 (후순위)
         connect(client, roomNum, userNickname, setNewMessage, newMessage);
@@ -95,19 +93,6 @@ function TodoStudy() {
         setBadgeNum(++badgeNum);
     }, [newMessage])
 
-    // useEffect(() => {
-    //     axios.get('/api/todoStudy/', { params: { roomNum: roomNum } })
-    //         .then((res) => {
-    //             setStudy(res.data);
-    //             if (res.data((x) => x.memberId == myId).length != 0) {
-    //                 setIsMember(true);
-    //             }
-    //             // todo list작성하는 모달
-    //         }).catch((error) => {
-    //             // alert('Todo study방의 정보를 가져오는 데 실패했습니다.');
-    //             console.log(error);
-    //         });
-    // }, [study]);
     // 다른 스터디원의 실시간 투두 진행상황 보려면 양방향 데이터 통신 필요
 
     return (
@@ -120,7 +105,11 @@ function TodoStudy() {
                     {
                         isMember
                             ? (hasTodo
-                                ? null
+                                ? <RoomNumContext.Provider value={roomNum}>
+                                    <ClientContext.Provider value={client.current}>
+                                        <DeleteTodoBtn />
+                                    </ClientContext.Provider>
+                                </RoomNumContext.Provider>
                                 : <RoomNumContext.Provider value={roomNum}>
                                     <SetMemberContext.Provider value={setIsMember}>
                                         <JoinStudyBtn task={'onlyMake'} />
@@ -135,7 +124,9 @@ function TodoStudy() {
                             ? <ExitStudyBtn task={'exit'} />
                             : <RoomNumContext.Provider value={roomNum}>
                                 <SetMemberContext.Provider value={setIsMember}>
-                                    <JoinStudyBtn task={'join'} />
+                                    <ClientContext.Provider value={client.current}>
+                                        <JoinStudyBtn task={'join'} />
+                                    </ClientContext.Provider>
                                 </SetMemberContext.Provider>
                             </RoomNumContext.Provider>
                     }

@@ -17,18 +17,7 @@ export function connect(client, roomNum, userNickname, setNewMessage, newMessage
 
     client.current.onConnect = () => {
         subscribe(client, roomNum, setNewMessage, newMessage);
-        try {
-            client.current.publish({
-                destination: '/pub/chat/enter',
-                body: JSON.stringify({
-                    roomNumber: roomNum,
-                    userNickname: userNickname,
-                    message: ''
-                })
-            });
-        } catch (err) {
-            console.log(err.message);
-        }
+        
     }
 
     client.current.onStompError = function (frame) {

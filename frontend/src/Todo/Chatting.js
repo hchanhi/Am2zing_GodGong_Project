@@ -7,7 +7,7 @@ let Receive = styled.div`
     height: 75%;
     overflow: auto;
     width: 100%;
-    padding: 10px;
+    padding: 1rem;
 `
 let Send = styled.div`
     height: 20%;
@@ -75,10 +75,15 @@ function Chatting() {
             <Receive>
                 {
                     newMessage && newMessage.map((chat, index) => (
-                        <div key={index} style={{ padding: '10px', paddingBottom: 0 }} ref={scrollRef}>
-                            <b>{chat.userNickname}</b><br/>
-                            <NewText>{chat.message}</NewText>
-                        </div>
+                        chat.userNickname == userNickname
+                            ? (<div key={index} style={{ padding: '10px', paddingBottom: 0, textAlign: 'right' }} ref={scrollRef}>
+                                <b>{chat.userNickname}</b><br />
+                                <NewText>{chat.message}</NewText>
+                            </div>)
+                            : (<div key={index} style={{ padding: '10px', paddingBottom: 0 }} ref={scrollRef}>
+                                <b>{chat.userNickname}</b><br />
+                                <NewText>{chat.message}</NewText>
+                            </div>)
                     ))
                 }
             </Receive>

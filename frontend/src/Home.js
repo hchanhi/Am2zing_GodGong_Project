@@ -26,9 +26,9 @@ let StudyTime = styled(Grid)`
     div {
         font-size: 13pt;
     }
-    h1 {
-        font-size: 50pt;
-        letter-spacing: 6px;
+    h2 {
+        font-size: 45pt;
+        letter-spacing: 5px;
         margin: 4vh 0;
     }
     button {
@@ -97,6 +97,8 @@ function Home() {
             setTotalTime(json.data);
         }
     };
+
+
     let body = {
         nickname : nickname
     };
@@ -117,7 +119,7 @@ function Home() {
             <TodayStyle container spacing={1}>
                 <StudyTime item xs={5}>
                     <div style={{ textAlign: 'left' }}>오늘의 공부시간</div>
-                    <div><h1>{test(MyTime[0])=="NaN시간 NaN분 NaN초" ? "0시간 0분 0초":test(MyTime[0])}</h1></div>
+                    <div className="studytimetoday"><h2>{test(MyTime[0])=="NaN시간 NaN분 NaN초" ? "0시간 0분 0초":test(MyTime[0])}</h2></div>
                     <div><Button variant="contained" size="large" onClick={() => navigate("/challenge")}>공부 시작</Button></div>
                 </StudyTime>
                 <StudyDiary item xs={7} sx={{ textAlign: 'left' }}>

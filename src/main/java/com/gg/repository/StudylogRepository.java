@@ -5,7 +5,6 @@ import com.gg.dto.StudylogInterface;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.sql.Date;
 import java.util.List;
 
 
@@ -20,8 +19,8 @@ public interface StudylogRepository extends JpaRepository<Studylog, Long> {
     @Query(value= "select sum(studylog_time) from studylog where user_id=?1 and date(studylog_created) >= date_format(now(), '%Y-%m-01') group by user_id", nativeQuery = true)
     Integer oneMonthTime(Long userId);
 
-    @Query(value= "select studylog_time from studylog where user_id=?1 and date(studylog_created) = ?2 group by user_id", nativeQuery = true)
-    Integer selectDayTime(Long userId, Date date);
+    @Query(value= "select date(studylog_created) as day, sum(studylog_time) from studylog where user_id=?1 group by date(studylog_created) order by day asc;", nativeQuery = true)
+    List<String> calendarTime(Long userId);
 
     @Query(value="select sum(studylog_time) from studylog where user_id=?1 group by user_id", nativeQuery = true)
     Integer totalStudyTime(long id);

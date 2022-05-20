@@ -12,7 +12,7 @@ function ExitStudyBtn({task}) {
                 variant="contained"
                 style={{ backgroundColor: 'red' }}
                 onClick={() => setModalOpen(true)}>
-                나가기
+                퇴장하기
             </Button>
             {
                 modalOpen && <TodoModal

@@ -7,7 +7,7 @@ let Receive = styled.div`
     height: 75%;
     overflow: auto;
     width: 100%;
-    padding: 10px;
+    padding: 1rem;
 `
 let Send = styled.div`
     height: 20%;

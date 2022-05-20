@@ -30,7 +30,8 @@ const FindPassword = () => {
                 if (res.data.success == true) {
                     alert(res.data.message);
                     navigate('/');
-                } else if (res.data.message == '회원 정보를 찾을 수 없습니다. 다시 시도해 주세요.') {
+
+                } else if (res.data.success == false) {
                     alert('회원에 등록되지 않은 이메일입니다😰 다시 시도해주세요.');
                 } else {
                     alert(res.data.message);

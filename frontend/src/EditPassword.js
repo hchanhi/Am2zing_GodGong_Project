@@ -32,6 +32,7 @@ const Register = () => {
                     setEmail(res.data.message);
                     console.log(res.data.message);
                     alert('인증되었습니다. 비밀번호를 변경해주세요.');
+
                 } else {
                     alert('비정상적인 접근입니다.');
                     return navigate('/');

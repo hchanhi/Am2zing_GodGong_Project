@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import CloseIcon from '@mui/icons-material/Close';
+import MakeTodo from './MakeTodo.js';
+import CompleteTodo from './CompleteTodo.js';
 
 const ModalWrapper = styled.div`
   box-sizing: border-box;
@@ -42,19 +44,23 @@ const ModalInner = styled.div`
   text-align: left;
 `
 
-function Modal({ open, setOpen}) {
+function Modal({ modalContent, open, setOpen, setJoin }) {
 
-    return (
-        <div>
-            <ModalOverlay open={open} />
-            <ModalWrapper open={open}>
-                <ModalInner>
-                    <CloseIcon onClick={() => setOpen(false)} sx={{ float: 'right', cursor: 'pointer' }} /><br />
-                    <h3>나의 Todo List 만들기</h3>
-                </ModalInner>
-            </ModalWrapper>
-        </div>
-    )
+  return (
+    <div>
+      <ModalOverlay open={open} />
+      <ModalWrapper open={open}>
+        <ModalInner>
+          <CloseIcon onClick={() => setOpen(false)} sx={{ float: 'right', cursor: 'pointer' }} /><br />
+          {
+            modalContent == 'makeTodo'
+              ? <MakeTodo setOpen={setOpen} setJoin={setJoin} />
+              : <CompleteTodo />
+          }
+        </ModalInner>
+      </ModalWrapper>
+    </div>
+  )
 }
 
 export default Modal

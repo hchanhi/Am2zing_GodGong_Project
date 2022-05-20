@@ -34,7 +34,7 @@ const Register = () => {
                     alert('인증되었습니다. 비밀번호를 변경해주세요.');
                 } else {
                     alert('비정상적인 접근입니다.');
-                    return navigate('/login');
+                    return navigate('/');
                 }
             })
             .catch(err => {
@@ -44,7 +44,10 @@ const Register = () => {
 
     const onhandlePost = async (password) => {
 
-        if (!email) return alert('비정상적인 접근입니다.');
+        if (!email) {
+            alert('비정상적인 접근입니다.');
+            return navigate('/');
+        }
 
         await axios
             .put('/api/user/password', {

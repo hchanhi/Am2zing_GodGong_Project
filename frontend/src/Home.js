@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import styled from "styled-components";
-import TodoList from "./Todo/TodoList.js";
+import TodoStudyList from "./Todo/TodoStudyList.js";
 import axios from 'axios';
 import { isAuth, getNickName } from './jwtCheck';
 import DiaryCom from "./components/DiaryCom";
@@ -171,8 +171,8 @@ function Home() {
             </Grid>
 
             <h1 style={{ textAlign: 'left' }}>함께하는 Todo✅</h1>
-            <TodoList isHome={true} />
-            <Link to="/todoList" style={{ textDecoration: 'underline', textAlign: 'right' }}>
+            <TodoStudyList isHome={true} />
+            <Link to="/todoStudy" style={{ textDecoration: 'underline', textAlign: 'right' }}>
                 더 보러가기
             </Link>
         </Wrapper>

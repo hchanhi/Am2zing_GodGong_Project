@@ -37,6 +37,7 @@ public class StudylogService {
         return studylog;
     }
 
+    //마이페이지용
     public Integer oneDayTime(String nickname){
         User user = userRepository.findByNickname(nickname);
         return studylogRepository.oneDayTime(user.getId());
@@ -57,6 +58,7 @@ public class StudylogService {
         return studylogRepository.selectDayTime(user.getId(), date);
     }
 
+    //메인페이지 랭킹용
     public List<StudylogInterface> Monthtop10Studytime(){
         return studylogRepository.Monthtop10studyTime();
     }

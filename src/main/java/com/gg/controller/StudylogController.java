@@ -1,7 +1,6 @@
 package com.gg.controller;
 
 import com.gg.dto.StudyRankDTO;
-import com.gg.dto.StudylogInterface;
 import com.gg.service.StudylogService;
 import com.gg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

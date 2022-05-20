@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import CheckboxTodo from "./CheckboxTodo.js";
 import ChattingBox from "./ChattingBox.js";
+import TodoModal from './TodoModal.js';
 import { isAuth, getNickName } from '../jwtCheck.js';
 import { Grid, Chip } from '@mui/material/';
 import SockJs from "sockjs-client";
@@ -32,6 +33,8 @@ function TodoStudy() {
     let myId = "";
     let { roomNum } = useParams();
     let [isMember, setIsMember] = useState(false);
+    let [modalOpen, setModalOpen] = useState(false);
+
 
     let [newMessage, setNewMessage] = useState([]);
     let [badgeNum, setBadgeNum] = useState(-1);
@@ -161,7 +164,12 @@ function TodoStudy() {
                     {
                         isMember
                             ? <button>나가기</button>
-                            : <button>참여하기</button>
+                            : <button onClick={() => setModalOpen(true)}>참여하기</button>
+                    }
+                    {
+                        modalOpen && <TodoModal
+                            open={modalOpen}
+                            setOpen={setModalOpen} />
                     }
                 </Grid>
             </Grid>

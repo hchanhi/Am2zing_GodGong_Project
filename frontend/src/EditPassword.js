@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -6,8 +6,6 @@ import {
     Button,
     TextField,
     FormControl,
-    FormControlLabel,
-    Checkbox,
     FormHelperText,
     Grid,
     Box,
@@ -30,14 +28,13 @@ const Register = () => {
         // key값을 아무거나 넣으면 axios를 실행하지도 않는 이슈
         axios.get('/api/user/passwordChange/' + key)
             .then(res => {
-                if (res.data.success == true) {
+                if (res.data.success) {
                     setEmail(res.data.message);
                     console.log(res.data.message);
                     alert('인증되었습니다. 비밀번호를 변경해주세요.');
-                }
-                else if (res.data.message == '유효하지 않은 Key값입니다.') {
+                } else {
                     alert('비정상적인 접근입니다.');
-                    navigate('/login');
+                    return navigate('/login');
                 }
             })
             .catch(err => {
@@ -45,33 +42,21 @@ const Register = () => {
             })
     }, []);
 
-    const onhandlePost = async (password, rePassword) => {
+    const onhandlePost = async (password) => {
 
         if (!email) return alert('비정상적인 접근입니다.');
 
         await axios
-            .post('/api/auth/signup', {
+            .put('/api/user/password', {
                 email: email,
                 password: password,
-                rePassword: rePassword
             })
-            .then(function (response) {
-                console.log(response.status, '성공');
-
+            .then(function (res) {
+                alert('비밀번호가 성공적으로 변경되었습니다. 변경된 비밀번호로 로그인해주세요.')
                 navigate('/login');
-
-
-
             })
             .catch(function (err) {
                 console.log(err);
-                console.log(email);
-                console.log(err.response.data.message);
-                if (err.response.status === 400) {
-                    alert(err.response.data.message);
-                }
-
-
             });
     };
     // useState 추가
@@ -99,16 +84,12 @@ const Register = () => {
             setPasswordError('');
         }
 
-
-
-
-
         if (
             passwordRegex.test(password) &&
             password === rePassword
 
         ) {
-            onhandlePost(password, rePassword);
+            onhandlePost(password);
         }
 
     };

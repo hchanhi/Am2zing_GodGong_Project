@@ -14,7 +14,7 @@ import DiaryDetail from './DiaryDetail';
 import DiaryList from './DiaryList.js';
 import User from './user.js';
 import TodoStudyList from './Todo/TodoStudyList.js';
-import TodoStudy from './Todo/TodoStudy.js';
+import TodoStudyRoom from './Todo/TodoStudyRoom.js';
 import Footer from './Footer.js';
 import { isAuth, getNickName } from './jwtCheck.js';
 
@@ -50,7 +50,7 @@ function App() {
                 <Route path="/diary" element={<Diary />} />
                 <Route path='/mypage/user' element={<User setUserNickName={setUserNickName} />} />
                 <Route path="/todoStudy" element={<TodoStudyList />} />
-                <Route path="/todoStudy/:roomNum" element={<TodoStudy />} />
+                <Route path="/todoStudy/:roomNum" element={<TodoStudyRoom />} />
                 <Route path="/user/passwordChange/:key" element={<EditPassword />} />
             </Routes>
 

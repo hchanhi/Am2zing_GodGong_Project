@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import CheckboxTodo from "./CheckboxTodo.js";
 import ChattingBox from "./ChattingBox.js";
-import TodoModal from './TodoModal.js';
+import JoinStudyBtn from "./JoinStudyBtn.js";
 import { isAuth, getNickName } from '../jwtCheck.js';
 import { Grid, Chip } from '@mui/material/';
 import SockJs from "sockjs-client";
@@ -33,7 +33,7 @@ function TodoStudy() {
     let myId = "";
     let { roomNum } = useParams();
     let [isMember, setIsMember] = useState(false);
-    let [modalOpen, setModalOpen] = useState(false);
+   
 
 
     let [newMessage, setNewMessage] = useState([]);
@@ -50,6 +50,7 @@ function TodoStudy() {
         memberId: ""
     });
 
+    // 새로고침하면 state 초기화되니까 이 방 안에서 내가 이 방 멤버인지 체크하는거 있어야함
     useEffect(() => {
         if (!isAuth(token)) {
             alert('로그인 후 이용하실 수 있어요😥');
@@ -164,13 +165,11 @@ function TodoStudy() {
                     {
                         isMember
                             ? <button>나가기</button>
-                            : <button onClick={() => setModalOpen(true)}>참여하기</button>
+                            : <RoomNumContext.Provider value={roomNum}>
+                                <JoinStudyBtn userNickname={userNickname} roomNum={roomNum} setIsMember={setIsMember} />
+                            </RoomNumContext.Provider>
                     }
-                    {
-                        modalOpen && <TodoModal
-                            open={modalOpen}
-                            setOpen={setModalOpen} />
-                    }
+                   
                 </Grid>
             </Grid>
         </Wrapper>

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { getNickName } from '../jwtCheck.js';
-import { RoomNumContext, NewMessageContext, ClientContext } from './TodoStudy.js'
+import { RoomNumContext, NewMessageContext, ClientContext } from './TodoStudyRoom.js'
 
 let Receive = styled.div`
     height: 75%;
@@ -82,6 +82,7 @@ function Chatting() {
                     ))
                 }
             </Receive>
+            {/* 그냥 구경하러 온 사람은 채팅 못남기게 textarea 비활성화 */}
             <Send>
                 <div style={{ height: '20%' }}>{userNickname}</div>
                 <Text onKeyUp={(e) => {

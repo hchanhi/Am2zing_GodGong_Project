@@ -1,7 +1,9 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Grid } from "@mui/material";
+import { getNickName } from '../jwtCheck.js';
 
 let Wrapper = styled.div`
     background-color: white;
@@ -17,15 +19,35 @@ let Wrapper = styled.div`
 function TodoCard({ studyRoom }) {
 
     let navigate = useNavigate();
+    const token = JSON.parse(localStorage.getItem('accessToken'));
+    const userNickname = getNickName(token);
     let roomCreatedDate = studyRoom.roomCreated.substr(0, 4)
         + '.' + studyRoom.roomCreated.substr(5, 2)
         + '.' + studyRoom.roomCreated.substr(8, 2);
+    let nickname = {
+        userNickname: userNickname
+    }
+
+    function isRoomMember() {
+        axios.get('/api/chat/room/check', { params: nickname })
+            .then(res => {
+                console.log(res.data);
+                if (!res.data) {
+                    navigate("/todoStudy/" + studyRoom.roomNumber);
+                } else {
+                    console.log(res.data);
+                    alert('이미 참여하신 스터디가 있어 출입할 수 없습니다.')
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
     return (
         <Grid item xs={3} >
             <Wrapper onClick={() => {
-                // 사용자인지 체크함수
-                navigate("/todoStudy/" + studyRoom.roomNumber);
+                isRoomMember();
             }}>
                 <h2>{studyRoom.roomTitle}</h2>
                  {studyRoom.roomCategory} <br />

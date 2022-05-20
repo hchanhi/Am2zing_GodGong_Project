@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -21,46 +21,40 @@ const Register = () => {
 
     const [passwordState, setPasswordState] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const [email, setEmail] = useState([]);
-    const [state, setsState] = useState();
+    const [email, setEmail] = useState('');
     const navigate = useNavigate();
     let { key } = useParams();
 
-    useEffect(() => {
-        axios.get('/user/password/' + key)
+    useEffect( () => {
+        console.log(key);
+        // key값을 아무거나 넣으면 axios를 실행하지도 않는 이슈
+        axios.get('/api/user/passwordChange/' + key)
             .then(res => {
-                if (res.success == true) {
-                    alert('이메일이 인증되었습니다. 비밀번호를 변경해주세요.');
+                if (res.data.success == true) {
+                    setEmail(res.data.message);
+                    console.log(res.data.message);
+                    alert('인증되었습니다. 비밀번호를 변경해주세요.');
                 }
-                else if (res.success == false)
-                    alert('잘못된 접근입니다.');
-                return navigate('/login');
+                else if (res.data.message == '유효하지 않은 Key값입니다.') {
+                    alert('비정상적인 접근입니다.');
+                    navigate('/login');
+                }
             })
             .catch(err => {
                 console.log(err);
             })
     }, []);
 
-    const getUser = async () => {
-        const json = await axios.get('/api/users/');
-        console.log(json);
-        setEmail(json.data);
+    const onhandlePost = async (password, rePassword) => {
 
-        setsState(false);
-    };
-
-    useEffect(() => {
-        getUser();
-    }, [state == true]);
-
-    const onhandlePost = async (data) => {
-        const { email, password } = data;
-        const postData = { email, password };
-
-        // post
+        if (!email) return alert('비정상적인 접근입니다.');
 
         await axios
-            .post('/api/auth/signup', postData)
+            .post('/api/auth/signup', {
+                email: email,
+                password: password,
+                rePassword: rePassword
+            })
             .then(function (response) {
                 console.log(response.status, '성공');
 
@@ -71,8 +65,7 @@ const Register = () => {
             })
             .catch(function (err) {
                 console.log(err);
-                console.log(postData);
-                console.log(origin);
+                console.log(email);
                 console.log(err.response.data.message);
                 if (err.response.status === 400) {
                     alert(err.response.data.message);
@@ -88,14 +81,8 @@ const Register = () => {
         e.preventDefault();
 
         const data = new FormData(e.currentTarget);
-        const joinData = {
-            email: data.get('email'),
-            password: data.get('password'),
-            rePassword: data.get('rePassword'),
-
-        };
-        const { email, password, rePassword } = joinData;
-
+        let password = data.get('password');
+        let rePassword = data.get('rePassword');
 
         // 비밀번호 유효성 체크
         const passwordRegex = /^.{4,20}$/;
@@ -117,12 +104,11 @@ const Register = () => {
 
 
         if (
-            email != null &&
             passwordRegex.test(password) &&
             password === rePassword
 
         ) {
-            onhandlePost(joinData);
+            onhandlePost(password, rePassword);
         }
 
     };
@@ -152,18 +138,6 @@ const Register = () => {
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                     <FormControl component="fieldset" variant="standard">
                         <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    defaultValue={email.email}
-                                    name="email"
-                                    placeholder="이메일"
-                                    type="text"
-                                    readOnly
-                                />
-                            </Grid>
-
                             <Grid item xs={12}>
                                 <TextField
                                     required

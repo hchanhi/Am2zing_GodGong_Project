@@ -38,8 +38,8 @@ const Register = () => {
             .then(function (res) {
                 if (res.data.success == true) {
                     alert('메일함에서 비밀번호 변경 메일을 확인해주세요!');
-                    navigate('/login');
-                } else if (res.data.success == false) {
+                    navigate('/');
+                } else if (res.data.message == '사용자 정보를 조회할 수 없습니다.') {
                     alert('등록되지 않은 이메일입니다😰');
                 } else {
                     alert(res.data.message);

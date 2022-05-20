@@ -34,7 +34,7 @@ function TodoStudy() {
     let [isMember, setIsMember] = useState(false);
 
     let [newMessage, setNewMessage] = useState([]);
-    let [badgeNum, setBadgeNum] = useState(0);
+    let [badgeNum, setBadgeNum] = useState(-1);
     let StompJs = require('@stomp/stompjs');
     let client = useRef({});
 
@@ -52,6 +52,9 @@ function TodoStudy() {
             alert('로그인 후 이용하실 수 있어요😥');
             return navigate('/login');
         };
+        // roomlog에 입장요청하는 ajax필요
+        // room/enter roomNum이랑 닉네임 보내기
+        // axios /room/enter 몇명들어가있는지 roomlog > return : 인원수세는거 (후순위)
         connect();
         return () => disConnect();
     }, []);
@@ -110,7 +113,7 @@ function TodoStudy() {
         )
     };
 
-
+    // 누가 입장하셨습니다 하면 그때 setState해서 리렌더링해서 투두를 가져오게 하기
     function disConnect() {
         client.current.deactivate();
     };

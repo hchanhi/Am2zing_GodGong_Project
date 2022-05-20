@@ -32,7 +32,7 @@ const Register = () => {
                 if (res.success == true) {
                     alert('이메일이 인증되었습니다. 비밀번호를 변경해주세요.');
                 }
-                else if (res.message == '유효하지 않은 Key값입니다.')
+                else if (res.success == false)
                     alert('잘못된 접근입니다.');
                 return navigate('/login');
             })

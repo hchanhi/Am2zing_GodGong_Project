@@ -6,7 +6,6 @@ import com.gg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,10 +47,10 @@ public class StudylogController {
         return studytime;
     }
 
-    @PostMapping("/api/mypage/studytime/select")
-    public Integer selectStudyTime(String nickname, Date date){
-        int time = studylogService.selectDayTime(nickname, date);
-        return time;
+    @PostMapping("/api/mypage/studytime/calendar")
+    public List<String> calendarTime(@RequestBody HashMap<String,String>param){
+        String nickname = param.get("nickname");
+        return studylogService.calendarTime(nickname);
     }
 
     @GetMapping("/api/main/studytime/summary")

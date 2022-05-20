@@ -35,7 +35,7 @@ const Register = () => {
                     console.log(res.data.message);
                     alert('인증되었습니다. 비밀번호를 변경해주세요.');
                 }
-                else if (res.data.success == false) {
+                else {
                     alert('비정상적인 접근입니다.');
                     navigate('/login');
                 }

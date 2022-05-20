@@ -28,26 +28,25 @@ function TodoCard({ studyRoom }) {
         userNickname: userNickname
     }
 
-    function isRoomMember() {
+    function isMemberCheck() {
         axios.get('/api/chat/room/check', { params: nickname })
             .then(res => {
                 console.log(res.data);
-                if (!res.data) {
-                    navigate("/todoStudy/" + studyRoom.roomNumber);
+                if (!res.data || (res.data.room.roomNumber == studyRoom.roomNumber)) {
+                    return navigate("/todoStudy/" + studyRoom.roomNumber);
                 } else {
-                    console.log(res.data);
-                    alert('이미 참여하신 스터디가 있어 출입할 수 없습니다.')
+                    return alert('이미 참여하신 스터디가 있어 출입할 수 없습니다.');
                 }
             })
             .catch(err => {
                 console.log(err);
             })
-    }
+    };
 
     return (
         <Grid item xs={3} >
             <Wrapper onClick={() => {
-                isRoomMember();
+                isMemberCheck();
             }}>
                 <h2>{studyRoom.roomTitle}</h2>
                  {studyRoom.roomCategory} <br />

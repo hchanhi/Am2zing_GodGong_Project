@@ -35,7 +35,7 @@ const ModalInner = styled.div`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
   background-color: #fff;
   border-radius: 10px;
-  width: 360px;
+  width: 400px;
   max-width: 480px;
   top: 50%;
   transform: translateY(-50%);
@@ -44,7 +44,7 @@ const ModalInner = styled.div`
   text-align: left;
 `
 
-function Modal({ modalContent, open, setOpen, setJoin }) {
+function Modal({ task, open, setOpen }) {
 
   return (
     <div>
@@ -53,9 +53,9 @@ function Modal({ modalContent, open, setOpen, setJoin }) {
         <ModalInner>
           <CloseIcon onClick={() => setOpen(false)} sx={{ float: 'right', cursor: 'pointer' }} /><br />
           {
-            modalContent == 'makeTodo'
-              ? <MakeTodo setOpen={setOpen} setJoin={setJoin} />
-              : <CompleteTodo />
+            task == 'onlyMake' || task == 'join'
+              ? <MakeTodo setOpen={setOpen} task={task} />
+              : <CompleteTodo task={task} />
           }
         </ModalInner>
       </ModalWrapper>

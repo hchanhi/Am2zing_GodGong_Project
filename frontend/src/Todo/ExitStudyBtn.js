@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import TodoModal from './TodoModal.js';
 import Button from '@mui/material/Button';
 
-function JoinStudyBtn({task}) {
+function ExitStudyBtn({task}) {
 
     let [modalOpen, setModalOpen] = useState(false);
 
@@ -10,12 +10,9 @@ function JoinStudyBtn({task}) {
         <div>
             <Button
                 variant="contained"
+                style={{ backgroundColor: 'red' }}
                 onClick={() => setModalOpen(true)}>
-                {
-                    task == 'onlyMake'
-                        ? 'Todo만들기'
-                        : '참여하기'
-                }
+                나가기
             </Button>
             {
                 modalOpen && <TodoModal
@@ -27,4 +24,4 @@ function JoinStudyBtn({task}) {
     );
 }
 
-export default JoinStudyBtn;
+export default ExitStudyBtn;

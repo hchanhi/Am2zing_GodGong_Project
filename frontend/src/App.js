@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Header from './Header.js';
 import Home from './Home.js';
 import Challenge from './Challenge.js';
+import TimeCalendar from './TimeCalendar';
 import Login from './Login.js';
 import Join from './Join.js';
 import FindPassword from './FindPassword';
@@ -47,6 +48,7 @@ function App() {
                 <Route path="/mypage/diary" element={<DiaryList />} />
                 <Route path="/mypage/diaryDetail/:id" element={<DiaryDetail />} />
                 <Route path="/challenge" element={<Challenge />} />
+                <Route path="/timecalendar" element={<TimeCalendar />} />
                 <Route path="/diary" element={<Diary />} />
                 <Route path='/mypage/user' element={<User setUserNickName={setUserNickName} />} />
                 <Route path="/todoStudy" element={<TodoStudyList />} />

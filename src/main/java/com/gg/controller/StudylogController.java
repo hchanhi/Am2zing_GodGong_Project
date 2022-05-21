@@ -40,10 +40,12 @@ public class StudylogController {
         int week = studylogService.oneWeekTime(nickname);
         int month = studylogService.oneMonthTime(nickname);
         int total = studylogService.totalTime(nickname);
-        studytime.add(day);
-        studytime.add(week);
-        studytime.add(month);
-        studytime.add(total);
+
+        studytime.add(0,day);
+        studytime.add(1,week);
+        studytime.add(2,month);
+        studytime.add(3,total);
+
         return studytime;
     }
 
@@ -55,49 +57,7 @@ public class StudylogController {
 
     @GetMapping("/api/main/studytime/summary")
     public List<List<StudyRankDTO>> Ranking() {
-        List<List<StudyRankDTO>> result = new ArrayList<>();
-        int length = studylogService.Daytop10Studytime().size();
-        List<StudyRankDTO> dayranks = new ArrayList<>();
-        List<StudyRankDTO> weekranks = new ArrayList<>();
-        List<StudyRankDTO> monthranks = new ArrayList<>();
-        for (int i = 0; i < length; i++) {
-            //하루
-            StudyRankDTO daysr = new StudyRankDTO();
-            Long id = studylogService.Daytop10Studytime().get(i).getId();
-            int day = studylogService.Daytop10Studytime().get(i).getTime();
-            String nickname = userService.findNickname(id);
-            daysr.setNickname(nickname);
-            daysr.setTime(day);
-            dayranks.add(i, daysr);
-        }
-        result.add(0, dayranks);
-
-        length = studylogService.Weektop10Studytime().size();
-        for (int i = 0; i < length; i++) {
-            //한 주
-            StudyRankDTO weeksr = new StudyRankDTO();
-            Long id = studylogService.Weektop10Studytime().get(i).getId();
-            int week = studylogService.Weektop10Studytime().get(i).getTime();
-            String nickname = userService.findNickname(id);
-            weeksr.setNickname(nickname);
-            weeksr.setTime(week);
-            weekranks.add(i, weeksr);
-        }
-        result.add(1, weekranks);
-
-        length = studylogService.Monthtop10Studytime().size();
-        for (int i = 0; i < length; i++) {
-            //한 달
-            StudyRankDTO monthsr = new StudyRankDTO();
-            Long id = studylogService.Monthtop10Studytime().get(i).getId();
-            int month = studylogService.Monthtop10Studytime().get(i).getTime();
-            String nickname = userService.findNickname(id);
-            monthsr.setNickname(nickname);
-            monthsr.setTime(month);
-            monthranks.add(i, monthsr);
-        }
-        result.add(2, monthranks);
-
+        List<List<StudyRankDTO>> result = studylogService.Ranking();
         return result;
     }
 

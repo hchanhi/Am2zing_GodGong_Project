@@ -70,6 +70,9 @@ function Home() {
 
     const [recentDiary, setRecentDiary] = useState([]);
     const [totalTime, setTotalTime] = useState([]);
+    const [dayTime, setDayTime] = useState([]);
+    const [weekTime, setWeekTime] = useState([]);
+    const [monthTime, setMonthTime] = useState([]);
     const [myTime, setMyTime] = useState([]);
     const [recentDate, setRecentDate] = useState();
     let navigate = useNavigate();
@@ -99,7 +102,9 @@ function Home() {
             .then(res=> {
                 console.log(res.data);
                 setTotalTime(res.data);
-                console.log(totalTime);
+                setDayTime(res.data[0]);
+                setWeekTime(res.data[1]);
+                setMonthTime(res.data[2]);
             })
             .catch(err =>{
                 console.log(err);
@@ -109,7 +114,7 @@ function Home() {
     let body = {
         nickname : nickname
     };
-    const getMyTime = async () => {
+    const MyTime = async () => {
         axios.post('/api/mypage/studytime', body)
             .then(res=>{
                 console.log(res.data);
@@ -123,7 +128,7 @@ function Home() {
     useEffect(() => {
         getRecentDiary();
         getTotalTime();
-        getMyTime();
+        MyTime();
     }, []);
     return (
         <Wrapper>
@@ -162,16 +167,38 @@ function Home() {
                     <div><h1>누적 공부 시간 랭킹</h1></div>
                     <div>현재시간 기준</div>
                     <div><h1 style={{ color: 'darkcyan' }}>오 늘 ▾</h1></div>
-                    {/*<table>*/}
-                    {/*    <tbody>*/}
-                    {/*    {totalTime.map((day) =>(*/}
-                    {/*        <tr key={day.nickname}>*/}
-                    {/*            <td>{day.nickname}</td>*/}
-                    {/*            <td>{test(day.time)}</td>*/}
-                    {/*        </tr>*/}
-                    {/*    ))}*/}
-                    {/*    </tbody>*/}
-                    {/*</table>*/}
+                    <table>
+                        <tbody>
+                        {dayTime.map((day) =>(
+                            <tr key={day.nickname}>
+                                <td>{day.nickname}</td>
+                                <td>{test(day.time)}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                    <div><h1 style={{ color: 'darkcyan' }}>한 주 ▾</h1></div>
+                    <table>
+                        <tbody>
+                        {weekTime.map((day) =>(
+                            <tr key={day.nickname}>
+                                <td>{day.nickname}</td>
+                                <td>{test(day.time)}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                    <div><h1 style={{ color: 'darkcyan' }}>한 달 ▾</h1></div>
+                    <table>
+                        <tbody>
+                        {monthTime.map((day) =>(
+                            <tr key={day.nickname}>
+                                <td>{day.nickname}</td>
+                                <td>{test(day.time)}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
                 </RankingText>
                 <Grid item xs={8} sx={{ textAlign: 'left' }}>
                     <div><b>1~10위</b> 누적 공부시간 랭킹에서 다른 사용자와 공부시간을 비교할 수 있습니다.</div>

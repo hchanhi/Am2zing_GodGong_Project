@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import axios from 'axios';
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -34,16 +34,13 @@ export let TaskContext = React.createContext();
 
 function TodoStudy() {
 
+    let today = new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString().padStart(2, '0') + '-' + new Date().getDate().toString().padStart(2, '0')
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const userNickname = getNickName(token);
-    let nickname = {
-        userNickname: userNickname
-    }
     const navigate = useNavigate();
     let { roomNum } = useParams();
-    let roomNumber = {
-        roomNumber: roomNum
-    }
+    let [room, setRoom] = useState([]);
+    let [roomTodos, setRoomTodos] = useState([]);
     let [isMember, setIsMember] = useState(false);
     let [hasTodo, setHasTodo] = useState(false);
    
@@ -51,25 +48,32 @@ function TodoStudy() {
     let [badgeNum, setBadgeNum] = useState(-1);
     let client = useRef({});
 
+    useEffect(async () => {
+        await axios.get('/api/chat/rooms')
+            .then(res => {
+                setRoom(res.data.find((x) => x.roomNumber == roomNum));
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }, []);
+
     useEffect(() => {
         if (!isAuth(token)) {
             alert('로그인 후 이용하실 수 있어요😥');
             return navigate('/login');
         };
 
-        // 여기 리턴값에 todo도 들어있으면 todo있는지 없는지에 따라 todo버튼 생성할지말지 결정 가능
-        axios.get('/api/chat/room/check', { params: nickname })
+        axios.get('/api/chat/room/check', {
+            params: {
+                userNickname: userNickname
+            } })
             .then(res => {
-                console.log('/api/chat/room/check'); 
                 console.log(res.data);
                 if (!res.data)
                     setIsMember(false);
                 else if (res.data.room.roomNumber == roomNum) {
                     setIsMember(true);
-                    // '오늘'의 todo가 있는지 체크해야함
-                    if (res.data.todo) {
-                        setHasTodo(true);
-                    }
                 }
             })
             .catch(err => {
@@ -77,10 +81,14 @@ function TodoStudy() {
             })
         
         // message가 입장, 퇴장, done일때 리렌더링되야함
-        axios.get('/api/todo/room', {params: roomNumber})
+        axios.get('/api/todo/room', {
+            params: {
+                roomNumber: roomNum
+            } })
             .then(res => {
-                console.log('/api/todo/room'); 
                 console.log(res.data);
+                console.log(res.data.filter((item, i) => item.todoCreated.substr(0, 10) == today));
+                setRoomTodos('');
             })
             .catch(err => {
                 console.log(err);
@@ -89,21 +97,38 @@ function TodoStudy() {
         // axios /room/enter 몇명들어가있는지 roomlog > return : 인원수세는거 (후순위)
         connect(client, roomNum, userNickname, setNewMessage, newMessage);
         return () => disConnect(client);
-    }, []);
+    }, [isMember]);
 
     useEffect(() => {
         setBadgeNum(++badgeNum);
     }, [newMessage])
-
-    // 다른 스터디원의 실시간 투두 진행상황 보려면 양방향 데이터 통신 필요
-
+    
     return (
         <Wrapper>
-            <Grid alignItems="center" container spacing={4}>
+            <Grid alignItems="center" justifyContent="space-between" container spacing={3}>
+                
                 <Grid item xs={8}>
-                    <h1>에너지 넘치는 2조 투두방📚</h1>
+                    <Chip label={room.roomCategory} />
+                    <br />
+                    <h1>{room.roomTitle}</h1>
+                    <h3>{room.roomCreated
+                        && ('▶ ' + room.roomCreated.substr(0, 4) + '.'
+                            + room.roomCreated.substr(5, 2) + '.'
+                            + room.roomCreated.substr(8, 2) + ' 부터 이어지는 스터디')
+                        }</h3>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={4} sx={{ textAlign: 'right' }}>
+                    <RoomNumContext.Provider value={roomNum}>
+                        <NewMessageContext.Provider value={newMessage}>
+                            <ClientContext.Provider value={client.current}>
+                                <ChattingBox badgeNum={badgeNum} setBadgeNum={setBadgeNum} />
+                            </ClientContext.Provider>
+                        </NewMessageContext.Provider>
+                    </RoomNumContext.Provider>
+                </Grid>
+
+                <Grid item xs={9} />
+                <Grid item xs={2} style={{ textAlign: 'right' }}>
                     {
                         hasTodo
                             ? <RoomNumContext.Provider value={roomNum}>
@@ -118,7 +143,7 @@ function TodoStudy() {
                             </RoomNumContext.Provider>
                     }
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={1} style={{ textAlign: 'right' }}>
                     {
                         isMember
                             ? <SetMemberContext.Provider value={setIsMember}>
@@ -135,20 +160,7 @@ function TodoStudy() {
                             </RoomNumContext.Provider>
                     }
                 </Grid>
-                <Grid item xs={6}>
-                    <Chip label='대기업' />
-                    <h3>현재인원 : 4/5명</h3>
-                </Grid>
                 
-                <Grid item xs={6} sx={{ textAlign: 'right' }}>
-                    <RoomNumContext.Provider value={roomNum}>
-                        <NewMessageContext.Provider value={newMessage}>
-                            <ClientContext.Provider value={client.current}>
-                                <ChattingBox badgeNum={badgeNum} setBadgeNum={setBadgeNum}/>
-                            </ClientContext.Provider>
-                        </NewMessageContext.Provider>
-                    </RoomNumContext.Provider>
-                </Grid>
                 <Grid item xs={12}>
                     <CheckboxTodo />
                 </Grid>

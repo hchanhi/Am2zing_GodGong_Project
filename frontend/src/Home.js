@@ -5,8 +5,8 @@ import Button from '@mui/material/Button';
 import styled from "styled-components";
 import TodoStudyList from "./Todo/TodoStudyList.js";
 import axios from 'axios';
-import { isAuth, getNickName } from './jwtCheck';
-import DiaryCom from "./components/DiaryCom";
+import { getNickName } from './jwtCheck';
+
 let Wrapper = styled.div`
     margin: auto;
     width: 65%;

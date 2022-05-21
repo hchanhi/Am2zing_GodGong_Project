@@ -31,7 +31,7 @@ function DeleteTodoBtn() {
                 variant="contained"
                 style={{ backgroundColor: 'red' }}
                 onClick={deleteTodo()}>
-                삭제하기
+                Todo삭제
             </Button>
         </div>
     );

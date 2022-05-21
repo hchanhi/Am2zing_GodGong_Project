@@ -60,6 +60,7 @@ function TodoStudy() {
         // 여기 리턴값에 todo도 들어있으면 todo있는지 없는지에 따라 todo버튼 생성할지말지 결정 가능
         axios.get('/api/chat/room/check', { params: nickname })
             .then(res => {
+                console.log('/api/chat/room/check'); 
                 console.log(res.data);
                 if (!res.data)
                     setIsMember(false);
@@ -78,6 +79,7 @@ function TodoStudy() {
         // message가 입장, 퇴장, done일때 리렌더링되야함
         axios.get('/api/todo/room', {params: roomNumber})
             .then(res => {
+                console.log('/api/todo/room'); 
                 console.log(res.data);
             })
             .catch(err => {
@@ -101,27 +103,29 @@ function TodoStudy() {
                 <Grid item xs={8}>
                     <h1>에너지 넘치는 2조 투두방📚</h1>
                 </Grid>
-                <Grid item xs={2} sx={{ textAlign: 'right' }}>
+                <Grid item xs={2}>
                     {
-                        isMember
-                            ? (hasTodo
-                                ? <RoomNumContext.Provider value={roomNum}>
-                                    <ClientContext.Provider value={client.current}>
-                                        <DeleteTodoBtn />
-                                    </ClientContext.Provider>
-                                </RoomNumContext.Provider>
-                                : <RoomNumContext.Provider value={roomNum}>
-                                    <SetMemberContext.Provider value={setIsMember}>
-                                        <JoinStudyBtn task={'onlyMake'} />
-                                    </SetMemberContext.Provider>
-                                </RoomNumContext.Provider>)
-                            : null
+                        hasTodo
+                            ? <RoomNumContext.Provider value={roomNum}>
+                                <ClientContext.Provider value={client.current}>
+                                    <DeleteTodoBtn />
+                                </ClientContext.Provider>
+                            </RoomNumContext.Provider>
+                            : <RoomNumContext.Provider value={roomNum}>
+                                <SetMemberContext.Provider value={setIsMember}>
+                                    <JoinStudyBtn task={'onlyMake'} />
+                                </SetMemberContext.Provider>
+                            </RoomNumContext.Provider>
                     }
                 </Grid>
-                <Grid item xs={2} sx={{ textAlign: 'right' }}>
+                <Grid item xs={2}>
                     {
                         isMember
-                            ? <ExitStudyBtn task={'exit'} />
+                            ? <SetMemberContext.Provider value={setIsMember}>
+                                <ClientContext.Provider value={client.current}>
+                                    <ExitStudyBtn task={'exit'} />
+                                </ClientContext.Provider>
+                            </SetMemberContext.Provider>
                             : <RoomNumContext.Provider value={roomNum}>
                                 <SetMemberContext.Provider value={setIsMember}>
                                     <ClientContext.Provider value={client.current}>

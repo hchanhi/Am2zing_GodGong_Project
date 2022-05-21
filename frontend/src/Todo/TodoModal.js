@@ -30,6 +30,7 @@ const ModalOverlay = styled.div`
 `
 
 const ModalInner = styled.div`
+  text-align: center;
   box-sizing: border-box;
   position: relative;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
@@ -40,8 +41,7 @@ const ModalInner = styled.div`
   top: 50%;
   transform: translateY(-50%);
   margin: 0 auto;
-  padding: 30px 30px 40px;
-  text-align: left;
+  padding: 40px 30px;
 `
 
 function Modal({ task, open, setOpen }) {

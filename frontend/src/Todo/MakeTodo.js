@@ -8,6 +8,7 @@ import { getNickName } from '../jwtCheck.js';
 
 let Wrapper = styled.div`
     h4 {
+        text-align: left;
         color: dimgrey;
         margin: 15px 0;
     }
@@ -89,6 +90,7 @@ function MakeTodo({ setOpen, task }) {
             {/* Todo추가버튼은 아이콘으로 변경 */}
             <Button
                 variant="contained"
+                style={{ marginTop: '1rem'}}
                 onClick={() => {
                     if (todos.length == 0) {
                         return alert('todo는 최소 1개 작성해야 합니다.')

@@ -7,6 +7,7 @@ import TodoStudyList from "./Todo/TodoStudyList.js";
 import axios from 'axios';
 import { isAuth, getNickName } from './jwtCheck';
 import DiaryCom from "./components/DiaryCom";
+
 let Wrapper = styled.div`
     margin: auto;
     width: 65%;
@@ -109,11 +110,13 @@ function Home() {
             setMyTime(json.data);
         }
     };
+
     useEffect(() => {
         getRecentDiary();
         getTotalTime();
         getMyTime();
     }, []);
+    
     return (
         <Wrapper>
             <TodayStyle container spacing={1}>

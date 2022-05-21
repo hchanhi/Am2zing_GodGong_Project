@@ -1,5 +1,5 @@
 .page{
-    width:1140px;
+    width:1000px;
     height:400px;
     margin:0 auto;
 
@@ -27,5 +27,9 @@
 
 .totaltime2{
     margin-top:20px;
+}
+
+.totaltime2 h1{
+    margin-bottom:20px;
 }
 

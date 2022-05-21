@@ -7,6 +7,7 @@ import TodoStudyList from "./Todo/TodoStudyList.js";
 import axios from 'axios';
 import { isAuth, getNickName } from './jwtCheck';
 import DiaryCom from "./components/DiaryCom";
+import './Home.css';
 let Wrapper = styled.div`
     margin: auto;
     width: 65%;
@@ -64,6 +65,7 @@ let RankingText = styled(Grid)`
     }
 `;
 
+
 function Home() {
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const nickname = getNickName(token);
@@ -76,6 +78,45 @@ function Home() {
     const [myTime, setMyTime] = useState([]);
     const [recentDate, setRecentDate] = useState();
     let navigate = useNavigate();
+
+    const[clicked, setClicked] = useState(0);
+    const clickhandler = (num) => {
+        setClicked(num);
+    };
+    const ranking = {
+        0:<table>
+                <tbody>
+                {dayTime.map((day) =>(
+                    <tr key={day.nickname}>
+                        <td>{day.nickname}</td>
+                        <td>{test(day.time)}</td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>,
+
+        1:<table>
+            <tbody>
+            {weekTime.map((day) =>(
+                <tr key={day.nickname}>
+                    <td>{day.nickname}</td>
+                    <td>{test(day.time)}</td>
+                </tr>
+            ))}
+            </tbody>
+        </table>,
+        2:<table>
+            <tbody>
+            {monthTime.map((day) =>(
+                <tr key={day.nickname}>
+                    <td>{day.nickname}</td>
+                    <td>{test(day.time)}</td>
+                </tr>
+            ))}
+            </tbody>
+        </table>}
+
+
     const getRecentDiary = async () => {
 
         axios.get('/api/main/diary/recent', {params: {nickname: nickname}})
@@ -166,39 +207,11 @@ function Home() {
                 <RankingText item xs={4} sx={{ margin: '5vh 0 10vh' }}>
                     <div><h1>누적 공부 시간 랭킹</h1></div>
                     <div>현재시간 기준</div>
-                    <div><h1 style={{ color: 'darkcyan' }}>오 늘 ▾</h1></div>
-                    <table>
-                        <tbody>
-                        {dayTime.map((day) =>(
-                            <tr key={day.nickname}>
-                                <td>{day.nickname}</td>
-                                <td>{test(day.time)}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                    <div><h1 style={{ color: 'darkcyan' }}>한 주 ▾</h1></div>
-                    <table>
-                        <tbody>
-                        {weekTime.map((day) =>(
-                            <tr key={day.nickname}>
-                                <td>{day.nickname}</td>
-                                <td>{test(day.time)}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                    <div><h1 style={{ color: 'darkcyan' }}>한 달 ▾</h1></div>
-                    <table>
-                        <tbody>
-                        {monthTime.map((day) =>(
-                            <tr key={day.nickname}>
-                                <td>{day.nickname}</td>
-                                <td>{test(day.time)}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
+                    <span className={`rankingbtn ${clicked === 0 ? 'selected' : ''}`} state={clicked} onClick={()=>clickhandler(0)}>오 늘</span>
+                    <span className={`rankingbtn ${clicked === 1 ? 'selected' : ''}`} state={clicked} onClick={()=>clickhandler(1)}>한 주</span>
+                    <span className={`rankingbtn ${clicked === 2 ? 'selected' : ''}`} state={clicked} onClick={()=>clickhandler(2)}>한 달</span>
+                    <div>{ranking[clicked]}</div>
+
                 </RankingText>
                 <Grid item xs={8} sx={{ textAlign: 'left' }}>
                     <div><b>1~10위</b> 누적 공부시간 랭킹에서 다른 사용자와 공부시간을 비교할 수 있습니다.</div>

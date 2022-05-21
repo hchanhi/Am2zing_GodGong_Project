@@ -69,19 +69,22 @@ function Home() {
     const nickname = getNickName(token);
 
     const [recentDiary, setRecentDiary] = useState([]);
-    const [TotalTime, setTotalTime] = useState([]);
-    const [MyTime, setMyTime] = useState([]);
+    const [totalTime, setTotalTime] = useState([]);
+    const [myTime, setMyTime] = useState([]);
     const [recentDate, setRecentDate] = useState();
     let navigate = useNavigate();
     const getRecentDiary = async () => {
 
-        const json = await axios.get('/api/main/diary/recent', {params: {nickname: nickname}});
+        axios.get('/api/main/diary/recent', {params: {nickname: nickname}})
+            .then(res=>{
+                console.log(res.data);
+                setRecentDiary(res.data);
+                setRecentDate(res.data.diaryCreated.substr(0, 10));
+            })
+            .catch(err =>{
+                console.log(err);
+        })
 
-        if (json.data.diaryContent == null) {
-        } else {
-            setRecentDiary(json.data);
-            setRecentDate(json.data.diaryCreated.substr(0, 10));
-        }
     };
     function test(data){
         var h = parseInt(data/3600);
@@ -90,24 +93,32 @@ function Home() {
         var time = h+"시간 "+m+"분 "+s+"초";
         return time;
     };
-    const getTotalTime = async () => {
-        const json = await axios.get('/api/main/studytime/summary');
-        if (json.data == null) {
-        } else {
-            setTotalTime(json.data);
-        }
-    };
 
+    const getTotalTime = async () => {
+        axios.get('/api/main/studytime/summary')
+            .then(res=> {
+                console.log(res.data);
+                setTotalTime(res.data);
+                console.log(totalTime);
+            })
+            .catch(err =>{
+                console.log(err);
+            })
+    };
 
     let body = {
         nickname : nickname
     };
     const getMyTime = async () => {
-        const json = await axios.post('/api/mypage/studytime', body);
-        if (json.data == null) {
-        } else {
-            setMyTime(json.data);
-        }
+        axios.post('/api/mypage/studytime', body)
+            .then(res=>{
+                console.log(res.data);
+                setMyTime(res.data);
+            })
+            .catch(err =>{
+                console.log(err);
+            })
+
     };
     useEffect(() => {
         getRecentDiary();
@@ -119,7 +130,7 @@ function Home() {
             <TodayStyle container spacing={1}>
                 <StudyTime item xs={5}>
                     <div style={{ textAlign: 'left' }}>오늘의 공부시간</div>
-                    <div className="studytimetoday"><h2>{test(MyTime[0])=="NaN시간 NaN분 NaN초" ? "0시간 0분 0초":test(MyTime[0])}</h2></div>
+                    <div className="studytimetoday"><h2>{test(myTime[0])=="NaN시간 NaN분 NaN초" ? "0시간 0분 0초":test(myTime[0])}</h2></div>
                     <div><Button variant="contained" size="large" onClick={() => navigate("/challenge")}>공부 시작</Button></div>
                 </StudyTime>
                 <StudyDiary item xs={7} sx={{ textAlign: 'left' }}>
@@ -143,8 +154,6 @@ function Home() {
                                     : <h5>감정분석결과 : 기분이 좋습니다. 🥰</h5>
                         }
                     </div>
-
-
                 </StudyDiary>
             </TodayStyle>
 
@@ -152,19 +161,17 @@ function Home() {
                 <RankingText item xs={4} sx={{ margin: '5vh 0 10vh' }}>
                     <div><h1>누적 공부 시간 랭킹</h1></div>
                     <div>현재시간 기준</div>
-                    <div><h1 style={{ color: 'darkcyan' }}>한 달 ▾</h1></div>
-                    <table>
-                        <tbody>
-                        {TotalTime.map((tt) =>(
-                            <tr key={tt.nickname}>
-                                <td>{tt.nickname}</td>
-                                <td>{test(tt.day)}</td>
-                                <td>{test(tt.week)}</td>
-                                <td>{test(tt.month)}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
+                    <div><h1 style={{ color: 'darkcyan' }}>오 늘 ▾</h1></div>
+                    {/*<table>*/}
+                    {/*    <tbody>*/}
+                    {/*    {totalTime.map((day) =>(*/}
+                    {/*        <tr key={day.nickname}>*/}
+                    {/*            <td>{day.nickname}</td>*/}
+                    {/*            <td>{test(day.time)}</td>*/}
+                    {/*        </tr>*/}
+                    {/*    ))}*/}
+                    {/*    </tbody>*/}
+                    {/*</table>*/}
                 </RankingText>
                 <Grid item xs={8} sx={{ textAlign: 'left' }}>
                     <div><b>1~10위</b> 누적 공부시간 랭킹에서 다른 사용자와 공부시간을 비교할 수 있습니다.</div>

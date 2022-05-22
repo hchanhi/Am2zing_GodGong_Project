@@ -32,8 +32,14 @@ function subscribe(client, roomNum, update, setUpdate, setNewMessage, newMessage
     client.current.subscribe("/sub/room/" + roomNum,
         function (chat) {
             if (chat.body) {
-                if (JSON.parse(chat.body).result == 'done') setUpdate(!update);
-                else setNewMessage(newMessage => [...newMessage, JSON.parse(chat.body)]);
+                if ((JSON.parse(chat.body).message.indexOf('입장했습니다.') != -1)
+                    || (JSON.parse(chat.body).message.indexOf('퇴장했습니다.') != -1))
+                    setUpdate(!update);
+                if ((JSON.parse(chat.body).result == 'done'))
+                    setUpdate(!update);
+                else {
+                    setNewMessage(newMessage => [...newMessage, JSON.parse(chat.body)]);
+                }
             } else {
                 alert('got empty message!')
             }

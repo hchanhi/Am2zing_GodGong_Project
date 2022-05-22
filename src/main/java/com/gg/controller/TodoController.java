@@ -34,8 +34,8 @@ public class TodoController {
         return todoService.findTodos(roomNumber);
     }
 
-    @DeleteMapping("/todo/delete")
-    public void deleteTodo(@RequestParam String userNickname, String roomNumber){
-        todoService.deleteTodo(userNickname, roomNumber);
-    }
+//    @DeleteMapping("/todo/delete")
+//    public void deleteTodo(@RequestParam String userNickname, String roomNumber){
+//        todoService.deleteTodo(userNickname, roomNumber);
+//    }
 }

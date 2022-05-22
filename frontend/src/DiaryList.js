@@ -44,8 +44,14 @@ function DiaryList(diary) {
     useEffect(() => {
         getDiaries();
         if (!isAuth(token)) {
-            alert('로그인 후 이용하실 수 있어요😥');
-            return navigate('/login');
+            Swal.fire({
+                confirmButtonColor: '#2fbe9f',
+
+                confirmButtonText: '확인',
+                text: '로그인 후 이용하실 수 있어요😥', // Alert 제목 
+
+            });
+            navigate('/login');
         }
     }, [state == true]);
 
@@ -100,24 +106,22 @@ function DiaryList(diary) {
 
                     <Container className='diary_header'>
 
-                        <div > <h2>공부일기📆</h2></div>
-                        <div >   <button className="diary" type="submit" onClick={() => move_dairy()}>일기쓰기</button></div>
+                        <div className='paging'> <h2>공부일기📆</h2>
+                            <select
+                                type="number"
+                                value={limit}
+                                onChange={({ target: { value } }) => setLimit(Number(value))}
+                            >
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select></div>
+                        <div>   <button className="diary" type="submit" onClick={() => move_dairy()}>일기쓰기</button></div>
 
                     </Container>
-                    <label>
-                        페이지 당 표시할 게시물 수:&nbsp;
-                        <select
-                            type="number"
-                            value={limit}
-                            onChange={({ target: { value } }) => setLimit(Number(value))}
-                        >
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
-                    </label>
+
                     <div >
 
                         {diaries.slice(offset, offset + limit).map((diary) => (

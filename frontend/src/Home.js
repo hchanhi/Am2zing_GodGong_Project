@@ -50,6 +50,10 @@ let StudyDiary = styled(Grid)`
         white-space:pre;
       
     }
+    .recentContent{
+        font-size: 16pt;
+        font-weight :600;
+    }
     div {
         background-color: mintcream;
         padding: 1rem;
@@ -57,6 +61,13 @@ let StudyDiary = styled(Grid)`
         border-radius: 20px;
         border: solid 1px lightseagreen;
         // box-shadow: 1px 1px 10px gainsboro;
+    }
+    .home_diary {
+
+        width: 100% !important;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
     }
 `;
 let RankingText = styled(Grid)`
@@ -80,91 +91,92 @@ function Home() {
     const [recentDate, setRecentDate] = useState();
     let navigate = useNavigate();
 
-    const[clicked, setClicked] = useState(0);
+    const [clicked, setClicked] = useState(0);
     const clickhandler = (num) => {
         setClicked(num);
     };
     const ranking = {
-        0:<table>
-                <tbody>
-                {dayTime.map((day) =>(
+        0: <table>
+            <tbody>
+                {dayTime.map((day) => (
                     <tr key={day.nickname}>
                         <td>{day.nickname}</td>
                         <td>{test(day.time)}</td>
                     </tr>
                 ))}
-                </tbody>
-            </table>,
-
-        1:<table>
-            <tbody>
-            {weekTime.map((day) =>(
-                <tr key={day.nickname}>
-                    <td>{day.nickname}</td>
-                    <td>{test(day.time)}</td>
-                </tr>
-            ))}
             </tbody>
         </table>,
-        2:<table>
+
+        1: <table>
             <tbody>
-            {monthTime.map((day) =>(
-                <tr key={day.nickname}>
-                    <td>{day.nickname}</td>
-                    <td>{test(day.time)}</td>
-                </tr>
-            ))}
+                {weekTime.map((day) => (
+                    <tr key={day.nickname}>
+                        <td>{day.nickname}</td>
+                        <td>{test(day.time)}</td>
+                    </tr>
+                ))}
             </tbody>
-        </table>}
+        </table>,
+        2: <table>
+            <tbody>
+                {monthTime.map((day) => (
+                    <tr key={day.nickname}>
+                        <td>{day.nickname}</td>
+                        <td>{test(day.time)}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    };
 
 
     const getRecentDiary = async () => {
 
-        axios.get('/api/main/diary/recent', {params: {nickname: nickname}})
-            .then(res=>{
+        axios.get('/api/main/diary/recent', { params: { nickname: nickname } })
+            .then(res => {
                 console.log(res.data);
                 setRecentDiary(res.data);
                 setRecentDate(res.data.diaryCreated.substr(0, 10));
             })
-            .catch(err =>{
+            .catch(err => {
                 console.log(err);
-        })
+            });
 
     };
-    function test(data){
-        var h = parseInt(data/3600);
-        var m = parseInt((data%3600)/60);
-        var s = (data%3600)%60;
-        var time = h+"시간 "+m+"분 "+s+"초";
+    function test(data) {
+        var h = parseInt(data / 3600);
+        var m = parseInt((data % 3600) / 60);
+        var s = (data % 3600) % 60;
+        var time = h + "시간 " + m + "분 " + s + "초";
         return time;
     };
 
     const getTotalTime = async () => {
         axios.get('/api/main/studytime/summary')
-            .then(res=> {
+            .then(res => {
                 console.log(res.data);
                 setTotalTime(res.data);
                 setDayTime(res.data[0]);
                 setWeekTime(res.data[1]);
                 setMonthTime(res.data[2]);
             })
-            .catch(err =>{
+            .catch(err => {
                 console.log(err);
-            })
+            });
     };
 
     let body = {
-        nickname : nickname
+        nickname: nickname
     };
     const MyTime = async () => {
         axios.post('/api/mypage/studytime', body)
-            .then(res=>{
+            .then(res => {
                 console.log(res.data);
                 setMyTime(res.data);
             })
-            .catch(err =>{
+            .catch(err => {
                 console.log(err);
-            })
+            });
 
     };
     useEffect(() => {
@@ -183,7 +195,7 @@ function Home() {
                 <StudyDiary item xs={7} sx={{ textAlign: 'left' }}>
 
                     <span>오늘의 공부일기</span>
-                    <div>
+                    <div className="home_diary">
                         <span>{recentDate}</span>
                         <br></br>
                         <br></br>
@@ -209,9 +221,9 @@ function Home() {
                 <RankingText item xs={4} sx={{ margin: '5vh 0 10vh' }}>
                     <div><h1>누적 공부 시간 랭킹</h1></div>
                     <div>현재시간 기준</div>
-                    <span className={`rankingbtn ${clicked === 0 ? 'selected' : ''}`} state={clicked} onClick={()=>clickhandler(0)}>오 늘</span>
-                    <span className={`rankingbtn ${clicked === 1 ? 'selected' : ''}`} state={clicked} onClick={()=>clickhandler(1)}>한 주</span>
-                    <span className={`rankingbtn ${clicked === 2 ? 'selected' : ''}`} state={clicked} onClick={()=>clickhandler(2)}>한 달</span>
+                    <span className={`rankingbtn ${clicked === 0 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(0)}>오 늘</span>
+                    <span className={`rankingbtn ${clicked === 1 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(1)}>한 주</span>
+                    <span className={`rankingbtn ${clicked === 2 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(2)}>한 달</span>
                     <div>{ranking[clicked]}</div>
 
                 </RankingText>
@@ -225,7 +237,7 @@ function Home() {
             <Link to="/todoStudy" style={{ textDecoration: 'underline', textAlign: 'right' }}>
                 더 보러가기
             </Link>
-        </Wrapper>
+        </Wrapper >
     );
 }
 

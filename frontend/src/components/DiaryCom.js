@@ -37,7 +37,8 @@ function DiaryCom({ diaryId, diaryContent, diarySentiment, diaryCreated, handleS
                             <button className="delBtn" type="submit" onClick={() => handleSubmit(diaryId)}>❌</button></div>
                         <div className="content">
 
-                            <span>{diaryContent.length > 50 ? diaryContent.substr(0, 50) + "..." : diaryContent}</span>
+                            <span>{diaryContent}</span>
+                            {/*   <span>{diaryContent.length > 50 ? diaryContent.substr(0, 50) + "..." : diaryContent}</span> */}
 
 
                         </div>

@@ -5,6 +5,7 @@ import com.gg.dto.ChatMessageDTO;
 import com.gg.service.RoomlogService;
 import com.gg.service.StudylogService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;

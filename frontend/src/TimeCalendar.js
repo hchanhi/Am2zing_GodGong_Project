@@ -75,16 +75,16 @@ function TimeCalendar() {
             <h1>{date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()} 공부시간</h1>
             {test(caltime)}
           <h1>오늘의 공부시간</h1>
-            {test(time[0])}
+            {test(time[0])=="NaN시간 NaN분 NaN초" ? "0시간 0분 0초":test(time[0])}
 
           <h1>이번주 공부시간</h1>
-            {test(time[1])}
+            {test(time[1])=="NaN시간 NaN분 NaN초" ? "0시간 0분 0초":test(time[1])}
 
           <h1>이번달 공부시간</h1>
-            {test(time[2])}
+            {test(time[2])=="NaN시간 NaN분 NaN초" ? "0시간 0분 0초":test(time[2])}
 
           <h1>나의 총 공부시간</h1>
-            {test(time[3])}
+            {test(time[3])=="NaN시간 NaN분 NaN초" ? "0시간 0분 0초":test(time[3])}
         </div>
       </div>
 

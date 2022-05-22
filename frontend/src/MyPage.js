@@ -7,6 +7,7 @@ import TimeCalendar from './TimeCalendar.js';
 import User from './user.js';
 import { isAuth, getNickName } from './jwtCheck';
 import './Mypage.css';
+import './DiaryList.css';
 function MyPage(props) {
     let [userNickName, setUserNickName] = useState('');
     let [isLogin, setIsLogin] = useState(false);

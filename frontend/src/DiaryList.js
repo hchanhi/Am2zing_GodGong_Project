@@ -63,8 +63,19 @@ function DiaryList(diary) {
             .get('/api/diary/delete/' + diaryId, { params: { diaryId: diaryId } })
             .then(function (response) {
                 console.log(response.status, '성공');
+                Swal.fire({
+                    confirmButtonColor: '#2fbe9f',
 
-                setsState(true);
+                    confirmButtonText: '확인',
+                    text: '일기가 삭제되었습니다!😊', // Alert 제목 
+
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        setsState(true);
+                    }
+
+                });
+
 
 
 
@@ -74,9 +85,7 @@ function DiaryList(diary) {
             .catch(function (err) {
                 console.log(err);
                 console.log(err.response.data.message);
-                if (err.response.status === 400) {
-                    alert(err.response.data.message);
-                }
+
 
 
             });

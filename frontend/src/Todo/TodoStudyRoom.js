@@ -17,7 +17,12 @@ let Wrapper = styled.div`
     width: 70%;
     text-align: left;
 
-    h3 { margin-top: 1rem }
+    b {
+        margin-left: 1rem;
+        font-size: 15pt;
+        font-weight: lighter;
+        color: dimgray;
+    }
 
     button {
         font-family: 'Pretendard-Medium';
@@ -40,6 +45,7 @@ function TodoStudy() {
     let { roomNum } = useParams();
     let [room, setRoom] = useState([]);
     let [todos, setTodos] = useState([]);
+    let [membersNum, setMembersNum] = useState([]);
     let [members, setMembers] = useState([]);
     let [isMember, setIsMember] = useState(false);
     let [hasTodo, setHasTodo] = useState(false);
@@ -89,10 +95,19 @@ function TodoStudy() {
             .then(res => {
                 console.log(res.data);
 
+                // 인원수 구하기
+                let num = [];
+                res.data.map(mem => {
+                    num.push(mem.user.nickname);
+                })
+                num = [...new Set(num)];
+                setMembersNum(num.length);
+
                 // 스터디 전체의 todo로부터 오늘의 todo를 구하고
                 // 오늘의 todo에서 오늘의 멤버를 뽑아냄
                 let todayTodos = res.data.filter((item, i) => item.todoCreated.substr(0, 10) == today);
                 setTodos(todayTodos);
+
                 let todayMember = [];
                 todayTodos.map(todo => {
                     todayMember.push(todo.user.nickname);
@@ -122,17 +137,21 @@ function TodoStudy() {
         <Wrapper>
             <Grid alignItems="center" justifyContent="space-between" container spacing={3}>
                 
-                <Grid item xs={8}>
+                <Grid item xs={11}>
                     <Chip label={room.roomCategory} />
+                    <b style={{ color: 'crimson', fontSize: '17pt', fontWeight: 'bold' }}>{membersNum}명</b>
                     <br />
-                    <h1>{room.roomTitle}</h1>
-                    <h3>{room.roomCreated
-                        && ('▶ ' + room.roomCreated.substr(0, 4) + '.'
-                            + room.roomCreated.substr(5, 2) + '.'
-                            + room.roomCreated.substr(8, 2) + ' 부터 이어지는 스터디')
-                        }</h3>
+                    <h1 style={{marginTop: '1rem'}}>{room.roomTitle}
+                        <b>{room.roomCreated
+                            && (room.roomCreated.substr(0, 4) + '.'
+                                + room.roomCreated.substr(5, 2) + '.'
+                                + room.roomCreated.substr(8, 2) + ' ~')}</b>
+                    </h1>
+                    <h2 style={{ marginTop: '1rem', color: 'dimgray' }}>
+                        방장🏁 {room.user && room.user.nickname}
+                    </h2>
                 </Grid>
-                <Grid item xs={4} sx={{ textAlign: 'right' }}>
+                <Grid item xs={1}>
                     <RoomNumContext.Provider value={roomNum}>
                         <NewMessageContext.Provider value={newMessage}>
                             <ClientContext.Provider value={client.current}>
@@ -141,7 +160,6 @@ function TodoStudy() {
                         </NewMessageContext.Provider>
                     </RoomNumContext.Provider>
                 </Grid>
-
                 <Grid item xs={9} />
                 <Grid item xs={2} style={{ textAlign: 'right' }}>
                     {
@@ -164,11 +182,13 @@ function TodoStudy() {
                 <Grid item xs={1} style={{ textAlign: 'right' }}>
                     {
                         isMember
-                            ? <SetMemberContext.Provider value={setIsMember}>
-                                <ClientContext.Provider value={client.current}>
-                                    <ExitStudyBtn task={'exit'} />
-                                </ClientContext.Provider>
-                            </SetMemberContext.Provider>
+                            ? <RoomNumContext.Provider value={roomNum}>
+                                <SetMemberContext.Provider value={setIsMember}>
+                                    <ClientContext.Provider value={client.current}>
+                                        <ExitStudyBtn task={'exit'} />
+                                    </ClientContext.Provider>
+                                </SetMemberContext.Provider>
+                            </RoomNumContext.Provider>
                             : <RoomNumContext.Provider value={roomNum}>
                                 <SetMemberContext.Provider value={setIsMember}>
                                     <ClientContext.Provider value={client.current}>
@@ -179,10 +199,10 @@ function TodoStudy() {
                     }
                 </Grid>
                 
-                <Grid item xs={12}>
+                <Grid container item xs={12}>
                     {
                         todos.length == 0
-                            ? <div style={{ textAlign: 'center', color: 'dimgray', fontSize: '20pt', margin: '5vw' }}>
+                            ? <div style={{ textAlign: 'center', color: 'gray', fontSize: '20pt', margin: '5vw' }}>
                                 오늘 스터디원들의 todo가 없습니다.<br />
                                 오늘의 첫 todo를 만들어보세요!
                             </div > 
@@ -190,7 +210,8 @@ function TodoStudy() {
                     }
                     {
                         members && members.map(member => {
-                            return <ClientContext.Provider value={client.current}>
+                            return <Grid item sm={6} md={4} lg={3}>
+                                <ClientContext.Provider value={client.current}>
                                 <CheckboxTodo
                                     nickname={member}
                                     myNickname={userNickname}
@@ -199,7 +220,8 @@ function TodoStudy() {
                                     todos={todos.filter((todo, i) => todo.user.nickname == member)}
                                     checkNum={todos.filter((todo, i) => todo.user.nickname == member)
                                         .filter((item, i) => item.todoCheck == true).length} />
-                            </ClientContext.Provider>
+                                </ClientContext.Provider>
+                            </Grid>
                         })
                     }
                 </Grid>

@@ -40,10 +40,12 @@ public class StudylogController {
         int week = studylogService.oneWeekTime(nickname);
         int month = studylogService.oneMonthTime(nickname);
         int total = studylogService.totalTime(nickname);
-        studytime.add(day);
-        studytime.add(week);
-        studytime.add(month);
-        studytime.add(total);
+
+        studytime.add(0,day);
+        studytime.add(1,week);
+        studytime.add(2,month);
+        studytime.add(3,total);
+
         return studytime;
     }
 
@@ -54,23 +56,9 @@ public class StudylogController {
     }
 
     @GetMapping("/api/main/studytime/summary")
-    public List<StudyRankDTO> Ranking(){
-        List<StudyRankDTO> ranks = new ArrayList<>();
-        int length = studylogService.Daytop10Studytime().size();
-        for(int i=0;i<length;i++) {
-            Long id = studylogService.Daytop10Studytime().get(i).getId();
-            int day = studylogService.Daytop10Studytime().get(i).getTime();
-            int week = studylogService.Weektop10Studytime().get(i).getTime();
-            int month = studylogService.Monthtop10Studytime().get(i).getTime();
-            String nickname = userService.findNickname(id);
-            StudyRankDTO sr = new StudyRankDTO();
-            sr.setDay(day);
-            sr.setWeek(week);
-            sr.setMonth(month);
-            sr.setNickname(nickname);
-            ranks.add(i, sr);
-        }
-        return ranks;
+    public List<List<StudyRankDTO>> Ranking() {
+        List<List<StudyRankDTO>> result = studylogService.Ranking();
+        return result;
     }
 
     @GetMapping("/api/studytime/recent")

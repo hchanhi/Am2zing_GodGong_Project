@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import CloseIcon from '@mui/icons-material/Close';
 import MakeTodo from './MakeTodo.js';
 import CompleteTodo from './CompleteTodo.js';
+import MakeTodoStudy from './MakeTodoStudy.js';
 
 const ModalWrapper = styled.div`
   box-sizing: border-box;
@@ -44,7 +45,7 @@ const ModalInner = styled.div`
   padding: 40px 30px;
 `
 
-function Modal({ task, open, setOpen }) {
+function Modal({ task, open, setOpen, setUpdate }) {
 
   return (
     <div>
@@ -53,9 +54,12 @@ function Modal({ task, open, setOpen }) {
         <ModalInner>
           <CloseIcon onClick={() => setOpen(false)} sx={{ float: 'right', cursor: 'pointer' }} /><br />
           {
-            task == 'onlyMake' || task == 'join'
-              ? <MakeTodo setOpen={setOpen} task={task} />
-              : <CompleteTodo task={task} />
+            task == 'createStudy'
+              ? <MakeTodoStudy setOpen={setOpen} setUpdate={setUpdate} />
+              : (
+                task == 'onlyMake' || task == 'join'
+                  ? <MakeTodo setOpen={setOpen} task={task} />
+                  : <CompleteTodo task={task} />)
           }
         </ModalInner>
       </ModalWrapper>

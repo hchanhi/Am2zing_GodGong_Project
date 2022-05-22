@@ -32,13 +32,17 @@
     padding-top:20px;
 }
 
+.totaltime2 h3{
+    text-align: left;
+}
+
 .clickedDate{
     margin-top:50px;
 
 }
 
 .totaltime3{
-    font-size:40px;
+    font-size:35px;
     margin-bottom:20px;
 }
 

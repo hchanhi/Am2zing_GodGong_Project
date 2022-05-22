@@ -52,20 +52,39 @@ function MakeTodo({ setOpen, task }) {
     }
 
     function joinStudy() {
-        try {
-            client.publish({
-                destination: '/pub/chat/enter',
-                body: JSON.stringify({
-                    roomNumber: roomNum,
-                    userNickname: userNickname,
-                    message: ''
-                })
-            });
-            setIsMember(true);
-            alert('스터디원이 되셨어요. 같이 열심히 Todo해요!')
-        } catch (err) {
-            console.log(err.message);
+
+        if (task == 'join') {
+            try {
+                client.publish({
+                    destination: '/pub/chat/enter',
+                    body: JSON.stringify({
+                        roomNumber: roomNum,
+                        userNickname: userNickname,
+                        message: ''
+                    })
+                });
+                setIsMember(true);
+                alert('스터디원이 되셨어요. 같이 열심히 Todo해요!')
+            } catch (err) {
+                console.log(err.message);
+            }
+        } else {
+            try {
+                client.publish({
+                    destination: '/pub/todo/add',
+                    body: JSON.stringify({
+                        roomNumber: roomNum,
+                        userNickname: userNickname,
+                        message: ''
+                    })
+                });
+                setIsMember(true);
+                alert('오늘의 todo를 생성했습니다. 같이 열심히 Todo해요!')
+            } catch (err) {
+                console.log(err.message);
+            }
         }
+      
     }
 
     return (
@@ -98,10 +117,7 @@ function MakeTodo({ setOpen, task }) {
                     console.log(todos);
                     postTodo();
                     setOpen(false);
-
-                    if (task == 'join') {
-                        joinStudy();
-                    }
+                    joinStudy();
                 }}>스터디시작</Button>
         </Wrapper>
     );

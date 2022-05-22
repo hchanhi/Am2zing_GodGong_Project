@@ -13,7 +13,7 @@ function JoinStudyBtn({task}) {
                 onClick={() => setModalOpen(true)}>
                 {
                     task == 'onlyMake'
-                        ? 'Todo생성'
+                        ? 'todo생성'
                         : '참여'
                 }
             </Button>

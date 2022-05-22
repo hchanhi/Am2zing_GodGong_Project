@@ -90,9 +90,10 @@ textarea {
     padding: 10px;
 
     margin: 0 auto;
+    overflow: hidden;
     text-overflow: ellipsis;
-
-    white-space: nowrap;
+    word-break: normal;
+    white-space: pre-line;
     vertical-align: top;
 
 }
@@ -104,8 +105,9 @@ textarea {
 .content>span {
 
     font-size: 1.3rem;
-    white-space: pre;
+
     margin: 0 !important;
+
 
 }
 

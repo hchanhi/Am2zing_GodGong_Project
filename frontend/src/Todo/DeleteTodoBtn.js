@@ -29,9 +29,9 @@ function DeleteTodoBtn() {
         <div>
             <Button
                 variant="contained"
-                style={{ backgroundColor: 'red' }}
-                onClick={deleteTodo()}>
-                Todo삭제
+                style={{ backgroundColor: 'orange' }}
+                onClick={() => deleteTodo()}>
+                todo삭제
             </Button>
         </div>
     );

@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { RoomNumContext, SetMemberContext, ClientContext } from './TodoStudyRoom.js';
@@ -23,21 +23,23 @@ function CompleteTodo({task}) {
     let setIsMember = useContext(SetMemberContext);
     const navigate = useNavigate();
 
-    if (task == 'complete') {
-        try {
-            client.publish({
-                destination: '/pub/chat/message',
-                body: JSON.stringify({
-                    roomNumber: roomNum,
-                    userNickname: userNickname,
-                    message: userNickname + '님이 todo를 완료하셨습니다🎉'
-                })
-            });
-        } catch (err) {
-            console.log(err.message);
+    useEffect(() => {
+        if (task == 'complete') {
+            try {
+                client.publish({
+                    destination: '/pub/chat/message',
+                    body: JSON.stringify({
+                        roomNumber: roomNum,
+                        userNickname: userNickname,
+                        message: userNickname + '님이 todo를 완료하셨습니다🎉'
+                    })
+                });
+            } catch (err) {
+                console.log(err.message);
+            }
         }
-    }
-
+    }, []);
+   
     function exitStudy() {
         try {
             client.publish({
@@ -61,7 +63,7 @@ function CompleteTodo({task}) {
         <Wrapper>
             {
                 task == 'complete'
-                    ? <h2>축하합니다! 오늘의 할일을 성공적으로 끝내셨습니다🎉</h2>
+                    ? <h2>축하합니다!<br/>오늘의 할일을 성공적으로 끝내셨습니다🎉</h2>
                     : null
             }
             <h3>공부일기를 작성하시겠어요?</h3>

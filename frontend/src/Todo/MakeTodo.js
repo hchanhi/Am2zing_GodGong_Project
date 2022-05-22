@@ -75,7 +75,7 @@ function MakeTodo({ setOpen, task }) {
                     body: JSON.stringify({
                         roomNumber: roomNum,
                         userNickname: userNickname,
-                        message: ''
+                        result: ''
                     })
                 });
                 setIsMember(true);

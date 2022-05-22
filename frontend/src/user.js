@@ -96,7 +96,7 @@ const User = (props) => {
                             confirmButtonColor: '#2fbe9f',
 
                             confirmButtonText: '확인',
-                            text: '중복된 닉네임입니다!', // Alert 제목 
+                            text: '중복된 닉네임입니다!😢', // Alert 제목 
 
                         });
 
@@ -105,7 +105,7 @@ const User = (props) => {
                             confirmButtonColor: '#2fbe9f',
 
                             confirmButtonText: '확인',
-                            html: '닉네임이 수정되었습니다.<br>다시 로그인해주세요!', // Alert 제목 
+                            html: '닉네임이 수정되었습니다.<br>다시 로그인해주세요!😊', // Alert 제목 
 
                         }).then((re) => {
                             if (re.isConfirmed) {
@@ -152,7 +152,7 @@ const User = (props) => {
                         confirmButtonColor: '#2fbe9f',
 
                         confirmButtonText: '확인',
-                        html: '생년월일이 수정되었습니다.<br>다시 로그인해주세요!', // Alert 제목 
+                        html: '생년월일이 수정되었습니다.<br>다시 로그인해주세요!😊', // Alert 제목 
 
                     }).then((re) => {
                         if (re.isConfirmed) {
@@ -213,7 +213,7 @@ const User = (props) => {
                             confirmButtonColor: '#2fbe9f',
 
                             confirmButtonText: '확인',
-                            text: '비밀번호가 틀렸습니다!', // Alert 제목 
+                            text: '비밀번호가 틀렸습니다!😢', // Alert 제목 
 
                         });
 
@@ -222,7 +222,7 @@ const User = (props) => {
                             confirmButtonColor: '#2fbe9f',
 
                             confirmButtonText: '확인',
-                            html: '비밀번호가 수정되었습니다.<br>다시 로그인해주세요!', // Alert 제목 
+                            html: '비밀번호가 수정되었습니다.<br>다시 로그인해주세요!😊', // Alert 제목 
 
                         }).then((re) => {
                             if (re.isConfirmed) {

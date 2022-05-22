@@ -16,8 +16,8 @@ function MyPage(props) {
 
     let navigate = useNavigate();
     let token = JSON.parse(localStorage.getItem('accessToken'));
-    let [menu, setMenu] = useState(0);
-  
+    let [menu, setMenu] = useState(2);
+
     let handleChange = (event, newValue) => {
         setMenu(newValue);
     };
@@ -28,7 +28,7 @@ function MyPage(props) {
     }
 
     return (
-        <div style={{textAlign: 'center'}}>
+        <div style={{ textAlign: 'center' }}>
             <h3>{getNickName(token)}님의 마이페이지💁🏻‍♀️</h3>
             <Tabs value={menu} onChange={handleChange} centered={true}>
                 <Tab icon={<TimelapseIcon />} label="공부시간" />

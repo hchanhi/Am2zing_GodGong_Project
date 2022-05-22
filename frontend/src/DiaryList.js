@@ -128,7 +128,7 @@ function DiaryList(diary) {
                                 <option value="50">50</option>
                                 <option value="100">100</option>
                             </select></div>
-                        <div>   <button className="diary" type="submit" onClick={() => move_dairy()}>일기쓰기</button></div>
+                        <div>   <button className="diary" type="submit" onClick={() => move_dairy()}>일기 쓰기</button></div>
 
                     </Container>
 

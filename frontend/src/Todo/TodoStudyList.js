@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import TodoModal from './TodoModal.js';
 import TodoCard from "./TodoCard.js";
 import { getNickName } from '../jwtCheck';
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import styled from "styled-components";
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 
 let Wrapper = styled.div`
     margin: auto;
@@ -18,14 +20,9 @@ function TodoStudyList(props) {
     const userNickname = getNickName(token);
     
     let [rooms, setRooms] = useState([]);
-    // let rooms = props.rooms;
-
-    let room = {
-        roomCategory: "대기업",
-        roomTitle: "코테 같이 공부해요!",
-        userNickname: userNickname
-    };
-    let [change, setChange] = useState(false);
+    let [modalOpen, setModalOpen] = useState(false);
+   
+    let [update, setUpdate] = useState(false);
 
     let [nowPage, setNowPage] = useState(1);
     let LastIndex = nowPage * 8;
@@ -33,6 +30,7 @@ function TodoStudyList(props) {
     sliceTodoList = rooms && rooms.slice(0, LastIndex);
 
     useEffect(() => {
+        console.log(props.ishome);
         axios.get('/api/chat/rooms')
             .then(res => {
                 setRooms(res.data);
@@ -40,44 +38,47 @@ function TodoStudyList(props) {
             .catch(error => {
                 console.log(error);
             })
-    }, [change])
-
-    function makeRoom() {
-
-        axios.post('/api/chat/room', null, { params: room })
-            .then(res => {
-                alert('스터디룸을 성공적으로 만들었어요.');
-                setChange(!change);
-                console.log(res.data);
-            })
-            .catch((error) => {
-                console.log(error);
-        })
-    }
+    }, [update])
        
     return (
         <Wrapper>
             {
                 props.isHome || !userNickname
-                    ? null 
-                    : <button onClick={() => makeRoom()}>study 만들기</button>
+                    ? null
+                    : <AddCircleOutlineRoundedIcon
+                        sx={{ fontSize: 60, float: 'right' }}
+                        onClick={() => setModalOpen(true)} />
             }
-            
+            <h1 style={{ textAlign: 'left', margin: '1rem 1rem 0' }}>함께하는 Todo✅</h1>
+            {
+                modalOpen && <TodoModal
+                    task='createStudy'
+                    open={modalOpen}
+                    setOpen={setModalOpen}
+                    setUpdate={setUpdate} />
+            }
             <Grid container
                 direction="row"
                 alignItems="stretch"
                 spacing={1}>
-            {
-                sliceTodoList && sliceTodoList.map(studyRoom => {
-                    return <TodoCard studyRoom={studyRoom} key={studyRoom.roomNumber} />
-                })
-            }
+                {
+                    sliceTodoList && sliceTodoList.map(studyRoom => {
+                        return <TodoCard studyRoom={studyRoom} key={studyRoom.roomNumber} />
+                    })
+                }
             </Grid>
 
             {
                 LastIndex >= (rooms && rooms.length) || props.isHome
                     ? null
-                    : <button onClick={() => setNowPage(++nowPage)}>▼ 더보기</button>
+                    : <Button
+                        variant="contained" size="large"
+                        sx={{
+                            backgroundColor: 'black',
+                            marginTop: '20px',
+                            fontFamily: 'Pretendard-Medium',
+                            borderRadius: '40px' }}
+                        onClick={() => setNowPage(++nowPage)}>▼ 더보기</Button>
             }
         </Wrapper>
     );

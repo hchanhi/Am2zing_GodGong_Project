@@ -20,25 +20,27 @@ let FireNav = styled(List)({
     }
 });
 
-function CheckboxTodo({ nickname, client, todos }) {
+function CheckboxTodo({ nickname, myNickname, client, todos, checkNum }) {
 
     //todos에서 todoContent랑 todoCheck만 꺼내서 써야함
 
-    let [checkNum, setCheckNum] = useState(0);
     let [checked, setChecked] = useState([]);
     let [modalOpen, setModalOpen] = useState(false);
 
     let handleToggle = (todo) => () => {
-        let currentIndex = checked.indexOf(todo);
+
+
+        let currentIndex = checked.indexOf(todo.todoContent);
         let newChecked = [...checked];
 
         if (currentIndex === -1) {
-            newChecked.push(todo);
+            newChecked.push(todo.todoContent);
         } else {
             newChecked.splice(currentIndex, 1);
         }
 
         try {
+            console.log(todo);
             client.publish({
                 destination: '/pub/todo/check',
                 body: JSON.stringify(todo)
@@ -47,12 +49,10 @@ function CheckboxTodo({ nickname, client, todos }) {
             console.log(err.message);
         }
 
-        setCheckNum(newChecked.length);
         setChecked(newChecked);
 
         if (newChecked.length == todos.length) {
             setModalOpen(true)
-            
         }
     };
 
@@ -85,8 +85,10 @@ function CheckboxTodo({ nickname, client, todos }) {
                                     secondaryAction={
                                         <Checkbox
                                             edge="end"
-                                            onChange={handleToggle(todo.todoContent)}
-                                            checked={checked.indexOf(todo.todoContent) !== -1}
+                                            disabled={nickname != myNickname}
+                                            onChange={handleToggle(todo)}
+                                            // checked={checked.indexOf(todo.todoContent) !== -1}
+                                            checked={todo.todoCheck}
                                         />
                                     }
                                     disablePadding

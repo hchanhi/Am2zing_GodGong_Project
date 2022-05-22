@@ -22,7 +22,6 @@ let Wrapper = styled.div`
     button {
         font-family: 'Pretendard-Medium';
         font-size: 13pt;
-        background-color: lightseagreen
     }
 `;
 
@@ -40,7 +39,8 @@ function TodoStudy() {
     const navigate = useNavigate();
     let { roomNum } = useParams();
     let [room, setRoom] = useState([]);
-    let [roomTodos, setRoomTodos] = useState([]);
+    let [todos, setTodos] = useState([]);
+    let [members, setMembers] = useState([]);
     let [isMember, setIsMember] = useState(false);
     let [hasTodo, setHasTodo] = useState(false);
    
@@ -48,8 +48,8 @@ function TodoStudy() {
     let [badgeNum, setBadgeNum] = useState(-1);
     let client = useRef({});
 
-    useEffect(async () => {
-        await axios.get('/api/chat/rooms')
+    useEffect(() => {
+        axios.get('/api/chat/rooms')
             .then(res => {
                 setRoom(res.data.find((x) => x.roomNumber == roomNum));
             })
@@ -87,8 +87,22 @@ function TodoStudy() {
             } })
             .then(res => {
                 console.log(res.data);
-                console.log(res.data.filter((item, i) => item.todoCreated.substr(0, 10) == today));
-                setRoomTodos('');
+
+                // 스터디 전체의 todo로부터 오늘의 todo를 구하고
+                // 오늘의 todo에서 오늘의 멤버를 뽑아냄
+                let todayTodos = res.data.filter((item, i) => item.todoCreated.substr(0, 10) == today);
+                setTodos(todayTodos);
+                let todayMember = [];
+                todayTodos.map(todo => {
+                    todayMember.push(todo.user.nickname);
+                })
+                todayMember = [...new Set(todayMember)];
+                console.log(todayMember);
+                setMembers(todayMember);
+
+                // 오늘멤버에 내가 있는지 체크 (내가 오늘 작성한 todo가 있는지)
+                if (todayMember.filter((nickname, i) => nickname == userNickname).length != 0)
+                    setHasTodo(true);
             })
             .catch(err => {
                 console.log(err);
@@ -162,7 +176,19 @@ function TodoStudy() {
                 </Grid>
                 
                 <Grid item xs={12}>
-                    <CheckboxTodo />
+                    {
+                        todos
+                            ? null
+                            : <h3 style={{margin: 'auto'}}>오늘 스터디원들의 todo가 없습니다.<br/>오늘의 첫 todo를 만들어보세요!</h3>
+                    }
+                    {
+                        members && members.map(member => {
+                            return <CheckboxTodo
+                                nickname={member}
+                                client={client.current}
+                                todos={todos.filter((todo, i) => todo.user.nickname == member)} />
+                        })
+                    }
                 </Grid>
               
             </Grid>

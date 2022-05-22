@@ -63,9 +63,19 @@ const Diary = () => {
         axios
             .post('/api/diary/post', body)
             .then(function (response) {
-                navigate('/mypage');
-                console.log(response);
-                alert("일기가 작성되었습니다!");
+                Swal.fire({
+                    confirmButtonColor: '#2fbe9f',
+
+                    confirmButtonText: '확인',
+
+                    text: "일기가 작성되었습니다!", // Alert 내용 
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        navigate('/mypage');
+                    }
+
+                });
+
 
 
             })

@@ -8,6 +8,7 @@ import { getNickName } from '../jwtCheck.js';
 
 let Wrapper = styled.div`
     h4 {
+        text-align: left;
         color: dimgrey;
         margin: 15px 0;
     }
@@ -51,20 +52,39 @@ function MakeTodo({ setOpen, task }) {
     }
 
     function joinStudy() {
-        try {
-            client.publish({
-                destination: '/pub/chat/enter',
-                body: JSON.stringify({
-                    roomNumber: roomNum,
-                    userNickname: userNickname,
-                    message: ''
-                })
-            });
-            setIsMember(true);
-            alert('스터디원이 되셨어요. 같이 열심히 Todo해요!')
-        } catch (err) {
-            console.log(err.message);
+
+        if (task == 'join') {
+            try {
+                client.publish({
+                    destination: '/pub/chat/enter',
+                    body: JSON.stringify({
+                        roomNumber: roomNum,
+                        userNickname: userNickname,
+                        message: ''
+                    })
+                });
+                setIsMember(true);
+                alert('스터디원이 되셨어요. 같이 열심히 Todo해요!')
+            } catch (err) {
+                console.log(err.message);
+            }
+        } else {
+            try {
+                client.publish({
+                    destination: '/pub/todo/add',
+                    body: JSON.stringify({
+                        roomNumber: roomNum,
+                        userNickname: userNickname,
+                        message: ''
+                    })
+                });
+                setIsMember(true);
+                alert('오늘의 todo를 생성했습니다. 같이 열심히 Todo해요!')
+            } catch (err) {
+                console.log(err.message);
+            }
         }
+      
     }
 
     return (
@@ -89,6 +109,7 @@ function MakeTodo({ setOpen, task }) {
             {/* Todo추가버튼은 아이콘으로 변경 */}
             <Button
                 variant="contained"
+                style={{ marginTop: '1rem'}}
                 onClick={() => {
                     if (todos.length == 0) {
                         return alert('todo는 최소 1개 작성해야 합니다.')
@@ -96,10 +117,7 @@ function MakeTodo({ setOpen, task }) {
                     console.log(todos);
                     postTodo();
                     setOpen(false);
-
-                    if (task == 'join') {
-                        joinStudy();
-                    }
+                    joinStudy();
                 }}>스터디시작</Button>
         </Wrapper>
     );

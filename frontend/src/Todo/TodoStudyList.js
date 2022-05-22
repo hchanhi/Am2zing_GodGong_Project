@@ -12,23 +12,35 @@ let Wrapper = styled.div`
     width: ${props => props.isHome ? '0' : '65vw'}
 `
 
-function TodoList(props) {
+function TodoStudyList(props) {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const userNickname = getNickName(token);
+    
+    let [rooms, setRooms] = useState([]);
+    // let rooms = props.rooms;
 
-    let [room, setRoom] = useState({
+    let room = {
         roomCategory: "대기업",
         roomTitle: "코테 같이 공부해요!",
         userNickname: userNickname
-    });
-    let [rooms, setRooms] = useState([]);
+    };
     let [change, setChange] = useState(false);
 
     let [nowPage, setNowPage] = useState(1);
     let LastIndex = nowPage * 8;
     let sliceTodoList = [];
-    sliceTodoList = rooms.slice(0, LastIndex);
+    sliceTodoList = rooms && rooms.slice(0, LastIndex);
+
+    useEffect(() => {
+        axios.get('/api/chat/rooms')
+            .then(res => {
+                setRooms(res.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }, [change])
 
     function makeRoom() {
 
@@ -42,16 +54,6 @@ function TodoList(props) {
                 console.log(error);
         })
     }
-
-    useEffect(() => {
-        axios.get('/api/chat/rooms')
-            .then(res => {
-                setRooms(res.data);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }, [change])
        
     return (
         <Wrapper>
@@ -66,7 +68,7 @@ function TodoList(props) {
                 alignItems="stretch"
                 spacing={1}>
             {
-                sliceTodoList.map(studyRoom => {
+                sliceTodoList && sliceTodoList.map(studyRoom => {
                     return <TodoCard studyRoom={studyRoom} key={studyRoom.roomNumber} />
                 })
             }
@@ -81,4 +83,4 @@ function TodoList(props) {
     );
 }
 
-export default TodoList;
+export default TodoStudyList;

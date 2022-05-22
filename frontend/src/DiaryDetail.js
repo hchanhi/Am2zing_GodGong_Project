@@ -75,7 +75,7 @@ const DiaryDetail = () => {
 
                     confirmButtonText: '확인',
 
-                    text: "일기가 수정되었습니다!", // Alert 내용 
+                    text: "일기가 수정되었습니다!😊", // Alert 내용 
                 }).then((result) => {
                     if (result.isConfirmed) {
                         navigate('/mypage');

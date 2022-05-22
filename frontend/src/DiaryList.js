@@ -15,6 +15,7 @@ import {
 
 } from '@mui/material/';
 import './DiaryList.css';
+import Swal from 'sweetalert2';
 function DiaryList(diary) {
 
 

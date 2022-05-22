@@ -21,12 +21,30 @@ function TodoCard({ studyRoom }) {
     let navigate = useNavigate();
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const userNickname = getNickName(token);
+    let [membersNum, setMembersNum] = useState([]);
     let roomCreatedDate = studyRoom.roomCreated.substr(0, 4)
         + '.' + studyRoom.roomCreated.substr(5, 2)
         + '.' + studyRoom.roomCreated.substr(8, 2);
     let nickname = {
         userNickname: userNickname
     }
+
+    axios.get('/api/todo/room', {
+        params: {
+            roomNumber: studyRoom.roomNumber
+        } })
+        .then(res => {
+            let num = [];
+            res.data.map(mem => {
+                num.push(mem.user.nickname);
+            })
+            num = [...new Set(num)];
+            setMembersNum(num.length);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+
 
     function isMemberCheck() {
         axios.get('/api/chat/room/check', { params: nickname })
@@ -49,7 +67,7 @@ function TodoCard({ studyRoom }) {
                 <h2>{studyRoom.roomTitle}</h2>
                  {studyRoom.roomCategory} <br />
                 {roomCreatedDate} ~ <br />
-                <h3 style={{textAlign: 'right', color: 'orangered'}}>5/6</h3>
+                <h3 style={{ textAlign: 'right', color: 'orangered' }}>{membersNum}명</h3>
             </Wrapper>
         </Grid>
     );

@@ -29,7 +29,7 @@ let StudyTime = styled(Grid)`
         font-size: 13pt;
     }
     h2 {
-        font-size: 45pt;
+        font-size: 40pt;
         letter-spacing: 5px;
         margin: 4vh 0;
     }
@@ -189,7 +189,7 @@ function Home() {
             <TodayStyle container spacing={1}>
                 <StudyTime item xs={5}>
                     <div style={{ textAlign: 'left' }}>오늘의 공부시간</div>
-                    <div className="studytimetoday"><h2>{test(myTime[0]) == "NaN시간 NaN분 NaN초" ? "0시간 0분 0초" : test(myTime[0])}</h2></div>
+                    <div className="studytimetoday"><h2 style={{ textAlign: 'center' }}>{test(myTime[0])=="NaN시간 NaN분 NaN초" ? "0시간 0분 0초":test(myTime[0])}</h2></div>
                     <div><Button variant="contained" size="large" onClick={() => navigate("/challenge")}>공부 시작</Button></div>
                 </StudyTime>
                 <StudyDiary item xs={7} sx={{ textAlign: 'left' }}>
@@ -200,8 +200,9 @@ function Home() {
                         <br></br>
                         <br></br>
                         {recentDiary.diaryContent == null ?
-                            <h3>일기를 한번도 작성하지 않으셨어요!</h3> :
-                            <span className="recentContent">{recentDiary.diaryContent}</span>}
+                            <h3 style={{ textAlign: 'center', fontWeight: 'lighter' }} >
+                                일기를 한번도 작성하지 않으셨어요!</h3> :
+                            <h3>{recentDiary.diaryContent}</h3>}
                         <br></br>
                         <br></br>
                         {recentDiary.diarySentiment == null ?

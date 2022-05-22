@@ -220,7 +220,6 @@ function Home() {
                 </Grid>
             </Grid>
 
-            <h1 style={{ textAlign: 'left' }}>함께하는 Todo✅</h1>
             <TodoStudyList isHome={true} />
             <Link to="/todoStudy" style={{ textDecoration: 'underline', textAlign: 'right' }}>
                 더 보러가기

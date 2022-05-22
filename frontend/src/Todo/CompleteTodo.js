@@ -22,23 +22,6 @@ function CompleteTodo({task}) {
     let roomNum = useContext(RoomNumContext);
     let setIsMember = useContext(SetMemberContext);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (task == 'complete') {
-            try {
-                client.publish({
-                    destination: '/pub/chat/message',
-                    body: JSON.stringify({
-                        roomNumber: roomNum,
-                        userNickname: userNickname,
-                        message: userNickname + '님이 todo를 완료하셨습니다🎉'
-                    })
-                });
-            } catch (err) {
-                console.log(err.message);
-            }
-        }
-    }, []);
    
     function exitStudy() {
         try {
@@ -63,7 +46,7 @@ function CompleteTodo({task}) {
         <Wrapper>
             {
                 task == 'complete'
-                    ? <h2>축하합니다!<br/>오늘의 할일을 성공적으로 끝내셨습니다🎉</h2>
+                    ? <div><h2>축하합니다!</h2><h3>오늘의 할일을 성공적으로 끝내셨습니다🎉</h3></div>
                     : null
             }
             <h3>공부일기를 작성하시겠어요?</h3>

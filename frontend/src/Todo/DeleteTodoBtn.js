@@ -1,14 +1,11 @@
 import { Button } from "@mui/material";
 import React, { useContext } from "react";
-import { RoomNumContext, ClientContext } from './TodoStudyRoom.js'
 import { getNickName } from '../jwtCheck.js';
 
-function DeleteTodoBtn() {
+function DeleteTodoBtn({ roomNum, client, setHasTodo}) {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const userNickname = getNickName(token);
-    let client = useContext(ClientContext);
-    let roomNum = useContext(RoomNumContext);
 
     function deleteTodo() {
         try {
@@ -20,6 +17,8 @@ function DeleteTodoBtn() {
                     result: ''
                 })
             });
+            setHasTodo(false);
+            alert('회원님의 todo가 삭제되었습니다.')
         } catch (err) {
             console.log(err.message);
         }

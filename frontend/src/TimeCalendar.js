@@ -10,15 +10,9 @@ function TimeCalendar() {
     const token = JSON.parse(localStorage.getItem('accessToken'));
     let nickname = getNickName(token);
   const [date, setDate] = useState(new Date());
-  const [ct, setCt] = useState(false);
 
   const [time, setTime] = useState([]);
   const [caltime, setCaltime] = useState('');
-
-    function click(){
-        setCt(!ct);
-        console.log(ct);
-    }
 
     function test(data){
         var h = parseInt(data/3600);
@@ -61,7 +55,7 @@ function TimeCalendar() {
 
     useEffect(()=>{
         MyTime();
-    });
+    },[]);
     useEffect(()=>{
         CalTime();
     },[date]);

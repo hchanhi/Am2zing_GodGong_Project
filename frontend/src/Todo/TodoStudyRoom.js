@@ -202,7 +202,7 @@ function TodoStudy() {
                 <Grid container item xs={12}>
                     {
                         todos.length == 0
-                            ? <div style={{ textAlign: 'center', color: 'gray', fontSize: '20pt', margin: '5vw' }}>
+                            ? <div style={{ textAlign: 'center', color: 'gray', fontSize: '20pt', margin: 'auto', padding: '7vw'}}>
                                 오늘 스터디원들의 todo가 없습니다.<br />
                                 오늘의 첫 todo를 만들어보세요!
                             </div > 

@@ -18,6 +18,8 @@ let HeaderStyle = styled.div`
     span {
         margin: 1rem;
     }
+
+
 `
 
 function Header(props) {
@@ -28,7 +30,7 @@ function Header(props) {
         <HeaderStyle>
             {
                 nickName
-                    ? (<div style={{textAlign: 'right'}}>
+                    ? (<div className="help" style={{textAlign: 'right'}}>
                         <Link to="/">
                             <span
                                 onClick={() => {
@@ -41,7 +43,7 @@ function Header(props) {
                         </Link>
                         <Link to="/mypage">
                             {nickName}
-                            <AccountCircleIcon sx={{ fontSize: 40}} />
+                            <AccountCircleIcon className="help2" sx={{fontSize: 40, mb:-1.5}} />
                         </Link>
                     </div>)
                     : (<div style={{ textAlign: 'right' }} >

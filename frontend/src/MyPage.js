@@ -28,13 +28,13 @@ function MyPage(props) {
     }
 
     return (
-        <div>
+        <div style={{textAlign: 'center'}}>
             <h3>{getNickName(token)}님의 마이페이지💁🏻‍♀️</h3>
-                <Tabs value={menu} onChange={handleChange} centered={true}>
+            <Tabs value={menu} onChange={handleChange} centered={true}>
                 <Tab icon={<TimelapseIcon />} label="공부시간" />
-                <Tab icon={<ListAltIcon />} label="Todo List" />
+                <Tab icon={<ListAltIcon />} label="투두리스트" />
                 <Tab icon={<BorderColorRoundedIcon />} label="공부일기" />
-                <Tab icon={<PersonSearchRoundedIcon />} label="회원정보 수정" />
+                <Tab icon={<PersonSearchRoundedIcon />} label="회원정보" />
             </Tabs>
             {menu == 0
                 ? <TimeCalendar />

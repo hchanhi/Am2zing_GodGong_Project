@@ -14,6 +14,10 @@ let HeaderStyle = styled.div`
         margin-top: 1rem;
         color: darkcyan;
     }
+
+    span {
+        margin: 1rem;
+    }
 `
 
 function Header(props) {

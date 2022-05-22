@@ -62,7 +62,7 @@ function TodoCard({ studyRoom }) {
     };
 
     return (
-        <Grid item xs={3} >
+        <Grid item sm={6} md={4} lg={3} >
             <Wrapper onClick={() => { isMemberCheck() }}>
                 <h2>{studyRoom.roomTitle}</h2>
                  {studyRoom.roomCategory} <br />

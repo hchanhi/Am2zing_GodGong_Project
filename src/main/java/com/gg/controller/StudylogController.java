@@ -52,7 +52,8 @@ public class StudylogController {
     @PostMapping("/api/mypage/studytime/calendar")
     public List<String> calendarTime(@RequestBody HashMap<String,String>param){
         String nickname = param.get("nickname");
-        return studylogService.calendarTime(nickname);
+        String date = param.get("date");
+        return studylogService.calendarTime(nickname, date);
     }
 
     @GetMapping("/api/main/studytime/summary")

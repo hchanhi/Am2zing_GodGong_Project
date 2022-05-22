@@ -59,9 +59,9 @@ public class StudylogService {
         return time;
     }
 
-    public List<String> calendarTime(String nickname){
+    public List<String> calendarTime(String nickname, String date){
         User user = userRepository.findByNickname(nickname);
-        return studylogRepository.calendarTime(user.getId());
+        return studylogRepository.calendarTime(user.getId(), date);
     }
 
     //메인페이지 랭킹용

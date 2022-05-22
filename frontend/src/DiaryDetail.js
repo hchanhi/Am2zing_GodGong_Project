@@ -14,7 +14,7 @@ import {
 } from '@mui/material/';
 import './diary.css';
 
-
+import Swal from 'sweetalert2';
 
 const DiaryDetail = () => {
 

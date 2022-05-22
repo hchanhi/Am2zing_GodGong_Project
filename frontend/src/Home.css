@@ -1,13 +1,23 @@
-.rankingbtn{
+.rankingbtn {
     font-size: 23px;
     color: darkcyan;
 }
 
-.rankingbtn:hover{
-    cursor:pointer;
+.rankingbtn:hover {
+    cursor: pointer;
     color: lightpink;
 }
 
-.selected{
+.selected {
     color: red;
+}
+
+.home_diary {
+    width: 100% !important;
+
+
+    text-overflow: ellipsis !important;
+    word-break: normal !important;
+    white-space: pre-line !important;
+    vertical-align: top;
 }

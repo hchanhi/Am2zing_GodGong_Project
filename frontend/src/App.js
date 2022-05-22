@@ -37,6 +37,7 @@ function App() {
 
     return (
         <div className="App">
+
             <Header userNickName={userNickName} setUserNickName={setUserNickName} />
 
             <Routes>

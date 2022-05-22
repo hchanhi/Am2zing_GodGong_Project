@@ -58,13 +58,13 @@ const DiaryDetail = () => {
     console.log(edit);
 
     function move() {
-        navigate("/mypage/diary");
+        navigate("/mypage");
     }
     const handleSubmit = () => {
         axios
             .post('/api/diary/edit/' + id, body)
             .then(function (response) {
-                navigate('/mypage/diary');
+                navigate('/mypage');
                 console.log(response);
                 alert("수정되었습니다!");
 

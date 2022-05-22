@@ -23,6 +23,21 @@ function CompleteTodo({task}) {
     let setIsMember = useContext(SetMemberContext);
     const navigate = useNavigate();
 
+    if (task == 'complete') {
+        try {
+            client.publish({
+                destination: '/pub/chat/message',
+                body: JSON.stringify({
+                    roomNumber: roomNum,
+                    userNickname: userNickname,
+                    message: userNickname + '님이 todo를 완료하셨습니다🎉'
+                })
+            });
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
     function exitStudy() {
         try {
             client.publish({

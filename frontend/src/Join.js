@@ -17,6 +17,7 @@ import {
 
 import './join.css';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 
 
@@ -48,8 +49,20 @@ const Register = () => {
             .post('/api/auth/signup', postData)
             .then(function (response) {
                 console.log(response.status, '성공');
+                Swal.fire({
+                    confirmButtonColor: '#2fbe9f',
 
-                navigate('/login');
+                    confirmButtonText: '확인',
+
+                    text: '가입이 완료되었습니다!', // Alert 내용 
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        navigate('/login');
+                    }
+
+                });
+
+
 
 
 
@@ -60,7 +73,14 @@ const Register = () => {
                 console.log(origin);
                 console.log(err.response.data.message);
                 if (err.response.status === 400) {
-                    alert(err.response.data.message);
+                    Swal.fire({
+                        confirmButtonColor: '#2fbe9f',
+
+                        confirmButtonText: '확인',
+
+                        text: err.response.data.message, // Alert 내용 
+                    });
+
                 }
                 setRegisterError('회원가입에 실패하였습니다. 다시한번 확인해 주세요!');
 

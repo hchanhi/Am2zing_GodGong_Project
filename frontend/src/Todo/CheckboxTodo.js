@@ -11,8 +11,6 @@ import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 
-// let todos = ['멋지게 밥먹기', '끝내주게 숨쉬기', '알람끄고 잘자기', '코딩하기...'];
-
 let FireNav = styled(List)({
     '& .MuiListItemIcon-root': {
         minWidth: 0,
@@ -20,9 +18,7 @@ let FireNav = styled(List)({
     }
 });
 
-function CheckboxTodo({ nickname, myNickname, client, todos, checkNum }) {
-
-    //todos에서 todoContent랑 todoCheck만 꺼내서 써야함
+function CheckboxTodo({ nickname, myNickname, roomNum, client, todos, checkNum }) {
 
     let [checked, setChecked] = useState([]);
     let [modalOpen, setModalOpen] = useState(false);
@@ -52,7 +48,21 @@ function CheckboxTodo({ nickname, myNickname, client, todos, checkNum }) {
         setChecked(newChecked);
 
         if (newChecked.length == todos.length) {
-            setModalOpen(true)
+            setModalOpen(true);
+            try {
+                client.publish({
+                    destination: '/pub/chat/message',
+                    body: JSON.stringify({
+                        roomNumber: roomNum,
+                        userNickname: myNickname,
+                        message: myNickname + '님이 todo를 완료하셨습니다🎉'
+                    })
+                });
+            } catch (err) {
+                console.log(err.message);
+            }
+        } else {
+            setModalOpen(false)
         }
     };
 
@@ -100,16 +110,19 @@ function CheckboxTodo({ nickname, myNickname, client, todos, checkNum }) {
                                         <ListItemText
                                             primary={todo.todoContent}
                                             primaryTypographyProps={{
-                                                lineHeight: '10px'
+                                                lineHeight: '15px'
                                             }}
                                         />
                                     </ListItemButton>
                                 </ListItem>
                             ))}
                         </Box>
-                        <h4 style={{ padding: '15px', paddingBottom: '10px' }}>
-                            현재 진행 중 ... ({Math.round(checkNum / todos.length * 100)}%)
-                        </h4>
+                        {
+                            checkNum == todos.length
+                                ? <h4 style={{ padding: '15px', paddingBottom: '10px' }}>todo 완료✅</h4>
+                                : <h4 style={{ padding: '15px', paddingBottom: '10px' }}>현재 진행 중 ...
+                                    ({Math.round(checkNum / todos.length * 100)}%) </h4>
+                        }
                     </FireNav>
                 </Paper>
             </ThemeProvider>

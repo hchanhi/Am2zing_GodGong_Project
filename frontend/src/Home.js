@@ -200,7 +200,7 @@ function Home() {
                     <div><Button variant="contained" size="large" onClick={() => navigate("/challenge")}>공부 시작</Button></div>
                 </StudyTime>
                 <StudyDiary item xs={7} sx={{ textAlign: 'left' }}>
-                    <div style={{ paddingBottom: '0', border: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ paddingBottom: '0', border: 'none', background: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <span style={{ textAlign: 'center' }}>오늘의 공부일기</span>
                         <Button variant="contained" onClick={() => navigate("/diary")}>일기 쓰기</Button>
                     </div>

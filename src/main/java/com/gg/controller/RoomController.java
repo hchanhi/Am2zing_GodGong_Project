@@ -50,14 +50,14 @@ public class RoomController {
         return roomlogService.checkRoomlog(userNickname);
     }
 
-    @PostMapping(value = "/room/enter")
-    public Roomlog enterRoom(@RequestParam String userNickname, @RequestParam String roomNumber) {
-        return roomlogService.enterRoom(userNickname, roomNumber);
-    }
-
-    @DeleteMapping(value = "/room/exit")
-    public void exitRoom(@RequestParam String userNickname) {
-        roomlogService.exitRoom(userNickname);
-    }
+//    @PostMapping(value = "/room/enter")
+//    public Roomlog enterRoom(@RequestParam String userNickname, @RequestParam String roomNumber) {
+//        return roomlogService.enterRoom(userNickname, roomNumber);
+//    }
+//
+//    @DeleteMapping(value = "/room/exit")
+//    public void exitRoom(@RequestParam String userNickname) {
+//        roomlogService.exitRoom(userNickname);
+//    }
 
 }

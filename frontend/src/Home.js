@@ -75,6 +75,12 @@ let RankingText = styled(Grid)`
     div {
         margin: 3vh 0;
     }
+
+    span{
+        font-weight:700;
+        font-size:28px;
+        margin-right:10px;
+    }
 `;
 
 
@@ -219,11 +225,10 @@ function Home() {
 
             <Grid container spacing={1} sx={{ marginTop: '3vh' }}>
                 <RankingText item xs={4} sx={{ margin: '5vh 0 10vh' }}>
-                    <div><h1>누적 공부 시간 랭킹</h1></div>
-                    <div>현재시간 기준</div>
-                    <span className={`rankingbtn ${clicked === 0 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(0)}>오 늘</span>
-                    <span className={`rankingbtn ${clicked === 1 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(1)}>한 주</span>
-                    <span className={`rankingbtn ${clicked === 2 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(2)}>한 달</span>
+                    <div><h1>누적 공부 시간 랭킹🏆</h1></div>
+                    <span className={`rankingbtn ${clicked === 0 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(0)}>오늘 </span>
+                    <span className={`rankingbtn ${clicked === 1 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(1)}>이번주 </span>
+                    <span className={`rankingbtn ${clicked === 2 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(2)}>이번달</span>
                     <div>{ranking[clicked]}</div>
 
                 </RankingText>

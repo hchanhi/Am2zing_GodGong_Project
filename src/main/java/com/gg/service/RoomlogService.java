@@ -7,7 +7,6 @@ import com.gg.repository.RoomRepository;
 import com.gg.repository.RoomlogRepository;
 import com.gg.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 @Service

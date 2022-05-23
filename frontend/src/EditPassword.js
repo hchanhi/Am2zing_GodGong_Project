@@ -28,10 +28,25 @@ const Register = (props) => {
                 if (res.data.success) {
                     setEmail(res.data.message);
                     console.log(res.data.message);
-                    alert('인증되었습니다. 비밀번호를 변경해주세요.');
+                    Swal.fire({
+                        confirmButtonColor: '#2fbe9f',
+                        confirmButtonText: '확인',
+                        html: '인증되었습니다.<br>비밀번호를 변경해주세요!😊', // Alert 제목 
+
+                    });
+
                 } else {
-                    alert('비정상적인 접근입니다.');
-                    return navigate('/');
+                    Swal.fire({
+                        confirmButtonColor: '#2fbe9f',
+                        confirmButtonText: '확인',
+                        html: '비정상적인 접근입니다.😥', // Alert 제목 
+
+                    }).then((re) => {
+                        if (re.isConfirmed) {
+                            navigate('/');
+                        }
+                    });
+
                 }
             })
             .catch(err => {
@@ -45,7 +60,8 @@ const Register = (props) => {
             Swal.fire({
                 confirmButtonColor: '#2fbe9f',
                 confirmButtonText: '확인',
-                text: '비정상적인 접근입니다.😥'});
+                text: '비정상적인 접근입니다.😥'
+            });
             navigate('/');
         }
 
@@ -58,18 +74,19 @@ const Register = (props) => {
                 Swal.fire({
                     confirmButtonColor: '#2fbe9f',
                     confirmButtonText: '확인',
-                    html: '비밀번호가 성공적으로 변경되었습니다.<br>변경된 비밀번호로 로그인해주세요!😊'})
+                    html: '비밀번호가 성공적으로 변경되었습니다.<br>변경된 비밀번호로 로그인해주세요!😊'
+                })
                     .then((re) => {
                         if (re.isConfirmed) {
                             localStorage.clear();
                             props.setUserNickName('');
                             navigate('/login');
                         }
-                    })
+                    });
             })
             .catch((err) => {
                 console.log(err);
-            });      
+            });
     };
 
     const handleSubmit = (e) => {

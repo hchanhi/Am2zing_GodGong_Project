@@ -65,7 +65,13 @@ const FindPassword = () => {
                 console.log(origin);
                 console.log(err.response.data.message);
                 if (err.response.status === 400) {
-                    alert(err.response.data.message);
+                    Swal.fire({
+                        confirmButtonColor: '#2fbe9f',
+                        confirmButtonText: '확인',
+                        html: err.response.data.message, // Alert 제목 
+
+                    });
+
                 }
             });
     };

@@ -19,7 +19,7 @@ let TodayStyle = styled(Grid)`
     background-color: white;
     box-shadow: 15px 15px 10px rgb(226, 233, 230);
     border-radius: 20px;
-    padding: 1rem 3rem;
+    padding: 1rem 3rem 2rem 3rem;
 `;
 let StudyTime = styled(Grid)`
 
@@ -27,28 +27,31 @@ let StudyTime = styled(Grid)`
 
     div {
         font-size: 13pt;
+        margin-top:30px;
     }
     h2 {
-        font-size: 40pt;
+        font-size: 35pt;
         letter-spacing: 5px;
-        margin: 4vh 0;
+        margin: 3vh 0;
     }
     button {
         font-family: 'Pretendard-Medium';
         border-radius: 40px;
         font-size: 16pt;
         margin-bottom: 3vh;
+        margin-left:-30px;
         width: 12vw;
         background-color: lightseagreen
+    }
+    .studytimetoday{
+        margin-left:-30px;
     }
 `;
 let StudyDiary = styled(Grid)`
     span {
         font-size: 13pt;
-        margin-left: 0;
-    
         white-space:pre;
-      
+        margin-bottom:20px;
     }
     .recentContent{
         font-size: 16pt;
@@ -57,13 +60,11 @@ let StudyDiary = styled(Grid)`
     div {
         background-color: mintcream;
         padding: 1rem;
-        margin-top: 1rem;
         border-radius: 20px;
-        border: solid 1px lightseagreen;
+        border: solid 3px lightseagreen;
         // box-shadow: 1px 1px 10px gainsboro;
     }
     .home_diary {
-
         width: 100% !important;
         overflow:hidden;
         text-overflow:ellipsis;
@@ -73,7 +74,7 @@ let StudyDiary = styled(Grid)`
         font-family: 'Pretendard-Medium';
         border-radius: 10px;
         font-size: 10pt;
-
+        margin-bottom:20px;
         background-color: lightseagreen
     }
 `;
@@ -86,7 +87,7 @@ let RankingText = styled(Grid)`
     span{
         font-weight:700;
         font-size:28px;
-        margin-right:10px;
+        margin-right:20px;
     }
 `;
 
@@ -113,8 +114,8 @@ function Home() {
             <tbody>
                 {dayTime.map((day) => (
                     <tr key={day.nickname}>
-                        <td>{day.nickname}</td>
-                        <td>{test(day.time)}</td>
+                        닉네임:<td>{day.nickname}</td>
+                        공부시간:<td>{test(day.time)}</td>
                     </tr>
                 ))}
             </tbody>
@@ -233,19 +234,15 @@ function Home() {
                 </StudyDiary>
             </TodayStyle>
 
-            <Grid container spacing={1} sx={{ marginTop: '3vh' }}>
-                <RankingText item xs={4} sx={{ margin: '5vh 0 10vh' }}>
+            <Grid container spacing={1} sx={{ marginTop: '1vh' }}>
+                <RankingText item xs={4} sx={{ margin: '2vh 0 10vh' }}>
                     <div><h1>누적 공부 시간 랭킹🏆</h1></div>
-                    <span className={`rankingbtn ${clicked === 0 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(0)}>오늘 </span>
-                    <span className={`rankingbtn ${clicked === 1 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(1)}>이번주 </span>
+                    <span className={`rankingbtn ${clicked === 0 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(0)}>오늘</span>
+                    <span className={`rankingbtn ${clicked === 1 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(1)}>이번주</span>
                     <span className={`rankingbtn ${clicked === 2 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(2)}>이번달</span>
                     <div>{ranking[clicked]}</div>
 
                 </RankingText>
-                <Grid item xs={8} sx={{ textAlign: 'left' }}>
-                    <div><b>1~10위</b> 누적 공부시간 랭킹에서 다른 사용자와 공부시간을 비교할 수 있습니다.</div>
-                    <div>***랭킹 표***</div>
-                </Grid>
             </Grid>
 
             <TodoStudyList isHome={true} />

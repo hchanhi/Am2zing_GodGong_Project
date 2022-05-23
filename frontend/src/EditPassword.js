@@ -159,7 +159,7 @@ const Register = () => {
                             sx={{ mt: 1 }}
                             size="large"
                         >
-                            비밀번호 찾기
+                            비밀번호 변경
                         </Button>
 
                     </FormControl>

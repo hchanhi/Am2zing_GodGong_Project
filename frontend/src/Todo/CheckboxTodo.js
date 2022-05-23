@@ -20,13 +20,16 @@ let FireNav = styled(List)({
 
 function CheckboxTodo({ nickname, myNickname, roomNum, client, todos, checkNum }) {
 
-    let [checked, setChecked] = useState([]);
+    let [checkNumber, setCheckedNumber] = useState(checkNum);
     let [modalOpen, setModalOpen] = useState(false);
 
     let handleToggle = (todo) => () => {
 
-        let currentIndex = checked.indexOf(todo.todoContent);
-        let newChecked = [...checked];
+        if (todo.todoCheck) {
+            setCheckedNumber(--checkNumber);
+        } else {
+            setCheckedNumber(++checkNumber);
+        }
 
         try {
             console.log(todo);
@@ -38,18 +41,7 @@ function CheckboxTodo({ nickname, myNickname, roomNum, client, todos, checkNum }
             console.log(err.message);
         }
 
-        if (currentIndex === -1) {
-            newChecked.push(todo.todoContent);
-        } else {
-            newChecked.splice(currentIndex, 1);
-        }
-        console.log(newChecked);
-       
-        setChecked(newChecked);
-        console.log(newChecked.length);
-        console.log(todos.length);
-
-        if (newChecked.length == todos.length) {
+        if (checkNumber == todos.length) {
             try {
                 client.publish({
                     destination: '/pub/chat/message',

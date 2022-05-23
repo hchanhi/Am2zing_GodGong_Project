@@ -179,7 +179,7 @@ function TodoStudy() {
                         isMember
                             ? <RoomNumContext.Provider value={roomNum}>
                                     <ClientContext.Provider value={client.current}>
-                                        <ExitStudyBtn task={'exit'} />
+                                        <ExitStudyBtn />
                                     </ClientContext.Provider>
                             </RoomNumContext.Provider>
                             : <RoomNumContext.Provider value={roomNum}>
@@ -202,16 +202,19 @@ function TodoStudy() {
                     {
                         members && members.map(member => {
                             return <Grid item sm={6} md={4} lg={3}>
-                                <ClientContext.Provider value={client.current}>
-                                    <CheckboxTodo
-                                        nickname={member}
-                                        myNickname={userNickname}
-                                        roomNum={roomNum}
-                                        client={client.current}
-                                        todos={todos.filter((todo, i) => todo.user.nickname == member)}
-                                        checkNum={todos.filter((todo, i) => todo.user.nickname == member)
-                                            .filter((item, i) => item.todoCheck == true).length} />
-                                </ClientContext.Provider>
+                                {/* 여기 context는 checkboxtodo가 아닌 그 하위 모달 ~ completeTodo로 가기 위한 것이기 떄문에 지우면 안됨 */}
+                                <RoomNumContext.Provider value={roomNum}>
+                                    <ClientContext.Provider value={client.current}>
+                                        <CheckboxTodo
+                                            nickname={member}
+                                            myNickname={userNickname}
+                                            roomNum={roomNum}
+                                            client={client.current}
+                                            todos={todos.filter((todo, i) => todo.user.nickname == member)}
+                                            checkNum={todos.filter((todo, i) => todo.user.nickname == member)
+                                                .filter((item, i) => item.todoCheck == true).length} />
+                                    </ClientContext.Provider>
+                                </RoomNumContext.Provider>
                             </Grid>;
                         })
                     }

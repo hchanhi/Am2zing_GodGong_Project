@@ -251,7 +251,7 @@ function Home() {
                 <RankingText item xs={4} sx={{ margin: '2vh 0 10vh' }}>
                     <div><h1>누적 공부 시간 랭킹🏆</h1></div>
                     <span className={`rankingbtn ${clicked === 0 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(0)}>오늘</span>
-                    <span className={`rankingbtn ${clicked === 1 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(1)}>이번주</span>
+                    <span className={`rankingbtn ${clicked === 1 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(1)}>한 주</span>
                     <span className={`rankingbtn ${clicked === 2 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(2)}>이번달</span>
                     <div className="rankingdata">{ranking[clicked]}</div>
 

@@ -55,7 +55,9 @@ function TodoStudyList(props) {
                         sx={{ fontSize: 60, float: 'right', cursor: 'pointer' }}
                         onClick={() => setModalOpen(true)} />
             }
-            <h1 style={{ textAlign: 'left', margin: '1rem' }}>함께하는 Todo✅</h1>
+
+            <h1 style={{ textAlign: 'left', margin: '1rem 0' }}>함께하는 Todo✅</h1>
+
             {
                 modalOpen && <TodoModal
                     task='createStudy'

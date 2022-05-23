@@ -12,7 +12,7 @@ import {
     Typography,
     Container,
 } from '@mui/material/';
-
+import Swal from 'sweetalert2';
 import './join.css';
 
 const Register = (props) => {
@@ -23,7 +23,7 @@ const Register = (props) => {
     const navigate = useNavigate();
     let { key } = useParams();
 
-    useEffect( () => {
+    useEffect(() => {
         axios.get('/api/user/passwordChange/' + key)
             .then(res => {
                 if (res.data.success) {
@@ -43,8 +43,14 @@ const Register = (props) => {
     const onhandlePost = async (password) => {
 
         if (!email) {
-            alert('비정상적인 접근입니다.');
-            return navigate('/');
+            Swal.fire({
+                confirmButtonColor: '#2fbe9f',
+
+                confirmButtonText: '확인',
+                text: '비정상적인 접근입니다.😥', // Alert 제목 
+
+            });
+            navigate('/');
         }
 
         await axios
@@ -53,120 +59,127 @@ const Register = (props) => {
                 password: password,
             })
             .then(() => {
-                localStorage.clear();
-                props.setUserNickName('');
-                alert('비밀번호가 성공적으로 변경되었습니다. 변경된 비밀번호로 로그인해주세요.');
-                navigate('/login');
+                Swal.fire({
+                    confirmButtonColor: '#2fbe9f',
+                    confirmButtonText: '확인',
+                    html: '비밀번호가 성공적으로 변경되었습니다.<br>변경된 비밀번호로 로그인해주세요!😊', // Alert 제목 
+                })
+                    .then((re) => {
+                        if (re.isConfirmed) {
+                            localStorage.clear();
+                            props.setUserNickName('');
+                            navigate('/login');
+                        }
+                    })
             })
             .catch((err) => {
                 console.log(err);
             });
-    };
-    // useState 추가
 
-    // form 전송
-    const handleSubmit = (e) => {
-        e.preventDefault();
+        const handleSubmit = (e) => {
+            e.preventDefault();
 
-        const data = new FormData(e.currentTarget);
-        let password = data.get('password');
-        let rePassword = data.get('rePassword');
+            const data = new FormData(e.currentTarget);
+            let password = data.get('password');
+            let rePassword = data.get('rePassword');
 
-        // 비밀번호 유효성 체크
-        const passwordRegex = /^.{4,20}$/;
-        if (!passwordRegex.test(password)) {
-            setPasswordState('4~20글자를 입력해주세요!');
-        } else {
-            setPasswordState('');
-        }
+            // 비밀번호 유효성 체크
+            const passwordRegex = /^.{4,20}$/;
+            if (!passwordRegex.test(password)) {
+                setPasswordState('4~20글자를 입력해주세요!');
+            } else {
+                setPasswordState('');
+            }
 
-        // 비밀번호 같은지 체크
-        if (password !== rePassword) {
-            setPasswordError('비밀번호가 일치하지 않습니다!');
-        } else {
-            setPasswordError('');
-        }
+            // 비밀번호 같은지 체크
+            if (password !== rePassword) {
+                setPasswordError('비밀번호가 일치하지 않습니다!');
+            } else {
+                setPasswordError('');
+            }
 
-        if (
-            passwordRegex.test(password) &&
-            password === rePassword
+            if (
+                passwordRegex.test(password) &&
+                password === rePassword
 
-        ) {
-            onhandlePost(password);
-        }
+            ) {
+                onhandlePost(password);
+            }
 
-    };
+        };
 
 
 
-    return (
+        return (
 
-        <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="xs">
 
-            <Box
-                sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    borderRadius: '10px',
-                    padding: '32px',
-                    backgroundColor: '#fff',
-                    boxShadow: ' 0 8px 20px 0 rgba(0, 0, 0, 0.15)'
-                }}
-            >
+                <Box
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        borderRadius: '10px',
+                        padding: '32px',
+                        backgroundColor: '#fff',
+                        boxShadow: ' 0 8px 20px 0 rgba(0, 0, 0, 0.15)'
+                    }}
+                >
 
-                <Typography component="h1" variant="h5">
-                    비밀번호 변경
-                </Typography>
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                    <FormControl component="fieldset" variant="standard">
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                    label="비밀번호 (4~20글자를 입력해주세요)"
-                                    error={passwordState !== '' || false}
-                                />
+                    <Typography component="h1" variant="h5">
+                        비밀번호 변경
+                    </Typography>
+                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                        <FormControl component="fieldset" variant="standard">
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        label="비밀번호 (4~20글자를 입력해주세요)"
+                                        error={passwordState !== '' || false}
+                                    />
+                                </Grid>
+                                <FormHelperText>{passwordState}</FormHelperText>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        type="password"
+                                        id="rePassword"
+                                        name="rePassword"
+                                        label="비밀번호 재입력"
+                                        error={passwordError !== '' || false}
+                                    />
+                                </Grid>
+                                <FormHelperText>{passwordError}</FormHelperText>
+
+
                             </Grid>
-                            <FormHelperText>{passwordState}</FormHelperText>
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    type="password"
-                                    id="rePassword"
-                                    name="rePassword"
-                                    label="비밀번호 재입력"
-                                    error={passwordError !== '' || false}
-                                />
-                            </Grid>
-                            <FormHelperText>{passwordError}</FormHelperText>
 
+                            <Button
+                                id='joinBtn'
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 1 }}
+                                size="large"
+                            >
+                                비밀번호 찾기
+                            </Button>
 
-                        </Grid>
+                        </FormControl>
 
-                        <Button
-                            id='joinBtn'
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 1 }}
-                            size="large"
-                        >
-                            비밀번호 찾기
-                        </Button>
-
-                    </FormControl>
-
+                    </Box>
                 </Box>
-            </Box>
-        </Container>
+            </Container>
 
-    );
+        );
+    };
 };
+
 export default Register;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from "react-router-dom";
-
+import Swal from 'sweetalert2';
 import {
     Button,
     TextField,
@@ -23,7 +23,7 @@ const Register = () => {
     const navigate = useNavigate();
     let { key } = useParams();
 
-    useEffect( () => {
+    useEffect(() => {
         console.log(key);
         // key값을 아무거나 넣으면 axios를 실행하지도 않는 이슈
         axios.get('/api/user/passwordChange/' + key)
@@ -40,14 +40,20 @@ const Register = () => {
             })
             .catch(err => {
                 console.log(err);
-            })
+            });
     }, []);
 
     const onhandlePost = async (password) => {
 
         if (!email) {
-            alert('비정상적인 접근입니다.');
-            return navigate('/');
+            Swal.fire({
+                confirmButtonColor: '#2fbe9f',
+
+                confirmButtonText: '확인',
+                text: '비정상적인 접근입니다.😥', // Alert 제목 
+
+            });
+            navigate('/');
         }
 
         await axios
@@ -56,8 +62,18 @@ const Register = () => {
                 password: password,
             })
             .then(function (res) {
-                alert('비밀번호가 성공적으로 변경되었습니다. 변경된 비밀번호로 로그인해주세요.')
-                navigate('/login');
+                Swal.fire({
+                    confirmButtonColor: '#2fbe9f',
+                    confirmButtonText: '확인',
+                    html: '비밀번호가 성공적으로 변경되었습니다.<br>변경된 비밀번호로 로그인해주세요!😊', // Alert 제목 
+
+                }).then((re) => {
+                    if (re.isConfirmed) {
+
+                        navigate('/login');
+                    }
+                });
+
             })
             .catch(function (err) {
                 console.log(err);

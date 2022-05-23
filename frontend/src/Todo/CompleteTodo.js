@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { RoomNumContext, SetMemberContext, ClientContext } from './TodoStudyRoom.js';
 import { getNickName } from '../jwtCheck.js';
+import Swal from 'sweetalert2';
 
 let Wrapper = styled.div`
     h2 {
@@ -12,9 +13,9 @@ let Wrapper = styled.div`
     button {
         margin: 1rem;
     }
-`
+`;
 
-function CompleteTodo({task}) {
+function CompleteTodo({ task }) {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const userNickname = getNickName(token);
@@ -22,7 +23,7 @@ function CompleteTodo({task}) {
     let roomNum = useContext(RoomNumContext);
     let setIsMember = useContext(SetMemberContext);
     const navigate = useNavigate();
-   
+
     function exitStudy() {
         try {
             client.publish({
@@ -34,11 +35,27 @@ function CompleteTodo({task}) {
                 })
             });
             setIsMember(false);
-            alert('퇴장하셨습니다. 다음에 또 같이 공부해요!')
-            navigate("/");
+            Swal.fire({
+                confirmButtonColor: '#2fbe9f',
+
+                confirmButtonText: '확인',
+                html: '퇴장하셨습니다.<br>다음에 또 같이 공부해요!😊', // Alert 제목 
+
+            }).then((re) => {
+                if (re.isConfirmed) {
+                    navigate("/");
+                }
+            });
+
         } catch (err) {
             console.log(err.message);
-            alert('퇴장에 실패하셨습니다.');
+            Swal.fire({
+                confirmButtonColor: '#2fbe9f',
+
+                confirmButtonText: '확인',
+                html: '퇴장에 실패하셨습니다!😢', // Alert 제목 
+
+            });
         }
     }
 

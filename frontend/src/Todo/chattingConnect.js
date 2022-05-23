@@ -35,14 +35,21 @@ function subscribe(client, roomNum, update, setUpdate, setNewMessage, newMessage
 
         if (chat.body) {
 
-            let message = JSON.parse(chat.body).message || false
-            let result = JSON.parse(chat.body).result || false
+            let message = JSON.parse(chat.body).message || ''
+            let result = JSON.parse(chat.body).result || ''
 
-            result == 'done'
+            console.log(message);
+            console.log(result);
+            if (result == 'done'
                 || (message.indexOf('입장했습니다.') != -1)
-                || (message.indexOf('퇴장했습니다.') != -1)
-                ? setUpdate(!update)
-                : setNewMessage(newMessage => [...newMessage, JSON.parse(chat.body)])
+                || (message.indexOf('퇴장했습니다.') != -1))
+                setUpdate(!update)
+            else
+                setNewMessage(newMessage => [...newMessage, JSON.parse(chat.body)])
+            
+            if((message.indexOf('입장했습니다') != -1)
+                || (message.indexOf('퇴장했습니다') != -1))
+                setNewMessage(newMessage => [...newMessage, JSON.parse(chat.body)])
 
         } else {
             Swal.fire({

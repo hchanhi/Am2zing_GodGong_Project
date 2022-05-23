@@ -81,8 +81,6 @@ const Diary = () => {
             })
             .catch(function (err) {
                 console.log(err);
-                console.log(state);
-                console.log(origin);
                 console.log(err.response.data.message);
                 if (err.response.status === 400) {
                     alert(err.response.data.message);

@@ -1,10 +1,10 @@
 
-import { useState, useEffect, useContext, useCallback } from "react";
-import { isAuth, getNickName, getId } from './jwtCheck';
+import { useState, useEffect, useCallback } from "react";
+import { isAuth, getId } from './jwtCheck';
 import axios from 'axios';
 
 
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
 
     Box,
@@ -49,12 +49,9 @@ const User = (props) => {
 
     const getUser = async () => {
         const json = await axios.get('/api/users/' + userId, { params: { id: userId } });
-        console.log(json);
         setUser(json.data);
         setNick(json.data.nickname);
         setBirth(json.data.birth);
-
-        console.log(user);
         setsState(false);
     };
     useEffect(() => {
@@ -122,8 +119,6 @@ const User = (props) => {
                 })
                 .catch(function (err) {
                     console.log(err);
-                    console.log(origin);
-
                 });
 
         }
@@ -168,7 +163,6 @@ const User = (props) => {
                 })
                 .catch(function (err) {
                     console.log(err);
-                    console.log(origin);
 
                 });
 
@@ -238,8 +232,6 @@ const User = (props) => {
                 })
                 .catch(function (err) {
                     console.log(err);
-                    console.log(origin);
-
                 });
 
         }
@@ -289,7 +281,6 @@ const User = (props) => {
                     .catch(function (err) {
                         console.log(delBody);
                         console.log(err);
-                        console.log(origin);
 
                     });
             }
@@ -368,7 +359,6 @@ const User = (props) => {
         },
         [newPas]
     );
-    console.log(user.nickname);
     return (<div>
 
         <Container className="UserEditor">

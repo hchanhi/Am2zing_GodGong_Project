@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from 'axios';
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -7,10 +7,9 @@ import ChattingBox from "./ChattingBox.js";
 import JoinStudyBtn from "./JoinStudyBtn.js";
 import ExitStudyBtn from "./ExitStudyBtn.js";
 import DeleteTodoBtn from "./DeleteTodoBtn.js";
-import { isAuth, getNickName } from '../jwtCheck.js';
+import { getNickName } from '../jwtCheck.js';
 import { Grid, Chip } from '@mui/material/';
 import { connect, disConnect } from './chattingConnect.js';
-import Swal from 'sweetalert2';
 
 let Wrapper = styled.div`
     margin: auto;
@@ -34,6 +33,7 @@ let Wrapper = styled.div`
 export let RoomNumContext = React.createContext();
 export let NewMessageContext = React.createContext();
 export let ClientContext = React.createContext();
+export let SetMemberContext = React.createContext();
 export let TaskContext = React.createContext();
 
 function TodoStudy() {
@@ -41,7 +41,6 @@ function TodoStudy() {
     let today = new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString().padStart(2, '0') + '-' + new Date().getDate().toString().padStart(2, '0');
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const userNickname = getNickName(token);
-    const navigate = useNavigate();
     let { roomNum } = useParams();
     let [room, setRoom] = useState([]);
     let [todos, setTodos] = useState([]);
@@ -56,18 +55,6 @@ function TodoStudy() {
     let client = useRef({});
 
     useEffect(() => {
-
-        if (!isAuth(token)) {
-            Swal.fire({
-                confirmButtonColor: '#2fbe9f',
-
-                confirmButtonText: '확인',
-                text: '로그인 후 이용하실 수 있어요😥', // Alert 제목 
-
-            });
-            navigate('/login');
-        };
-
         axios.get('/api/chat/rooms')
             .then(res => {
                 setRoom(res.data.find((x) => x.roomNumber == roomNum));
@@ -177,7 +164,8 @@ function TodoStudy() {
                             ? (hasTodo
                                 ? <DeleteTodoBtn
                                     roomNum={roomNum}
-                                    client={client.current} />
+                                    client={client.current}
+                                    setHasTodo={setHasTodo}/>
                                 : <RoomNumContext.Provider value={roomNum}>
                                         <ClientContext.Provider value={client.current}>
                                             <JoinStudyBtn task={'onlyMake'} />

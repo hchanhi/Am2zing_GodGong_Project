@@ -14,7 +14,6 @@ let Wrapper = styled.div`
     text-align: left;
     cursor: pointer;
     border-radius: 2rem;
-    // border: solid 8px black;
 `;
 
 function TodoCard({ studyRoom }) {
@@ -49,6 +48,16 @@ function TodoCard({ studyRoom }) {
 
 
     function isMemberCheck() {
+
+        if (!userNickname) {
+            Swal.fire({
+                confirmButtonColor: '#2fbe9f',
+                confirmButtonText: '확인',
+                text: '로그인 후 이용하실 수 있어요😥', // Alert 제목 
+            });
+            navigate('/login');
+        };
+
         axios.get('/api/chat/room/check', { params: nickname })
             .then(res => {
                 console.log(res.data);
@@ -59,7 +68,6 @@ function TodoCard({ studyRoom }) {
                         confirmButtonColor: '#2fbe9f',
                         confirmButtonText: '확인',
                         html: '이미 참여하신 스터디가 있어 출입할 수 없습니다!😢', // Alert 제목 
-
                     });
                 }
             })

@@ -10,6 +10,7 @@
 
 .selected {
     color: rgb(0, 135, 135);
+    border-bottom: 5px solid rgb(0, 135, 135);
 }
 
 .home_diary {
@@ -20,4 +21,13 @@
     word-break: normal !important;
     white-space: pre-line !important;
     vertical-align: top;
+}
+
+.rankingnick{
+    font-size:18pt;
+    font-weight: 600;
+}
+
+.blank{
+    width:10px;
 }

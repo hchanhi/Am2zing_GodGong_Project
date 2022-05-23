@@ -33,27 +33,11 @@ function CompleteTodo({ task }) {
                     message: ''
                 })
             });
-            Swal.fire({
-                confirmButtonColor: '#2fbe9f',
-
-                confirmButtonText: '확인',
-                html: '퇴장하셨습니다.<br>다음에 또 같이 공부해요!😊', // Alert 제목 
-
-            }).then((re) => {
-                if (re.isConfirmed) {
-                    navigate("/");
-                }
-            });
-
+            alert('퇴장하셨습니다. 다음에 또 같이 공부해요!')
+            navigate("/");
         } catch (err) {
             console.log(err.message);
-            Swal.fire({
-                confirmButtonColor: '#2fbe9f',
-
-                confirmButtonText: '확인',
-                html: '퇴장에 실패하셨습니다!😢', // Alert 제목 
-
-            });
+            alert('퇴장에 실패하셨습니다.');
         }
     }
 

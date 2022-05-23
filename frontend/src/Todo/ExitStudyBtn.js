@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import TodoModal from './TodoModal.js';
 import Button from '@mui/material/Button';
 
@@ -18,7 +18,7 @@ function ExitStudyBtn() {
                 modalOpen && <TodoModal
                     task='exit'
                     open={modalOpen}
-                    setOpen={setModalOpen}/>
+                    setOpen={setModalOpen} />
             }
         </div>
     );

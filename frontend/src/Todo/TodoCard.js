@@ -82,7 +82,7 @@ function TodoCard({ studyRoom }) {
                 <h2>{studyRoom.roomTitle}</h2>
                 {studyRoom.roomCategory} <br />
                 {roomCreatedDate} ~ <br />
-                <h3 style={{ textAlign: 'right', color: 'orangered' }}>{membersNum}명</h3>
+                <h3 style={{ textAlign: 'right', color: '#fd565f' }}>{membersNum}명</h3>
             </Wrapper>
         </Grid>
     );

@@ -1,14 +1,15 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import TodoModal from './TodoModal.js';
 import Button from '@mui/material/Button';
 
-function JoinStudyBtn({task}) {
+function JoinStudyBtn({ task }) {
 
     let [modalOpen, setModalOpen] = useState(false);
 
     return (
         <div>
             <Button
+                style={{ backgroundColor: '#2fbe9f ' }}
                 variant="contained"
                 onClick={() => setModalOpen(true)}
                 sx={{ backgroundColor: '#2FBE9F'}}>
@@ -22,7 +23,7 @@ function JoinStudyBtn({task}) {
                 modalOpen && <TodoModal
                     task={task}
                     open={modalOpen}
-                    setOpen={setModalOpen}/>
+                    setOpen={setModalOpen} />
             }
         </div>
     );

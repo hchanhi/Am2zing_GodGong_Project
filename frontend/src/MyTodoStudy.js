@@ -14,7 +14,7 @@ let Wrapper = styled.div`
         font-size: 20pt;
         color: grey;
     }
-`
+`;
 let Card = styled.div`
     background-color: white;
     box-shadow: 5px 5px 5px rgb(226, 233, 230);
@@ -34,12 +34,13 @@ function MyTodoStudy() {
     let [roomDate, setRoomDate] = useState('');
     let [membersNum, setMembersNum] = useState([]);
 
-  
+
     useEffect(() => {
         axios.get('/api/chat/room/check', {
             params: {
                 userNickname: userNickname
-        } })
+            }
+        })
             .then(res => {
                 if (res.data) {
                     console.log(res.data);
@@ -69,19 +70,19 @@ function MyTodoStudy() {
             })
             .catch(error => {
                 console.log(error);
-            })
-    }, [])
-    
+            });
+    }, []);
+
     return (
         <Wrapper>
             <h4 style={{ textAlign: 'left', margin: '1rem' }}>나의 Todo Study✅</h4>
             {
                 room.length != 0
-                    ? <Card onClick={() => { navigate("/todoStudy/" + room.roomNumber) }}>
+                    ? <Card onClick={() => { navigate("/todoStudy/" + room.roomNumber); }}>
                         <h2>{room.roomTitle}</h2>
                         {room.roomCategory} <br />
                         {roomDate} ~ <br />
-                        <h3 style={{ textAlign: 'right', color: 'orangered' }}>{membersNum}명</h3>
+                        <h3 style={{ textAlign: 'right', color: '#fd565f' }}>{membersNum}명</h3>
                     </Card>
                     : <span>현재 함께하는 todo스터디가 없습니다.</span>
             }

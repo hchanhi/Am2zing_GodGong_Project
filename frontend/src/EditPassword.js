@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from "react-router-dom";
-
+import Swal from 'sweetalert2';
 import {
     Button,
     TextField,
@@ -12,7 +12,6 @@ import {
     Typography,
     Container,
 } from '@mui/material/';
-import Swal from 'sweetalert2';
 import './join.css';
 
 const Register = (props) => {
@@ -37,7 +36,7 @@ const Register = (props) => {
             })
             .catch(err => {
                 console.log(err);
-            })
+            });
     }, []);
 
     const onhandlePost = async (password) => {

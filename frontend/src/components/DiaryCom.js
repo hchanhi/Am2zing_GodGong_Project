@@ -52,7 +52,7 @@ function DiaryCom({ diaryId, diaryContent, diarySentiment, diaryCreated, handleS
                                 }
                             </div>
 
-                            <div className="more" >    <button type="submit" onClick={() => move_more()} >더보기</button>  </div>
+                            <div className="more" >    <button type="submit" onClick={() => move_more()} >더 보기</button>  </div>
                         </div>
                     </Box>
 

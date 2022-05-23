@@ -57,7 +57,7 @@ const Resigter = (props) => {
                         confirmButtonColor: '#2fbe9f',
 
                         confirmButtonText: '확인',
-                        text: '로그인 되었습니다!',
+                        text: '로그인 되었습니다!😊',
                     }).then((result) => {
                         if (result.isConfirmed) {
                             props.setIsLogin(!props.isLogin);
@@ -75,7 +75,7 @@ const Resigter = (props) => {
                     confirmButtonColor: '#2fbe9f',
 
                     confirmButtonText: '확인',
-                    text: '이메일 혹은 비밀번호가 틀렸습니다!', // Alert 제목 
+                    text: '이메일 혹은 비밀번호가 틀렸습니다!😢', // Alert 제목 
 
                 });
 

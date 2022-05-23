@@ -34,7 +34,6 @@ let Wrapper = styled.div`
 export let RoomNumContext = React.createContext();
 export let NewMessageContext = React.createContext();
 export let ClientContext = React.createContext();
-export let SetMemberContext = React.createContext();
 export let TaskContext = React.createContext();
 
 function TodoStudy() {
@@ -57,16 +56,7 @@ function TodoStudy() {
     let client = useRef({});
 
     useEffect(() => {
-        axios.get('/api/chat/rooms')
-            .then(res => {
-                setRoom(res.data.find((x) => x.roomNumber == roomNum));
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }, []);
 
-    useEffect(() => {
         if (!isAuth(token)) {
             Swal.fire({
                 confirmButtonColor: '#2fbe9f',
@@ -77,6 +67,17 @@ function TodoStudy() {
             });
             navigate('/login');
         };
+
+        axios.get('/api/chat/rooms')
+            .then(res => {
+                setRoom(res.data.find((x) => x.roomNumber == roomNum));
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }, [update]);
+
+    useEffect(() => {
 
         axios.get('/api/chat/room/check', {
             params: {
@@ -136,7 +137,7 @@ function TodoStudy() {
         // axios /room/enter 몇명들어가있는지 roomlog > return : 인원수세는거 (후순위)
         connect(client, roomNum, update, setUpdate, setNewMessage, newMessage);
         return () => disConnect(client);
-    }, [isMember, update]);
+    }, [update]);
 
     useEffect(() => {
         setBadgeNum(++badgeNum);

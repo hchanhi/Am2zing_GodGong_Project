@@ -109,23 +109,3 @@ h2 {
     color: #ececec;
     font-weight: 600;
 }
-
-.message {
-    font-weight: 500;
-    font-size: 1rem;
-    line-height: 24px;
-    letter-spacing: -1px;
-
-    bottom: -10px;
-    left: 0;
-
-
-}
-
-.success {
-    display: none;
-}
-
-.error {
-    color: #ff2727;
-}

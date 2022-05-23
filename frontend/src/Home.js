@@ -6,7 +6,6 @@ import styled from "styled-components";
 import TodoStudyList from "./Todo/TodoStudyList.js";
 import axios from 'axios';
 import { getNickName } from './jwtCheck';
-import DiaryCom from "./components/DiaryCom";
 import './Home.css';
 
 let Wrapper = styled.div`
@@ -118,9 +117,9 @@ function Home() {
     const ranking = {
         0: <table>
             <tbody>
-                {dayTime.map((day,index) => (
+                {dayTime.map((day, index) => (
                     <tr key={day.nickname}>
-                        <td>{(index)+1}</td>
+                        <td>{(index) + 1}</td>
                         <td className="rankingnick">{day.nickname}</td>
                         <td className="blank"></td>
                         <td>{test(day.time)}</td>
@@ -131,9 +130,9 @@ function Home() {
 
         1: <table>
             <tbody>
-                {weekTime.map((day,index) => (
+                {weekTime.map((day, index) => (
                     <tr key={day.nickname}>
-                        <td>{(index)+1}</td>
+                        <td>{(index) + 1}</td>
                         <td className="rankingnick">{day.nickname}</td>
                         <td className="blank"></td>
                         <td>{test(day.time)}</td>
@@ -143,9 +142,9 @@ function Home() {
         </table>,
         2: <table>
             <tbody>
-                {monthTime.map((day,index) => (
+                {monthTime.map((day, index) => (
                     <tr key={day.nickname}>
-                        <td>{(index)+1}</td>
+                        <td>{(index) + 1}</td>
                         <td className="rankingnick">{day.nickname}</td>
                         <td className="blank"></td>
                         <td>{test(day.time)}</td>
@@ -213,7 +212,7 @@ function Home() {
         getTotalTime();
         MyTime();
     }, [nickname]);
-    
+
     return (
         <Wrapper>
             <TodayStyle container spacing={1}>

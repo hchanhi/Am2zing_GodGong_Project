@@ -48,6 +48,7 @@ const Register = () => {
         await axios
             .post('/api/auth/signup', postData)
             .then(function (response) {
+                console.log(response.status, '성공');
                 Swal.fire({
                     confirmButtonColor: '#2fbe9f',
 
@@ -68,6 +69,8 @@ const Register = () => {
             })
             .catch(function (err) {
                 console.log(err);
+                console.log(postData);
+                console.log(origin);
                 console.log(err.response.data.message);
                 if (err.response.status === 400) {
                     Swal.fire({

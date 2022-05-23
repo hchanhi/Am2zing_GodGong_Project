@@ -63,13 +63,13 @@ function CompleteTodo({ task }) {
             <h3>공부일기를 작성하시겠어요?</h3>
             <Button
                 variant="contained"
-                style={{ backgroundColor: 'dodgerblue' }}
+                style={{ backgroundColor: '#2fbe9f' }}
                 onClick={() => navigate("/diary")}>
                 작성하기
             </Button>
             <Button
                 variant="contained"
-                style={{ backgroundColor: 'red' }}
+                style={{ backgroundColor: '#fd565f' }}
                 onClick={() => exitStudy()}>
                 퇴장하기
             </Button>

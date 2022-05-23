@@ -136,7 +136,7 @@ function TodoStudy() {
 
                 <Grid item xs={11}>
                     <Chip label={room.roomCategory} />
-                    <b style={{ color: 'crimson', fontSize: '17pt', fontWeight: 'bold' }}>{membersNum}명</b>
+                    <b style={{ color: '#fd565f', fontSize: '17pt', fontWeight: 'bold' }}>{membersNum}명</b>
                     <br />
                     <h1 style={{ marginTop: '1rem' }}>{room.roomTitle}
                         <b>{room.roomCreated
@@ -165,11 +165,11 @@ function TodoStudy() {
                                 ? <DeleteTodoBtn
                                     roomNum={roomNum}
                                     client={client.current}
-                                    setHasTodo={setHasTodo}/>
+                                    setHasTodo={setHasTodo} />
                                 : <RoomNumContext.Provider value={roomNum}>
-                                        <ClientContext.Provider value={client.current}>
-                                            <JoinStudyBtn task={'onlyMake'} />
-                                        </ClientContext.Provider>
+                                    <ClientContext.Provider value={client.current}>
+                                        <JoinStudyBtn task={'onlyMake'} />
+                                    </ClientContext.Provider>
                                 </RoomNumContext.Provider>)
                             : null
                     }
@@ -178,14 +178,14 @@ function TodoStudy() {
                     {
                         isMember
                             ? <RoomNumContext.Provider value={roomNum}>
-                                    <ClientContext.Provider value={client.current}>
-                                        <ExitStudyBtn />
-                                    </ClientContext.Provider>
+                                <ClientContext.Provider value={client.current}>
+                                    <ExitStudyBtn />
+                                </ClientContext.Provider>
                             </RoomNumContext.Provider>
                             : <RoomNumContext.Provider value={roomNum}>
-                                    <ClientContext.Provider value={client.current}>
-                                        <JoinStudyBtn task={'join'} />
-                                    </ClientContext.Provider>
+                                <ClientContext.Provider value={client.current}>
+                                    <JoinStudyBtn task={'join'} />
+                                </ClientContext.Provider>
                             </RoomNumContext.Provider>
                     }
                 </Grid>

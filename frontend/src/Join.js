@@ -54,7 +54,7 @@ const Register = () => {
 
                     confirmButtonText: '확인',
 
-                    text: '가입이 완료되었습니다!', // Alert 내용 
+                    text: '가입이 완료되었습니다!😊', // Alert 내용 
                 }).then((result) => {
                     if (result.isConfirmed) {
                         navigate('/login');

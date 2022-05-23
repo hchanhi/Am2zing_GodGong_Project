@@ -69,11 +69,24 @@ let StudyDiary = styled(Grid)`
         text-overflow:ellipsis;
         white-space:nowrap;
     }
+    button {
+        font-family: 'Pretendard-Medium';
+        border-radius: 10px;
+        font-size: 10pt;
+
+        background-color: lightseagreen
+    }
 `;
 let RankingText = styled(Grid)`
     text-align: left;
     div {
         margin: 3vh 0;
+    }
+
+    span{
+        font-weight:700;
+        font-size:28px;
+        margin-right:10px;
     }
 `;
 
@@ -189,12 +202,14 @@ function Home() {
             <TodayStyle container spacing={1}>
                 <StudyTime item xs={5}>
                     <div style={{ textAlign: 'left' }}>오늘의 공부시간</div>
-                    <div className="studytimetoday"><h2 style={{ textAlign: 'center' }}>{test(myTime[0])=="NaN시간 NaN분 NaN초" ? "0시간 0분 0초":test(myTime[0])}</h2></div>
+                    <div className="studytimetoday"><h2 style={{ textAlign: 'center' }}>{test(myTime[0]) == "NaN시간 NaN분 NaN초" ? "0시간 0분 0초" : test(myTime[0])}</h2></div>
                     <div><Button variant="contained" size="large" onClick={() => navigate("/challenge")}>공부 시작</Button></div>
                 </StudyTime>
                 <StudyDiary item xs={7} sx={{ textAlign: 'left' }}>
-
-                    <span>오늘의 공부일기</span>
+                    <div style={{ paddingBottom: '0', border: 'none', background: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ textAlign: 'center' }}>오늘의 공부일기</span>
+                        <Button variant="contained" onClick={() => navigate("/diary")}>일기 쓰기</Button>
+                    </div>
                     <div className="home_diary">
                         <span>{recentDate}</span>
                         <br></br>
@@ -214,16 +229,16 @@ function Home() {
                                     : <h5>감정분석결과 : 기분이 좋습니다. 🥰</h5>
                         }
                     </div>
+
                 </StudyDiary>
             </TodayStyle>
 
             <Grid container spacing={1} sx={{ marginTop: '3vh' }}>
                 <RankingText item xs={4} sx={{ margin: '5vh 0 10vh' }}>
-                    <div><h1>누적 공부 시간 랭킹</h1></div>
-                    <div>현재시간 기준</div>
-                    <span className={`rankingbtn ${clicked === 0 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(0)}>오 늘</span>
-                    <span className={`rankingbtn ${clicked === 1 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(1)}>한 주</span>
-                    <span className={`rankingbtn ${clicked === 2 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(2)}>한 달</span>
+                    <div><h1>누적 공부 시간 랭킹🏆</h1></div>
+                    <span className={`rankingbtn ${clicked === 0 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(0)}>오늘 </span>
+                    <span className={`rankingbtn ${clicked === 1 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(1)}>이번주 </span>
+                    <span className={`rankingbtn ${clicked === 2 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(2)}>이번달</span>
                     <div>{ranking[clicked]}</div>
 
                 </RankingText>

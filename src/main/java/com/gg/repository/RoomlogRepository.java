@@ -15,7 +15,7 @@ public interface RoomlogRepository extends JpaRepository<Roomlog, Long> {
 
     Roomlog findByUser(User user);
 
-    @Query(value = "select * from roomlog order by roomlog_created limit 1,2", nativeQuery = true)
+    @Query(value = "select * from roomlog order by roomlog_created limit 1,1", nativeQuery = true)
     Roomlog findNextUser();
 
     @Transactional

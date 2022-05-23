@@ -96,22 +96,25 @@ const User = (props) => {
                             confirmButtonColor: '#2fbe9f',
 
                             confirmButtonText: '확인',
-                            text: '이메일 혹은 비밀번호가 틀렸습니다!', // Alert 제목 
+                            text: '중복된 닉네임입니다!😢', // Alert 제목 
 
                         });
-                        alert("중복된 닉네임입니다!");
+
                     } else {
                         Swal.fire({
                             confirmButtonColor: '#2fbe9f',
 
                             confirmButtonText: '확인',
-                            text: '이메일 혹은 비밀번호가 틀렸습니다!', // Alert 제목 
+                            html: '닉네임이 수정되었습니다.<br>다시 로그인해주세요!😊', // Alert 제목 
 
+                        }).then((re) => {
+                            if (re.isConfirmed) {
+                                localStorage.clear();
+                                props.setUserNickName('');
+                                navigate('/');
+                            }
                         });
-                        localStorage.clear();
-                        props.setUserNickName('');
-                        alert("닉네임이 수정되었습니다. 다시 로그인해주세요!");
-                        navigate('/');
+
                     }
 
 
@@ -149,14 +152,16 @@ const User = (props) => {
                         confirmButtonColor: '#2fbe9f',
 
                         confirmButtonText: '확인',
-                        text: '이메일 혹은 비밀번호가 틀렸습니다!', // Alert 제목 
+                        html: '생년월일이 수정되었습니다.<br>다시 로그인해주세요!😊', // Alert 제목 
 
+                    }).then((re) => {
+                        if (re.isConfirmed) {
+                            localStorage.clear();
+                            props.setUserNickName('');
+                            navigate('/');
+                        }
                     });
-                    console.log(response.status, '성공');
-                    localStorage.clear();
-                    props.setUserNickName('');
-                    alert("생년월일이 수정되었습니다. 다시 로그인해주세요!");
-                    navigate('/');
+
 
 
 
@@ -208,22 +213,25 @@ const User = (props) => {
                             confirmButtonColor: '#2fbe9f',
 
                             confirmButtonText: '확인',
-                            text: '이메일 혹은 비밀번호가 틀렸습니다!', // Alert 제목 
+                            text: '비밀번호가 틀렸습니다!😢', // Alert 제목 
 
                         });
-                        alert("비밀번호 오류!");
+
                     } else {
                         Swal.fire({
                             confirmButtonColor: '#2fbe9f',
 
                             confirmButtonText: '확인',
-                            text: '이메일 혹은 비밀번호가 틀렸습니다!', // Alert 제목 
+                            html: '비밀번호가 수정되었습니다.<br>다시 로그인해주세요!😊', // Alert 제목 
 
+                        }).then((re) => {
+                            if (re.isConfirmed) {
+                                localStorage.clear();
+                                props.setUserNickName('');
+                                navigate('/');
+                            }
                         });
-                        localStorage.clear();
-                        props.setUserNickName('');
-                        alert("비밀번호가 수정되었습니다. 다시 로그인해주세요!");
-                        navigate('/');
+
                     }
 
 

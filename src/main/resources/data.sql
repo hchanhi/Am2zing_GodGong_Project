@@ -11,4 +11,25 @@ insert into users(birth, email, nickname, password) values("970512","dddd@dddd.c
 insert into users(birth, email, nickname, password) values("970512","eeee@eeee.com", "구주", "$2a$10$SF8DLsuB42mCZ6IwagbuZeTWWSejLc7MQf1E9xG5Xqmb6ScmQG1oG");
 
 
+insert into studylog(studylog_created, studylog_time, user_id) values ("2022-05-20 13:23:13", 3600, 1);
+insert into studylog(studylog_created, studylog_time, user_id) values ("2022-05-20 13:23:13", 4000, 2);
+insert into studylog(studylog_created, studylog_time, user_id) values ("2022-05-20 13:23:13", 5000, 3);
+insert into studylog(studylog_created, studylog_time, user_id) values ("2022-05-20 13:23:13", 200000, 4);
+insert into studylog(studylog_created, studylog_time, user_id) values ("2022-05-20 13:23:13", 1004440, 5);
+
+insert into studylog(studylog_created, studylog_time, user_id) values ("2022-05-02 13:23:13", 360, 1);
+insert into studylog(studylog_created, studylog_time, user_id) values ("2022-05-02 13:23:13", 4400, 2);
+insert into studylog(studylog_created, studylog_time, user_id) values ("2022-05-02 13:23:13", 54400, 3);
+insert into studylog(studylog_created, studylog_time, user_id) values ("2022-05-02 13:23:13", 200, 4);
+insert into studylog(studylog_created, studylog_time, user_id) values ("2022-05-02 13:23:13", 10400, 5);
+
+insert into studylog(studylog_created, studylog_time, user_id) values ("2022-05-23 13:23:13", 5000, 1);
+insert into studylog(studylog_created, studylog_time, user_id) values ("2022-05-23 13:23:13", 4000, 2);
+insert into studylog(studylog_created, studylog_time, user_id) values ("2022-05-23 13:23:13", 50030, 3);
+insert into studylog(studylog_created, studylog_time, user_id) values ("2022-05-23 13:23:13", 2000, 4);
+insert into studylog(studylog_created, studylog_time, user_id) values ("2022-05-23 13:23:13", 10030, 5);
+
+
+insert into diary(diary_content, diary_created ,user_id) values("오늘은 공부가 잘됐다.", "2022-05-20 13:23:13", 1);
+insert into diary(diary_content, diary_created ,user_id) values("오늘은 집중이 잘 안되서 힘들었다. 목표했던 만큼 공부를 했어야 하는데 내일은 더 집중할 수 있겠찌?", "2022-05-23 13:23:13", 1);
 

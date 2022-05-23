@@ -101,7 +101,7 @@ function Home() {
     const [dayTime, setDayTime] = useState([]);
     const [weekTime, setWeekTime] = useState([]);
     const [monthTime, setMonthTime] = useState([]);
-    const [myTime, setMyTime] = useState([]);
+    const [myTime, setMyTime] = useState(0);
     const [recentDate, setRecentDate] = useState();
     let navigate = useNavigate();
 
@@ -179,25 +179,29 @@ function Home() {
             });
     };
 
-    let body = {
-        nickname: nickname
-    };
     const MyTime = async () => {
-        axios.post('/api/mypage/studytime', body)
-            .then(res => {
-                console.log(res.data);
-                setMyTime(res.data);
+        if (!nickname)
+            setMyTime(0);
+        else {
+            axios.post('/api/mypage/studytime', {
+                nickname: nickname
             })
-            .catch(err => {
-                console.log(err);
-            });
-
+                .then(res => {
+                    console.log(res.data);
+                    setMyTime(res.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
     };
+
     useEffect(() => {
         getRecentDiary();
         getTotalTime();
         MyTime();
     }, [nickname]);
+    
     return (
         <Wrapper>
             <TodayStyle container spacing={1}>

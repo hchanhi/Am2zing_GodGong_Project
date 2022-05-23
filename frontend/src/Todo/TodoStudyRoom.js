@@ -164,7 +164,8 @@ function TodoStudy() {
                             ? (hasTodo
                                 ? <DeleteTodoBtn
                                     roomNum={roomNum}
-                                    client={client.current} />
+                                    client={client.current}
+                                    setHasTodo={setHasTodo}/>
                                 : <RoomNumContext.Provider value={roomNum}>
                                         <ClientContext.Provider value={client.current}>
                                             <JoinStudyBtn task={'onlyMake'} />

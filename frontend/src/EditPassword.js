@@ -15,7 +15,7 @@ import {
 
 import './join.css';
 
-const Register = () => {
+const Register = (props) => {
 
     const [passwordState, setPasswordState] = useState('');
     const [passwordError, setPasswordError] = useState('');
@@ -24,15 +24,12 @@ const Register = () => {
     let { key } = useParams();
 
     useEffect( () => {
-        console.log(key);
-        // key값을 아무거나 넣으면 axios를 실행하지도 않는 이슈
         axios.get('/api/user/passwordChange/' + key)
             .then(res => {
                 if (res.data.success) {
                     setEmail(res.data.message);
                     console.log(res.data.message);
                     alert('인증되었습니다. 비밀번호를 변경해주세요.');
-
                 } else {
                     alert('비정상적인 접근입니다.');
                     return navigate('/');
@@ -55,11 +52,13 @@ const Register = () => {
                 email: email,
                 password: password,
             })
-            .then(function (res) {
-                alert('비밀번호가 성공적으로 변경되었습니다. 변경된 비밀번호로 로그인해주세요.')
+            .then(() => {
+                localStorage.clear();
+                props.setUserNickName('');
+                alert('비밀번호가 성공적으로 변경되었습니다. 변경된 비밀번호로 로그인해주세요.');
                 navigate('/login');
             })
-            .catch(function (err) {
+            .catch((err) => {
                 console.log(err);
             });
     };

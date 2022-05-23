@@ -14,9 +14,9 @@ public class TodoController {
 
     private final TodoService todoService;
 
-    @GetMapping("/mypage/todolist")
-    public List<Todo> todoList(String nickname){
-        return todoService.findByUserId(nickname);
+    @GetMapping("/todo/todolist")
+    public List<Todo> todoList(@RequestParam String userNickname){
+        return todoService.findByUserId(userNickname);
     }
 
     @PostMapping("/todo/insert")

@@ -10,7 +10,7 @@ function ExitStudyBtn() {
         <div>
             <Button
                 variant="contained"
-                style={{ backgroundColor: 'red' }}
+                style={{ backgroundColor: '#FD565F' }}
                 onClick={() => setModalOpen(true)}>
                 퇴장
             </Button>

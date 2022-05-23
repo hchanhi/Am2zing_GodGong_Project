@@ -10,7 +10,8 @@ function JoinStudyBtn({task}) {
         <div>
             <Button
                 variant="contained"
-                onClick={() => setModalOpen(true)}>
+                onClick={() => setModalOpen(true)}
+                sx={{ backgroundColor: '#2FBE9F'}}>
                 {
                     task == 'onlyMake'
                         ? 'todo생성'

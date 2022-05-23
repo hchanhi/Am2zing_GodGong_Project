@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { isAuth, getNickName } from './jwtCheck';
 import axios from 'axios';
 
@@ -22,7 +22,6 @@ const DiaryDetail = () => {
     const nickName = getNickName(token);
     const { id } = useParams();
 
-    console.log(id);
 
     let today = new Date();
 
@@ -35,7 +34,6 @@ const DiaryDetail = () => {
         const json = await axios.get('/api/diary/edit/' + id, { params: { diaryId: id } });
         setDiaries(json.data.diaryContent);
         setDate(json.data.diaryCreated);
-        console.log(json.data);
 
 
     };
@@ -61,7 +59,7 @@ const DiaryDetail = () => {
         content: edit
 
     };
-    console.log(edit);
+
 
     function move() {
         navigate("/mypage");
@@ -87,11 +85,6 @@ const DiaryDetail = () => {
             })
             .catch(function (err) {
                 console.log(err);
-
-                console.log(origin);
-
-
-
             });
 
 

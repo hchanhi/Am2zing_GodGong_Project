@@ -111,8 +111,9 @@ function Home() {
     const ranking = {
         0: <table>
             <tbody>
-                {dayTime.map((day) => (
+                {dayTime.map((day,index) => (
                     <tr key={day.nickname}>
+                        <td>{(index)+1}</td>
                         <td>{day.nickname}</td>
                         <td>{test(day.time)}</td>
                     </tr>
@@ -122,8 +123,9 @@ function Home() {
 
         1: <table>
             <tbody>
-                {weekTime.map((day) => (
+                {weekTime.map((day,index) => (
                     <tr key={day.nickname}>
+                        <td>{(index)+1}</td>
                         <td>{day.nickname}</td>
                         <td>{test(day.time)}</td>
                     </tr>
@@ -132,8 +134,9 @@ function Home() {
         </table>,
         2: <table>
             <tbody>
-                {monthTime.map((day) => (
+                {monthTime.map((day,index) => (
                     <tr key={day.nickname}>
+                        <td>{(index)+1}</td>
                         <td>{day.nickname}</td>
                         <td>{test(day.time)}</td>
                     </tr>

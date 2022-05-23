@@ -71,7 +71,7 @@ const Register = (props) => {
                             navigate('/login');
                         }
                     })
-            })
+            }) 
             .catch((err) => {
                 console.log(err);
             });

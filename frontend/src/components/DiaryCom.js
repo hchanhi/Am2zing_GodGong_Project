@@ -1,10 +1,7 @@
 
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
-
-import React, { useState, createContext } from "react";
+import React from "react";
 import {
 
     Box,
@@ -45,10 +42,10 @@ function DiaryCom({ diaryId, diaryContent, diarySentiment, diaryCreated, handleS
                         <div className="flex">
                             <div className="sentiment">
                                 {diarySentiment === 'neutral' ?
-                                    <h5 >감정분석결과  : 기분이 보통입니다. 😐</h5> :
+                                    <h5 >감정분석결과  : 오늘은 쏘쏘~ 내일은 더욱 힘차게! 😙</h5> :
                                     diarySentiment === 'negative' ?
-                                        <h5 >감정분석결과 : 기분이 나쁩니다. 👿</h5>
-                                        : <h5 >감정분석결과 : 기분이 좋습니다. 🥰</h5>
+                                        <h5 >감정분석결과 : 오늘은 조금 힘드셨군요. 내일은 더욱 힘내봐요! 😥</h5>
+                                        : <h5 >감정분석결과 : 오늘은 뿌듯! 내일도 화이팅! 😊</h5>
                                 }
                             </div>
 

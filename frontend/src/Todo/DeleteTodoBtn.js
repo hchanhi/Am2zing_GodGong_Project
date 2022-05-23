@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { getNickName } from '../jwtCheck.js';
 import Swal from 'sweetalert2';
 
-function DeleteTodoBtn({ roomNum, client, setHasTodo }) {
+function DeleteTodoBtn({ roomNum, client}) {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const userNickname = getNickName(token);
@@ -18,10 +18,9 @@ function DeleteTodoBtn({ roomNum, client, setHasTodo }) {
                     result: ''
                 })
             });
-            setHasTodo(false);
             Swal.fire({
                 confirmButtonColor: '#2fbe9f',
-
+                
                 confirmButtonText: '확인',
                 html: '회원님의 todo가 삭제되었습니다!😊', // Alert 제목 
 

@@ -30,28 +30,30 @@ export function connect(client, roomNum, update, setUpdate, setNewMessage, newMe
 }
 
 function subscribe(client, roomNum, update, setUpdate, setNewMessage, newMessage) {
-    client.current.subscribe("/sub/room/" + roomNum,
-        function (chat) {
-            if (chat.body) {
-                if ((JSON.parse(chat.body).message.indexOf('입장했습니다.') != -1)
-                    || (JSON.parse(chat.body).message.indexOf('퇴장했습니다.') != -1))
-                    setUpdate(!update);
-                if ((JSON.parse(chat.body).result == 'done'))
-                    setUpdate(!update);
-                else {
-                    setNewMessage(newMessage => [...newMessage, JSON.parse(chat.body)]);
-                }
-            } else {
-                Swal.fire({
-                    confirmButtonColor: '#2fbe9f',
 
-                    confirmButtonText: '확인',
+    client.current.subscribe("/sub/room/" + roomNum, function (chat) {
 
-                    text: '빈 메세지를 받았습니다!😢', // Alert 내용 
-                });
-            }
+        if (chat.body) {
+
+            let message = JSON.parse(chat.body).message || false
+            let result = JSON.parse(chat.body).result || false
+
+            result == 'done'
+                || (message.indexOf('입장했습니다.') != -1)
+                || (message.indexOf('퇴장했습니다.') != -1)
+                ? setUpdate(!update)
+                : setNewMessage(newMessage => [...newMessage, JSON.parse(chat.body)])
+
+        } else {
+            Swal.fire({
+                confirmButtonColor: '#2fbe9f',
+
+                confirmButtonText: '확인',
+
+                text: '빈 메세지를 받았습니다!😢', // Alert 내용 
+            });
         }
-    );
+    })
 };
 
 export function disConnect(client) {

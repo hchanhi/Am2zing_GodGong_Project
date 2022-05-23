@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { RoomNumContext, SetMemberContext, ClientContext } from './TodoStudyRoom.js';
+import { RoomNumContext, ClientContext } from './TodoStudyRoom.js';
 import { getNickName } from '../jwtCheck.js';
 import Swal from 'sweetalert2';
 
@@ -21,7 +21,6 @@ function CompleteTodo({ task }) {
     const userNickname = getNickName(token);
     let client = useContext(ClientContext);
     let roomNum = useContext(RoomNumContext);
-    let setIsMember = useContext(SetMemberContext);
     const navigate = useNavigate();
 
     function exitStudy() {
@@ -34,7 +33,6 @@ function CompleteTodo({ task }) {
                     message: ''
                 })
             });
-            setIsMember(false);
             Swal.fire({
                 confirmButtonColor: '#2fbe9f',
 

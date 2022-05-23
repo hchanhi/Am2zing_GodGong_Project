@@ -20,7 +20,6 @@ function MakeTodo({ setOpen, task }) {
     const userNickname = getNickName(token);
     let client = useContext(ClientContext);
     let roomNum = useContext(RoomNumContext);
-    let setIsMember = useContext(SetMemberContext);
     let [todos, setTodos] = useState([]);
     let arr = [0, 1, 2, 3, 4];
 
@@ -71,7 +70,6 @@ function MakeTodo({ setOpen, task }) {
                         message: ''
                     })
                 });
-                setIsMember(true);
                 Swal.fire({
                     confirmButtonColor: '#2fbe9f',
 
@@ -93,7 +91,6 @@ function MakeTodo({ setOpen, task }) {
                         result: ''
                     })
                 });
-                setIsMember(true);
                 Swal.fire({
                     confirmButtonColor: '#2fbe9f',
 

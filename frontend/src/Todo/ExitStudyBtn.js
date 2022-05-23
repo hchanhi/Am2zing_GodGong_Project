@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import TodoModal from './TodoModal.js';
 import Button from '@mui/material/Button';
 
-function ExitStudyBtn({task}) {
+function ExitStudyBtn() {
 
     let [modalOpen, setModalOpen] = useState(false);
 
@@ -16,7 +16,7 @@ function ExitStudyBtn({task}) {
             </Button>
             {
                 modalOpen && <TodoModal
-                    task={task}
+                    task='exit'
                     open={modalOpen}
                     setOpen={setModalOpen}/>
             }

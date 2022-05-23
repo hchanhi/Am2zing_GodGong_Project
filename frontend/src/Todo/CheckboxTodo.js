@@ -20,7 +20,7 @@ let FireNav = styled(List)({
 
 function CheckboxTodo({ nickname, myNickname, roomNum, client, todos, checkNum }) {
 
-    let [checkNumber, setCheckedNumber] = useState(0);
+    let [checkNumber, setCheckedNumber] = useState(checkNum);
     let [modalOpen, setModalOpen] = useState(false);
 
     let handleToggle = (todo) => () => {

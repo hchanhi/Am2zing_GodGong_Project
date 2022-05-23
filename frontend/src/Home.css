@@ -28,6 +28,16 @@
     font-weight: 600;
 }
 
+.rankingnum{
+    font-size:14pt;
+    font-weight: 600;
+color:rgb(0, 135, 135);
+}
+
 .blank{
+    width:5px;
+}
+
+.blank2{
     width:10px;
 }

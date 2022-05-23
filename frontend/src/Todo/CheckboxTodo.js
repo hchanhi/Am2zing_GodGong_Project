@@ -25,15 +25,8 @@ function CheckboxTodo({ nickname, myNickname, roomNum, client, todos, checkNum }
 
     let handleToggle = (todo) => () => {
 
-
         let currentIndex = checked.indexOf(todo.todoContent);
         let newChecked = [...checked];
-
-        if (currentIndex === -1) {
-            newChecked.push(todo.todoContent);
-        } else {
-            newChecked.splice(currentIndex, 1);
-        }
 
         try {
             console.log(todo);
@@ -45,10 +38,18 @@ function CheckboxTodo({ nickname, myNickname, roomNum, client, todos, checkNum }
             console.log(err.message);
         }
 
+        if (currentIndex === -1) {
+            newChecked.push(todo.todoContent);
+        } else {
+            newChecked.splice(currentIndex, 1);
+        }
+        console.log(newChecked);
+       
         setChecked(newChecked);
+        console.log(newChecked.length);
+        console.log(todos.length);
 
         if (newChecked.length == todos.length) {
-            setModalOpen(true);
             try {
                 client.publish({
                     destination: '/pub/chat/message',
@@ -58,6 +59,7 @@ function CheckboxTodo({ nickname, myNickname, roomNum, client, todos, checkNum }
                         message: myNickname + '님이 todo를 완료하셨습니다🎉'
                     })
                 });
+                setModalOpen(true);
             } catch (err) {
                 console.log(err.message);
             }

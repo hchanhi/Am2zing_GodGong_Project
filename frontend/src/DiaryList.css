@@ -72,34 +72,7 @@ textarea {
     margin-left: 10px;
 }
 
-.DiaryButton {
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
 
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
-
-    font-size: 18px;
-    white-space: nowrap;
-}
-
-.DiaryButton_default {
-    background-color: #ececec;
-    color: black;
-}
-
-.DiaryButton_positive {
-    background-color: #2fbe9f;
-    color: white;
-}
-
-.DiaryButton_negative {
-    background-color: #fd565f;
-    color: white;
-}
 
 .content {
 
@@ -196,14 +169,7 @@ textarea {
 
 }
 
-.success {
-    display: none;
 
-}
-
-.error {
-    color: #ff2727;
-}
 
 .flex {
     margin: 0 !important;

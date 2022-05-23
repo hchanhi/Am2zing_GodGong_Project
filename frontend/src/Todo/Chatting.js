@@ -1,19 +1,20 @@
 import React, { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { getNickName } from '../jwtCheck.js';
-import { RoomNumContext, NewMessageContext, ClientContext } from './TodoStudyRoom.js'
+import { RoomNumContext, NewMessageContext, ClientContext } from './TodoStudyRoom.js';
+import Swal from 'sweetalert2';
 
 let Receive = styled.div`
     height: 75%;
     overflow: auto;
     width: 100%;
     padding: 1rem;
-`
+`;
 let Send = styled.div`
     height: 20%;
     padding: 0.7rem;
     border-top: 1px solid lightgray;
-`
+`;
 let Text = styled.textarea`
     width: 100%;
     height: 80%;
@@ -24,13 +25,13 @@ let Text = styled.textarea`
     outline: none;
     font-family: 'Pretendard-Medium';
     font-size: 11pt;
-`
+`;
 let NewText = styled.div`
     background-color: #f0f0f0;
     padding: 5px;
     border-radius: 5px;
     display: inline-block;
-`
+`;
 
 function Chatting() {
 
@@ -48,13 +49,19 @@ function Chatting() {
                 {
                     behavior: 'smooth',
                     block: 'end',
-                })
+                });
         }
     }, [newMessage]);
 
     function sendMessage(myMessage) {
         if (myMessage.length == 1)
-            return alert('글자를 입력해주세요!');
+            return Swal.fire({
+                confirmButtonColor: '#2fbe9f',
+
+                confirmButtonText: '확인',
+
+                text: '글자를 입력해주세요!😊', // Alert 내용 
+            });
         try {
             client.publish({
                 destination: '/pub/chat/message',
@@ -64,14 +71,14 @@ function Chatting() {
                     message: myMessage
                 })
             });
-        } catch(err) {
+        } catch (err) {
             console.log(err.message);
         }
     }
 
     return (
         <div style={{ height: '100vh' }}>
-            <h2 style={{ height: '5%', padding: '10px 10px 12px 10px'}}>📢Chatting</h2>
+            <h2 style={{ height: '5%', padding: '10px 10px 12px 10px' }}>📢Chatting</h2>
             <Receive>
                 {
                     newMessage && newMessage.map((chat, index) => (

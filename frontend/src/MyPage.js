@@ -11,6 +11,7 @@ import ListAltIcon from '@mui/icons-material/ListAlt';
 import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
 import PersonSearchRoundedIcon from '@mui/icons-material/PersonSearchRounded';
 import MyTodos from "./MyTodos.js";
+import Swal from 'sweetalert2';
 
 function MyPage(props) {
 
@@ -23,8 +24,15 @@ function MyPage(props) {
     };
 
     if (!isAuth(token)) {
-        alert('로그인 후 이용하실 수 있어요😥');
-        return navigate('/login');
+
+        Swal.fire({
+            confirmButtonColor: '#2fbe9f',
+
+            confirmButtonText: '확인',
+            text: '로그인 후 이용하실 수 있어요😥', // Alert 제목 
+
+        });
+        navigate('/login');
     }
 
     return (

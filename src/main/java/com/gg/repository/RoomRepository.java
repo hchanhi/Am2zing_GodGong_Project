@@ -11,4 +11,6 @@ import java.util.List;
 public interface RoomRepository extends JpaRepository<Room, Long> {
     Room findRoomByRoomNumber(String roomNumber);
     List<Room> findAllByRoomValidTrue();
+
+    void deleteAllByUserId(Long Id);
 }

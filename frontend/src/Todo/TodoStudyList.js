@@ -61,6 +61,7 @@ function TodoStudyList(props) {
                     task='createStudy'
                     open={modalOpen}
                     setOpen={setModalOpen}
+                    update={update}
                     setUpdate={setUpdate} />
             }
             <Grid container

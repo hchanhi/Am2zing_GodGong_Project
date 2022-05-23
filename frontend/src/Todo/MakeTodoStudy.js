@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 let Wrapper = styled.div`
    
 `;
-function MakeTodoStudy({ setOpen, setUpdate }) {
+function MakeTodoStudy({ setOpen, update, setUpdate }) {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const userNickname = getNickName(token);
@@ -39,7 +39,7 @@ function MakeTodoStudy({ setOpen, setUpdate }) {
 
                 console.log(res.data);
                 setOpen(false);
-                setUpdate(true);
+                setUpdate(!update);
             })
             .catch((error) => {
                 console.log(error);

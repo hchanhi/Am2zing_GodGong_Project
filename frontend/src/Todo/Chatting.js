@@ -54,14 +54,7 @@ function Chatting() {
     }, [newMessage]);
 
     function sendMessage(myMessage) {
-        if (myMessage.length == 1)
-            return Swal.fire({
-                confirmButtonColor: '#2fbe9f',
-
-                confirmButtonText: '확인',
-
-                text: '글자를 입력해주세요!😊', // Alert 내용 
-            });
+        
         try {
             client.publish({
                 destination: '/pub/chat/message',

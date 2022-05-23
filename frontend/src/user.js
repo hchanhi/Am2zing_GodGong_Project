@@ -267,7 +267,7 @@ const User = (props) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 axios
-                    .post('/api/user/' + userId + '/delete', delBody)
+                    .post('/api/user/delete', delBody)
                     .then(function (response) {
                         console.log(response.status, '성공');
                         Swal.fire({

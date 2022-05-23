@@ -20,4 +20,6 @@ public interface RoomlogRepository extends JpaRepository<Roomlog, Long> {
 
     @Transactional
     void deleteByUser(User user);
+
+    void deleteAllByUserId(Long Id);
 }

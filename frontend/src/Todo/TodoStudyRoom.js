@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from 'axios';
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -6,8 +6,8 @@ import CheckboxTodo from "./CheckboxTodo.js";
 import ChattingBox from "./ChattingBox.js";
 import JoinStudyBtn from "./JoinStudyBtn.js";
 import ExitStudyBtn from "./ExitStudyBtn.js";
-import DeleteTodoBtn from "./DeleteTodoBtn.js"
-import { isAuth, getNickName } from '../jwtCheck.js';
+import DeleteTodoBtn from "./DeleteTodoBtn.js";
+import { getNickName } from '../jwtCheck.js';
 import { Grid, Chip } from '@mui/material/';
 import { connect, disConnect } from './chattingConnect.js';
 
@@ -38,10 +38,9 @@ export let TaskContext = React.createContext();
 
 function TodoStudy() {
 
-    let today = new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString().padStart(2, '0') + '-' + new Date().getDate().toString().padStart(2, '0')
+    let today = new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString().padStart(2, '0') + '-' + new Date().getDate().toString().padStart(2, '0');
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const userNickname = getNickName(token);
-    const navigate = useNavigate();
     let { roomNum } = useParams();
     let [room, setRoom] = useState([]);
     let [todos, setTodos] = useState([]);
@@ -49,7 +48,7 @@ function TodoStudy() {
     let [members, setMembers] = useState([]);
     let [isMember, setIsMember] = useState(false);
     let [hasTodo, setHasTodo] = useState(false);
-   
+
     let [update, setUpdate] = useState(false);
     let [newMessage, setNewMessage] = useState([]);
     let [badgeNum, setBadgeNum] = useState(-1);
@@ -62,19 +61,16 @@ function TodoStudy() {
             })
             .catch(error => {
                 console.log(error);
-            })
-    }, []);
+            });
+    }, [update]);
 
     useEffect(() => {
-        if (!isAuth(token)) {
-            alert('로그인 후 이용하실 수 있어요😥');
-            return navigate('/login');
-        };
 
         axios.get('/api/chat/room/check', {
             params: {
                 userNickname: userNickname
-            } })
+            }
+        })
             .then(res => {
                 console.log(res.data);
                 if (!res.data)
@@ -85,13 +81,14 @@ function TodoStudy() {
             })
             .catch(err => {
                 console.log(err);
-            })
-        
+            });
+
         // message가 입장, 퇴장, done일때 리렌더링되야함
         axios.get('/api/todo/room', {
             params: {
                 roomNumber: roomNum
-            } })
+            }
+        })
             .then(res => {
                 console.log(res.data);
 
@@ -99,7 +96,7 @@ function TodoStudy() {
                 let num = [];
                 res.data.map(mem => {
                     num.push(mem.user.nickname);
-                })
+                });
                 num = [...new Set(num)];
                 setMembersNum(num.length);
 
@@ -111,7 +108,7 @@ function TodoStudy() {
                 let todayMember = [];
                 todayTodos.map(todo => {
                     todayMember.push(todo.user.nickname);
-                })
+                });
                 todayMember = [...new Set(todayMember)];
                 console.log(todayMember);
                 setMembers(todayMember);
@@ -122,26 +119,26 @@ function TodoStudy() {
             })
             .catch(err => {
                 console.log(err);
-            })
+            });
 
         // axios /room/enter 몇명들어가있는지 roomlog > return : 인원수세는거 (후순위)
         connect(client, roomNum, update, setUpdate, setNewMessage, newMessage);
         return () => disConnect(client);
-    }, [isMember, update]);
+    }, [update]);
 
     useEffect(() => {
         setBadgeNum(++badgeNum);
-    }, [newMessage])
-    
+    }, [newMessage]);
+
     return (
         <Wrapper>
             <Grid alignItems="center" justifyContent="space-between" container spacing={3}>
-                
+
                 <Grid item xs={11}>
                     <Chip label={room.roomCategory} />
                     <b style={{ color: 'crimson', fontSize: '17pt', fontWeight: 'bold' }}>{membersNum}명</b>
                     <br />
-                    <h1 style={{marginTop: '1rem'}}>{room.roomTitle}
+                    <h1 style={{ marginTop: '1rem' }}>{room.roomTitle}
                         <b>{room.roomCreated
                             && (room.roomCreated.substr(0, 4) + '.'
                                 + room.roomCreated.substr(5, 2) + '.'
@@ -168,13 +165,11 @@ function TodoStudy() {
                                 ? <DeleteTodoBtn
                                     roomNum={roomNum}
                                     client={client.current}
-                                    setHasTodo={setHasTodo} />
+                                    setHasTodo={setHasTodo}/>
                                 : <RoomNumContext.Provider value={roomNum}>
-                                    <SetMemberContext.Provider value={setIsMember}>
                                         <ClientContext.Provider value={client.current}>
                                             <JoinStudyBtn task={'onlyMake'} />
                                         </ClientContext.Provider>
-                                    </SetMemberContext.Provider>
                                 </RoomNumContext.Provider>)
                             : null
                     }
@@ -183,49 +178,45 @@ function TodoStudy() {
                     {
                         isMember
                             ? <RoomNumContext.Provider value={roomNum}>
-                                <SetMemberContext.Provider value={setIsMember}>
                                     <ClientContext.Provider value={client.current}>
                                         <ExitStudyBtn task={'exit'} />
                                     </ClientContext.Provider>
-                                </SetMemberContext.Provider>
                             </RoomNumContext.Provider>
                             : <RoomNumContext.Provider value={roomNum}>
-                                <SetMemberContext.Provider value={setIsMember}>
                                     <ClientContext.Provider value={client.current}>
                                         <JoinStudyBtn task={'join'} />
                                     </ClientContext.Provider>
-                                </SetMemberContext.Provider>
                             </RoomNumContext.Provider>
                     }
                 </Grid>
-                
+
                 <Grid container item xs={12}>
                     {
                         todos.length == 0
-                            ? <div style={{ textAlign: 'center', color: 'gray', fontSize: '20pt', margin: 'auto', padding: '7vw'}}>
+                            ? <div style={{ textAlign: 'center', color: 'gray', fontSize: '20pt', margin: 'auto', padding: '7vw' }}>
                                 오늘 스터디원들의 todo가 없습니다.<br />
                                 오늘의 첫 todo를 만들어보세요!
-                            </div > 
+                            </div >
                             : null
                     }
                     {
                         members && members.map(member => {
                             return <Grid item sm={6} md={4} lg={3}>
                                 <ClientContext.Provider value={client.current}>
-                                <CheckboxTodo
-                                    nickname={member}
-                                    myNickname={userNickname}
-                                    roomNum={roomNum}
-                                    client={client.current}
-                                    todos={todos.filter((todo, i) => todo.user.nickname == member)}
-                                    checkNum={todos.filter((todo, i) => todo.user.nickname == member)
-                                        .filter((item, i) => item.todoCheck == true).length} />
+                                    <CheckboxTodo
+                                        nickname={member}
+                                        myNickname={userNickname}
+                                        roomNum={roomNum}
+                                        client={client.current}
+                                        todos={todos.filter((todo, i) => todo.user.nickname == member)}
+                                        checkNum={todos.filter((todo, i) => todo.user.nickname == member)
+                                            .filter((item, i) => item.todoCheck == true).length} />
                                 </ClientContext.Provider>
-                            </Grid>
+                            </Grid>;
                         })
                     }
                 </Grid>
-              
+
             </Grid>
         </Wrapper>
     );

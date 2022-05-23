@@ -52,7 +52,7 @@ function App() {
                 <Route path="/diary" element={<Diary />} />
                 <Route path="/todoStudy" element={<TodoStudyList />} />
                 <Route path="/todoStudy/:roomNum" element={<TodoStudyRoom />} />
-                <Route path="/user/passwordChange/:key" element={<EditPassword />} />
+                <Route path="/user/passwordChange/:key" element={<EditPassword setUserNickName={setUserNickName}/>} />
             </Routes>
 
             <Footer />

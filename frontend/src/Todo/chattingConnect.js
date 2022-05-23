@@ -35,8 +35,8 @@ function subscribe(client, roomNum, update, setUpdate, setNewMessage, newMessage
 
         if (chat.body) {
 
-            let message = JSON.parse(chat.body).message || false
-            let result = JSON.parse(chat.body).result || false
+            let message = JSON.parse(chat.body).message || ''
+            let result = JSON.parse(chat.body).result || ''
 
             console.log(message);
             console.log(result);

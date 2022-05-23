@@ -9,7 +9,7 @@ import Pagination from "./Pagination";
 import { isAuth, getNickName } from './jwtCheck';
 import {
 
-    Box,
+
     Container,
 
 
@@ -51,7 +51,7 @@ function DiaryList(diary) {
             });
             navigate('/login');
         }
-    }, [state == true]);
+    }, [state === true]);
 
 
     const handleSubmit = (diaryId) => {

@@ -6,7 +6,6 @@ import styled from "styled-components";
 import TodoStudyList from "./Todo/TodoStudyList.js";
 import axios from 'axios';
 import { getNickName } from './jwtCheck';
-import DiaryCom from "./components/DiaryCom";
 import './Home.css';
 
 let Wrapper = styled.div`
@@ -118,9 +117,11 @@ function Home() {
     const ranking = {
         0: <table>
             <tbody>
-                {dayTime.map((day,index) => (
+                {dayTime.map((day, index) => (
                     <tr key={day.nickname}>
+
                         <td className="rankingnum">{(index)+1==1 ? '🥇':(index)+1==2 ? '🥈': (index)+1==3 ? '🥉' : (index)+1+'위'}</td>
+                        <td className="rankingnick">{day.nickname}</td>
                         <td className="blank"></td>
                         <td className="rankingnick">{day.nickname}</td>
                         <td className="blank2"></td>
@@ -132,9 +133,11 @@ function Home() {
 
         1: <table>
             <tbody>
-                {weekTime.map((day,index) => (
+                {weekTime.map((day, index) => (
                     <tr key={day.nickname}>
-                        <td className="rankingnum">{(index)+1==1 ? '🥇':(index)+1==2 ? '🥈': (index)+1==3 ? '🥉' : (index)+1+'위'}</td>
+
+                        <td className="rankingnum">{(index)+1==1 ? '🥇':(index)+1==2 ? '🥈': (index)+1==3 ? '🥉' : (index)+1+'위'}</td>       
+                        <td className="rankingnick">{day.nickname}</td>
                         <td className="blank"></td>
                         <td className="rankingnick">{day.nickname}</td>
                         <td className="blank2"></td>
@@ -145,9 +148,11 @@ function Home() {
         </table>,
         2: <table>
             <tbody>
-                {monthTime.map((day,index) => (
+                {monthTime.map((day, index) => (
                     <tr key={day.nickname}>
+
                         <td className="rankingnum">{(index)+1==1 ? '🥇':(index)+1==2 ? '🥈': (index)+1==3 ? '🥉' : (index)+1+'위'}</td>
+                        <td className="rankingnick">{day.nickname}</td>
                         <td className="blank"></td>
                         <td className="rankingnick">{day.nickname}</td>
                         <td className="blank2"></td>
@@ -216,7 +221,7 @@ function Home() {
         getTotalTime();
         MyTime();
     }, [nickname]);
-    
+
     return (
         <Wrapper>
             <TodayStyle container spacing={1}>
@@ -243,10 +248,10 @@ function Home() {
                         {recentDiary.diarySentiment == null ?
                             <h5></h5> :
                             recentDiary.diarySentiment === 'neutral' ?
-                                <h5>감정분석결과 : 기분이 보통입니다. 😐</h5> :
+                                <h5>감정분석결과 : 오늘은 쏘쏘~ 내일은 더욱 힘차게! 😙</h5> :
                                 recentDiary.diarySentiment === 'negative' ?
-                                    <h5>감정분석결과 : 기분이 나쁩니다. 👿</h5>
-                                    : <h5>감정분석결과 : 기분이 좋습니다. 🥰</h5>
+                                    <h5>감정분석결과 : 오늘은 조금 힘드셨군요. 내일은 더욱 힘내봐요! 😥</h5>
+                                    : <h5>감정분석결과 : 오늘은 뿌듯! 내일도 화이팅! 😊</h5>
                         }
                     </div>
 

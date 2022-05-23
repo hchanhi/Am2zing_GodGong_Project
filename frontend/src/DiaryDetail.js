@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { isAuth, getNickName } from './jwtCheck';
+import { isAuth } from './jwtCheck';
 import axios from 'axios';
 
 
@@ -19,11 +19,7 @@ import Swal from 'sweetalert2';
 const DiaryDetail = () => {
 
     const token = JSON.parse(localStorage.getItem('accessToken'));
-    const nickName = getNickName(token);
     const { id } = useParams();
-
-
-    let today = new Date();
 
 
     const [diaries, setDiaries] = useState();

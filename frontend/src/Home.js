@@ -120,9 +120,11 @@ function Home() {
                 {dayTime.map((day, index) => (
                     <tr key={day.nickname}>
 
-                        <td>{(index) + 1 == 1 ? '🥇' : (index) + 1 == 2 ? '🥈' : (index) + 1 == 3 ? '🥉' : (index) + 1 + '위'}</td>
+                        <td className="rankingnum">{(index)+1==1 ? '🥇':(index)+1==2 ? '🥈': (index)+1==3 ? '🥉' : (index)+1+'위'}</td>
                         <td className="rankingnick">{day.nickname}</td>
                         <td className="blank"></td>
+                        <td className="rankingnick">{day.nickname}</td>
+                        <td className="blank2"></td>
                         <td>{test(day.time)}</td>
                     </tr>
                 ))}
@@ -134,9 +136,11 @@ function Home() {
                 {weekTime.map((day, index) => (
                     <tr key={day.nickname}>
 
-                        <td>{(index) + 1 == 1 ? '🥇' : (index) + 1 == 2 ? '🥈' : (index) + 1 == 3 ? '🥉' : (index) + 1 + '위'}</td>
+                        <td className="rankingnum">{(index)+1==1 ? '🥇':(index)+1==2 ? '🥈': (index)+1==3 ? '🥉' : (index)+1+'위'}</td>       
                         <td className="rankingnick">{day.nickname}</td>
                         <td className="blank"></td>
+                        <td className="rankingnick">{day.nickname}</td>
+                        <td className="blank2"></td>
                         <td>{test(day.time)}</td>
                     </tr>
                 ))}
@@ -147,9 +151,11 @@ function Home() {
                 {monthTime.map((day, index) => (
                     <tr key={day.nickname}>
 
-                        <td>{(index) + 1 == 1 ? '🥇' : (index) + 1 == 2 ? '🥈' : (index) + 1 == 3 ? '🥉' : (index) + 1 + '위'}</td>
+                        <td className="rankingnum">{(index)+1==1 ? '🥇':(index)+1==2 ? '🥈': (index)+1==3 ? '🥉' : (index)+1+'위'}</td>
                         <td className="rankingnick">{day.nickname}</td>
                         <td className="blank"></td>
+                        <td className="rankingnick">{day.nickname}</td>
+                        <td className="blank2"></td>
                         <td>{test(day.time)}</td>
                     </tr>
                 ))}

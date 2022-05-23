@@ -22,3 +22,12 @@
     white-space: pre-line !important;
     vertical-align: top;
 }
+
+.rankingnick{
+    font-size:18pt;
+    font-weight: 600;
+}
+
+.blank{
+    width:10px;
+}

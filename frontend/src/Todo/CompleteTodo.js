@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { RoomNumContext, SetMemberContext, ClientContext } from './TodoStudyRoom.js';
+import { RoomNumContext, ClientContext } from './TodoStudyRoom.js';
 import { getNickName } from '../jwtCheck.js';
 
 let Wrapper = styled.div`
@@ -20,7 +20,6 @@ function CompleteTodo({task}) {
     const userNickname = getNickName(token);
     let client = useContext(ClientContext);
     let roomNum = useContext(RoomNumContext);
-    let setIsMember = useContext(SetMemberContext);
     const navigate = useNavigate();
    
     function exitStudy() {
@@ -33,7 +32,6 @@ function CompleteTodo({task}) {
                     message: ''
                 })
             });
-            setIsMember(false);
             alert('퇴장하셨습니다. 다음에 또 같이 공부해요!')
             navigate("/");
         } catch (err) {

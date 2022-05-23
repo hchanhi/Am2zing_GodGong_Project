@@ -167,14 +167,11 @@ function TodoStudy() {
                             ? (hasTodo
                                 ? <DeleteTodoBtn
                                     roomNum={roomNum}
-                                    client={client.current}
-                                    setHasTodo={setHasTodo} />
+                                    client={client.current} />
                                 : <RoomNumContext.Provider value={roomNum}>
-                                    <SetMemberContext.Provider value={setIsMember}>
                                         <ClientContext.Provider value={client.current}>
                                             <JoinStudyBtn task={'onlyMake'} />
                                         </ClientContext.Provider>
-                                    </SetMemberContext.Provider>
                                 </RoomNumContext.Provider>)
                             : null
                     }
@@ -183,18 +180,14 @@ function TodoStudy() {
                     {
                         isMember
                             ? <RoomNumContext.Provider value={roomNum}>
-                                <SetMemberContext.Provider value={setIsMember}>
                                     <ClientContext.Provider value={client.current}>
                                         <ExitStudyBtn task={'exit'} />
                                     </ClientContext.Provider>
-                                </SetMemberContext.Provider>
                             </RoomNumContext.Provider>
                             : <RoomNumContext.Provider value={roomNum}>
-                                <SetMemberContext.Provider value={setIsMember}>
                                     <ClientContext.Provider value={client.current}>
                                         <JoinStudyBtn task={'join'} />
                                     </ClientContext.Provider>
-                                </SetMemberContext.Provider>
                             </RoomNumContext.Provider>
                     }
                 </Grid>

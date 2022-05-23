@@ -19,7 +19,6 @@ function MakeTodo({ setOpen, task }) {
     const userNickname = getNickName(token);
     let client = useContext(ClientContext);
     let roomNum = useContext(RoomNumContext);
-    let setIsMember = useContext(SetMemberContext);
     let [todos, setTodos] = useState([]);
     let arr = [0, 1, 2, 3, 4];
     
@@ -63,7 +62,6 @@ function MakeTodo({ setOpen, task }) {
                         message: ''
                     })
                 });
-                setIsMember(true);
                 alert('스터디원이 되셨어요. 같이 열심히 Todo해요!')
             } catch (err) {
                 console.log(err.message);
@@ -78,7 +76,6 @@ function MakeTodo({ setOpen, task }) {
                         result: ''
                     })
                 });
-                setIsMember(true);
                 alert('오늘의 todo를 생성했습니다. 같이 열심히 Todo해요!')
             } catch (err) {
                 console.log(err.message);

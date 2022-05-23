@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import axios from "axios";
-import { RoomNumContext, SetMemberContext, ClientContext } from './TodoStudyRoom.js';
+import { RoomNumContext, ClientContext } from './TodoStudyRoom.js';
 import { getNickName } from '../jwtCheck.js';
 import Swal from 'sweetalert2';
 

@@ -10,7 +10,7 @@ import TimelapseIcon from '@mui/icons-material/Timelapse';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
 import PersonSearchRoundedIcon from '@mui/icons-material/PersonSearchRounded';
-import MyTodos from "./MyTodos.js";
+import MyTodo from "./MyTodo.js";
 import Swal from 'sweetalert2';
 
 function MyPage(props) {
@@ -47,7 +47,7 @@ function MyPage(props) {
             {menu == 0
                 ? <TimeCalendar />
                 : menu == 1
-                    ? <MyTodos />
+                    ? <MyTodo />
                     : menu == 2
                         ? <DiaryList />
                         : <User setUserNickName={props.setUserNickName} />}

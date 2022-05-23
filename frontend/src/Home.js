@@ -196,7 +196,7 @@ function Home() {
         getRecentDiary();
         getTotalTime();
         MyTime();
-    }, []);
+    }, [nickname]);
     return (
         <Wrapper>
             <TodayStyle container spacing={1}>

@@ -121,7 +121,6 @@ function Home() {
                     <tr key={day.nickname}>
 
                         <td className="rankingnum">{(index)+1==1 ? '🥇':(index)+1==2 ? '🥈': (index)+1==3 ? '🥉' : (index)+1+'위'}</td>
-                        <td className="rankingnick">{day.nickname}</td>
                         <td className="blank"></td>
                         <td className="rankingnick">{day.nickname}</td>
                         <td className="blank2"></td>
@@ -137,7 +136,6 @@ function Home() {
                     <tr key={day.nickname}>
 
                         <td className="rankingnum">{(index)+1==1 ? '🥇':(index)+1==2 ? '🥈': (index)+1==3 ? '🥉' : (index)+1+'위'}</td>       
-                        <td className="rankingnick">{day.nickname}</td>
                         <td className="blank"></td>
                         <td className="rankingnick">{day.nickname}</td>
                         <td className="blank2"></td>
@@ -152,7 +150,6 @@ function Home() {
                     <tr key={day.nickname}>
 
                         <td className="rankingnum">{(index)+1==1 ? '🥇':(index)+1==2 ? '🥈': (index)+1==3 ? '🥉' : (index)+1+'위'}</td>
-                        <td className="rankingnick">{day.nickname}</td>
                         <td className="blank"></td>
                         <td className="rankingnick">{day.nickname}</td>
                         <td className="blank2"></td>

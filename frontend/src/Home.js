@@ -79,7 +79,9 @@ let StudyDiary = styled(Grid)`
     }
 `;
 let RankingText = styled(Grid)`
+    height:300px;
     text-align: left;
+
     div {
         margin: 3vh 0;
     }
@@ -88,6 +90,10 @@ let RankingText = styled(Grid)`
         font-weight:700;
         font-size:28px;
         margin-right:20px;
+    }
+
+    .rankingdata{
+        font-size:20px;
     }
 `;
 
@@ -114,8 +120,9 @@ function Home() {
             <tbody>
                 {dayTime.map((day) => (
                     <tr key={day.nickname}>
-                        닉네임:<td>{day.nickname}</td>
-                        공부시간:<td>{test(day.time)}</td>
+                        <td className="rankingnick">{day.nickname}</td>
+                        <td className="blank"></td>
+                        <td>{test(day.time)}</td>
                     </tr>
                 ))}
             </tbody>
@@ -125,7 +132,8 @@ function Home() {
             <tbody>
                 {weekTime.map((day) => (
                     <tr key={day.nickname}>
-                        <td>{day.nickname}</td>
+                        <td className="rankingnick">{day.nickname}</td>
+                        <td className="blank"></td>
                         <td>{test(day.time)}</td>
                     </tr>
                 ))}
@@ -135,7 +143,8 @@ function Home() {
             <tbody>
                 {monthTime.map((day) => (
                     <tr key={day.nickname}>
-                        <td>{day.nickname}</td>
+                        <td className="rankingnick">{day.nickname}</td>
+                        <td className="blank"></td>
                         <td>{test(day.time)}</td>
                     </tr>
                 ))}
@@ -240,7 +249,7 @@ function Home() {
                     <span className={`rankingbtn ${clicked === 0 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(0)}>오늘</span>
                     <span className={`rankingbtn ${clicked === 1 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(1)}>이번주</span>
                     <span className={`rankingbtn ${clicked === 2 ? 'selected' : ''}`} state={clicked} onClick={() => clickhandler(2)}>이번달</span>
-                    <div>{ranking[clicked]}</div>
+                    <div className="rankingdata">{ranking[clicked]}</div>
 
                 </RankingText>
             </Grid>

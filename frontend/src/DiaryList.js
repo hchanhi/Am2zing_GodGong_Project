@@ -35,10 +35,7 @@ function DiaryList(diary) {
     const getDiaries = async () => {
         const json = await axios.get('/api/diary/mydiary', { params: { nickname: nickname } });
         setDiaries(json.data);
-        console.log(json.data);
-        console.log(nickname);
         setLoading(false);
-        console.log(diaries.diaryContent);
         setsState(false);
 
     };
@@ -62,7 +59,6 @@ function DiaryList(diary) {
         axios
             .get('/api/diary/delete/' + diaryId, { params: { diaryId: diaryId } })
             .then(function (response) {
-                console.log(response.status, '성공');
                 Swal.fire({
                     confirmButtonColor: '#2fbe9f',
 
@@ -85,9 +81,6 @@ function DiaryList(diary) {
             .catch(function (err) {
                 console.log(err);
                 console.log(err.response.data.message);
-
-
-
             });
 
     };

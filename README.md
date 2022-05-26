@@ -5,11 +5,11 @@
 ## 팀 소개
 
 - 한찬희 (팀리더) <img src="https://img.shields.io/badge/backend-3766AB?style=flat-square&logo=Java&logoColor=white"/></a>&nbsp 
-- 이민혁
-- 이유진
-- 유하영
-- 신주희
-- 구주애
+- 이민혁 <img src="https://img.shields.io/badge/backend-3766AB?style=flat-square&logo=Java&logoColor=white"/></a>&nbsp 
+- 유하영 <img src="https://img.shields.io/badge/backend-3766AB?style=flat-square&logo=Java&logoColor=white"/></a>&nbsp 
+- 신주희 <img src="https://img.shields.io/badge/frontend-3766AB?style=flat-square&logo=&logoColor=white"/></a>&nbsp 
+- 구주애 <img src="https://img.shields.io/badge/frontend-3766AB?style=flat-square&logo=&logoColor=white"/></a>&nbsp 
+- 이유진 <img src="https://img.shields.io/badge/frontend-3766AB?style=flat-square&logo=&logoColor=white"/></a>&nbsp 
 
 # SpringBoot_React_Web_Project
 

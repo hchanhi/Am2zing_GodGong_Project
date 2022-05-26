@@ -31,7 +31,7 @@ Spring Boot의 MVC패턴과 React를 기반으로 만든 스터디 공유 플랫
 <img src="https://img.shields.io/badge/Hibernate-59666C?style=flat-square&logo=Hibernate&logoColor=white"/></a>
 <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=CSS3&logoColor=white"/></a>
 <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat-square&logo=Bootstrap&logoColor=white"/></a>
-<img src="https://img.shields.io/badge/Styled-components-#DB7093?style=flat-square&logo=tyledcomponents&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/Styled-components-DB7093?style=flat-square&logo=tyledcomponents&logoColor=white"/></a>
 
 # 사용 툴
 

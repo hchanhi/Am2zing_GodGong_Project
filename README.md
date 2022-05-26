@@ -21,10 +21,11 @@ Spring Boot의 MVC패턴과 React를 기반으로 만든 스터디 공유 플랫
  <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat-square&logo=SpringBoot&logoColor=white"/></a>
 - <img src="https://img.shields.io/badge/SpringSecurity-6DB33F?style=flat-square&logo=SpringBoot&logoColor=white"/></a>
 - <img src="https://img.shields.io/badge/JWT-6DB33F?style=flat-square&logo=JSONWebTokens&logoColor=white"/></a>
-- Spring mail
-- MySQL
-- React
-- axios
+- <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white"/></a>
+- <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/></a>
+- <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white"/></a>
+- <img src="https://img.shields.io/badge/Naver_Sentiment_API-03C75A?style=flat-square&logo=Naver&logoColor=white"/></a>
+- <img src="https://img.shields.io/badge/Teachable_machine-#4285F4?style=flat-square&logo=Google&logoColor=white"/></a>
 - Naver sentiment Api
 - Teachable machine
 

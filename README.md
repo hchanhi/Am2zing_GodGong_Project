@@ -18,9 +18,9 @@ Spring Boot의 MVC패턴과 React를 기반으로 만든 스터디 공유 플랫
 
 # 사용기술
 
-- Spring Boot 2.5.2
-- Spring Security
-- JWT
+ <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat-square&logo=SpringBoot&logoColor=white"/></a>
+- <img src="https://img.shields.io/badge/SpringSecurity-6DB33F?style=flat-square&logo=SpringBoot&logoColor=white"/></a>
+- <img src="https://img.shields.io/badge/JWT-6DB33F?style=flat-square&logo=JSONWebTokens&logoColor=white"/></a>
 - Spring mail
 - MySQL
 - React

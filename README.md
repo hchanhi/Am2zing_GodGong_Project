@@ -4,7 +4,7 @@
 
 ## 팀 소개
 
-- 한찬희 (팀리더) <img src="https://img.shields.io/badge/backend-3766AB?style=flat-square&logo=Python&logoColor=white"/></a>&nbsp 
+- 한찬희 (팀리더) <img src="https://img.shields.io/badge/backend-3766AB?style=flat-square&logo=Java&logoColor=white"/></a>&nbsp 
 - 이민혁
 - 이유진
 - 유하영

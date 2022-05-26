@@ -4,7 +4,7 @@
 
 ## 팀 소개
 
-- 한찬희 (팀리더) <img src="https://img.shields.io/badge/backend-3766AB?style=flat-square&logo=Java&logoColor=white"/></a>&nbsp 
+- 한찬희 (팀리더) <img src="https://img.shields.io/badge/backend-#6DB33F?style=flat-square&logo=SpringBoot&logoColor=white"/></a>&nbsp 
 - 이민혁 <img src="https://img.shields.io/badge/backend-3766AB?style=flat-square&logo=Java&logoColor=white"/></a>&nbsp 
 - 유하영 <img src="https://img.shields.io/badge/backend-3766AB?style=flat-square&logo=Java&logoColor=white"/></a>&nbsp 
 - 신주희 <img src="https://img.shields.io/badge/frontend-3766AB?style=flat-square&logo=&logoColor=white"/></a>&nbsp 

@@ -118,26 +118,47 @@ Spring Boot의 MVC패턴과 React를 기반으로 만든 스터디 공유 플랫
 </details>
 
 
-- ## 게시물 작성
+- ## TODO 공부방
 
-  - 모든 회원은 게시물을 작성 할 수 있습니다. 게시물 작성 시 `게시글 제목`을 먼저 입력합니다.
-  - 제목을 입력하면 게시글 작성 페이지로 이동해 장소를 추가합니다.
-  - 장소 선택하기 클릭 시 `Kakao Map API`를 이용하여 모달찰이 생성 됩니다. 원하는 장소를 검색 후 선택하기를 누르면 장소가 선택됩니다.
-  - 장소를 선택한 뒤 사진을 추가할 수 있고 장소에 대한 코멘트를 작성해 장소 추가하기를 누르면 저장된 장소가 추가됩니다.
-  - 이후 글쓰기 버튼을 클릭시 게시글이 등록됩니다.
+  - 회원은 공부방을 생성할 수 있습니다. 
+  - 공부방을 생성후 TODO 리스틀를 작성해 공부방에 참여합니다. 작성된 TODO 리스트는 `Web Socket` 을 이용해 실시간으로 공유됩니다.
+  - 회원인 TODO 공부방에 입장할 때, TODO 리스트를 완료했을 때, 퇴장할 때 채팅방에 메세지가 전송됩니다.
+  - `Web Socket`과 `Stomp` 을 사용해 공부방에 입장한 회원들 간의 실시간 채팅이 가능합니다.  
 
 <details>
-  <summary>글쓰기</summary>
+  <summary>🔽 TODO 공부방 생성</summary>
 
-![글쓰기](https://user-images.githubusercontent.com/79136087/166146268-1ac79e89-9cdb-426a-addf-f0bbf54bec8a.gif)
+![공부방 생성](https://user-images.githubusercontent.com/79136087/170862733-8cea1f48-3f78-43be-ae64-5fe1e7b28316.gif)
 
 </details>
 <details>
-  <summary>댓글</summary>
+  <summary>🔽 TODO 리스트 생성및 입장</summary>
 
-![댓글](https://user-images.githubusercontent.com/79136087/166146403-1b26d8db-c144-4ea0-9edc-c13d0da02c21.gif)
+![공부방 입장 및 TODO 리스트 생성](https://user-images.githubusercontent.com/79136087/170862737-bd63b3e2-c456-4fb4-a23a-5db6d670df54.gif)
 
 </details>
+
+<details>
+  <summary>🔽 TODO 리스트 공유 및 참여 알림 메세지</summary>
+
+![TODO 리스트 공유 및 알림 메세지](https://user-images.githubusercontent.com/79136087/170862741-5c58d0bb-375d-4ad8-8f47-db51b6072a6d.gif)
+
+</details>
+
+<details>
+  <summary>🔽 TODO 리스트 실시간 공유 및 완료 알림 메세지</summary>
+
+![실시간 TODO 리스트 공유 및 완료 메세지](https://user-images.githubusercontent.com/79136087/170862740-94cfc05b-0700-42db-989e-d66155908307.gif)
+
+</details>
+
+<details>
+  <summary>🔽 실시간 채팅</summary>
+
+![실시간 채팅](https://user-images.githubusercontent.com/79136087/170862738-ba652191-d0b3-4e3d-8cfc-6846ec938c8e.gif)
+
+</details>
+
 
 - ## 게시물 리스트 & 상세 보기
 

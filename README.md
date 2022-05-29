@@ -65,13 +65,14 @@ Spring Boot의 MVC패턴과 React를 기반으로 만든 스터디 공유 플랫
   - 회원은 `Member`라는 Role을 소유하고 있습니다.
   - 회원은 마이페이지에서 본인의 공부시간을 일별, 주별, 월별, 총 공부시간 단위로 확인할 수 있습니다.
   - 회원은 마이페이지에서 본인이 참여중인 TODO 공부방과 작성한 TODO 리스트를 확인할 수 있습니다.
+  - 회원은 마이페이지에서 본인이 작성한 공부일기를 확인 할 수 있으며 작성된 공부일기는 `Naver Sentiment API`를 통해 감정 분석되고 하단에 표시됩니다. 
   - 회원은 개인정보관리 페이지에서 패스워드 및 회원정보를 수정 할 수 있습니다. 이때 패스워드 변경 시 기존 패스워드를 한번 더 체크합니다.
 
 
 <details>
   <summary>🔽 로그인</summary>
 
-![login](https://user-images.githubusercontent.com/79136087/166146231-99ee7bc4-9b1a-466a-af86-59519489cea5.gif)
+![login](https://user-images.githubusercontent.com/79136087/170861912-bcbcfcd7-c153-4cc7-a176-a6abeb0b6d5d.gif)
 
 </details>
 
@@ -88,33 +89,31 @@ Spring Boot의 MVC패턴과 React를 기반으로 만든 스터디 공유 플랫
 <details>
   <summary>🔽 마이페이지</summary>
 
-![마이페이지](https://user-images.githubusercontent.com/79136087/166146252-61ba1a4b-af4b-428a-addd-bf2f82cb6b6f.gif)
-
+![mypage](https://user-images.githubusercontent.com/79136087/170861917-e6857bb1-cce7-4a03-83db-706df1177a0f.gif)
+  
 </details>
 
-- ## 관리자
+- ## 메인페이지
 
-- Spring Security를 이용하여 로그인 과정 시 로그인을 완료하면 회원의 Role이 `Admin`과`Member` 로 구분이 되어있습니다.
-- 관리자는 모든 게시물 및 댓글들의 삭제 권한이 주어집니다.
-- 관리자는 모든 회원들의 정보를 확인할 수 있고 일부 회원의 정보를 편집 수정 할 수 있습니다.
+- 메인페이지에서는 오늘 공부한 시간, 작성된 최신 공부일기, 회원 공부시간 랭킹, TODO 공부방 리스트를 확인 할 수 있습니다.
+- 
 <details>
-    <summary>회원 관리</summary>
+    <summary>🔽 메인페이지</summary>
 
-![관리자 회원 관리](https://user-images.githubusercontent.com/79136087/166146734-458ec6a8-01d7-4936-b4f5-a4b5f8290b24.gif)
+<img width="949" alt="image" src="https://user-images.githubusercontent.com/79136087/170862049-554f47ad-fdca-40fc-964d-397cdbd4f117.png">
 
-</details>
+
+- ## 챌린지
+
+- `Teachabel Machine`을 학습시켜 사용자가 현재 자리에서 공부중인지를 확인해 자리비움 상태일 때는 타이머 작동을 중지 시킵니다. 
+- 공부가 완료되면 공부한 시간이 DB에 저장됩니다.
 <details>
-    <summary>게시글 관리</summary>
+    <summary>🔽 챌린지</summary>
 
-![관리자 게시글 삭제](https://user-images.githubusercontent.com/79136087/166146731-bccf5ff9-0051-4027-ac78-4d424cc81e14.gif)
-
-</details>
-<details>
-    <summary>댓글 관리</summary>
-
-![관리자 댓글 관리](https://user-images.githubusercontent.com/79136087/166146732-cc09601b-ce27-44d9-b0db-f0a71755ce1a.gif)
+![챌린지](https://user-images.githubusercontent.com/79136087/170862151-207186ab-14c8-45cf-bf27-05d77e2d3253.gif)
 
 </details>
+
 
 - ## 게시물 작성
 

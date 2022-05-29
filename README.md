@@ -146,13 +146,6 @@ Spring Boot의 MVC패턴과 React를 기반으로 만든 스터디 공유 플랫
 </details>
 
 <details>
-  <summary>🔽 TODO 리스트 실시간 공유 및 완료 알림 메세지</summary>
-
-![실시간 TODO 리스트 공유 및 완료 메세지](https://user-images.githubusercontent.com/79136087/170862740-94cfc05b-0700-42db-989e-d66155908307.gif)
-
-</details>
-
-<details>
   <summary>🔽 실시간 채팅</summary>
 
 ![실시간 채팅](https://user-images.githubusercontent.com/79136087/170862738-ba652191-d0b3-4e3d-8cfc-6846ec938c8e.gif)

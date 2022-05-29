@@ -163,7 +163,6 @@ Spring Boot의 MVC패턴과 React를 기반으로 만든 스터디 공유 플랫
 <details>
     <summary>🔽 공부일기</summary>
 
-![Uploading 공부일기작성.gif…]()
+![공부일기작성](https://user-images.githubusercontent.com/79136087/170863010-2976781c-aa8a-4b92-9038-51947a829ebc.gif)
 -images.githubusercontent.com/79136087/170862741-5c58d0bb-375d-4ad8-8f47-db51b6072a6d.gif)
-
 </details>

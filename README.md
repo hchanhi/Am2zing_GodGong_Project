@@ -80,6 +80,8 @@ Spring Boot의 MVC패턴과 React를 기반으로 만든 스터디 공유 플랫
 
 <img width="961" alt="image" src="https://user-images.githubusercontent.com/79136087/170861642-e0cdc700-893c-4797-9d7b-1a0cf8929859.png">
 <img width="556" alt="image" src="https://user-images.githubusercontent.com/79136087/170861682-7c3a718f-9866-4b02-a1aa-fbd817a9a931.png">
+<img width="776" alt="image" src="https://user-images.githubusercontent.com/79136087/170861706-2c6629a3-92c3-4d5c-94ce-2b4f82b142bf.png">
+
 
 </details>
 

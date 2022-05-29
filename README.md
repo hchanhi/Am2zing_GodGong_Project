@@ -64,26 +64,27 @@ Spring Boot의 MVC패턴과 React를 기반으로 만든 스터디 공유 플랫
 
   - 회원은 `Member`라는 Role을 소유하고 있습니다.
   - 회원은 마이페이지에서 본인의 공부시간을 일별, 주별, 월별, 총 공부시간 단위로 확인할 수 있습니다.
-  - 회원은 MyPage에서 본인이 작성한 게시물 및 댓글을 관리 할 수 있습니다.
+  - 회원은 마이페이지에서 본인이 참여중인 TODO 공부방과 작성한 TODO 리스트를 확인할 수 있습니다.
   - 회원은 개인정보관리 페이지에서 패스워드 및 회원정보를 수정 할 수 있습니다. 이때 패스워드 변경 시 기존 패스워드를 한번 더 체크합니다.
-  - 회원정보 수정 시 닉네임은 중복체크를 통해 변경이 가능합니다.
+
 
 <details>
-    <summary>회원가입</summary>
-
-![join](https://user-images.githubusercontent.com/79136087/166146202-d132214b-3455-4551-acc2-b3be5d821751.gif)
-
-</details>
-
-<details>
-  <summary>로그인</summary>
+  <summary>🔽 로그인</summary>
 
 ![login](https://user-images.githubusercontent.com/79136087/166146231-99ee7bc4-9b1a-466a-af86-59519489cea5.gif)
 
 </details>
 
 <details>
-  <summary>마이페이지</summary>
+  <summary>🔽 비밀번호 찾기</summary>
+
+<img width="961" alt="image" src="https://user-images.githubusercontent.com/79136087/170861642-e0cdc700-893c-4797-9d7b-1a0cf8929859.png">
+<img width="556" alt="image" src="https://user-images.githubusercontent.com/79136087/170861682-7c3a718f-9866-4b02-a1aa-fbd817a9a931.png">
+
+</details>
+
+<details>
+  <summary>🔽 마이페이지</summary>
 
 ![마이페이지](https://user-images.githubusercontent.com/79136087/166146252-61ba1a4b-af4b-428a-addd-bf2f82cb6b6f.gif)
 

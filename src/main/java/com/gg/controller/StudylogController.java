@@ -21,11 +21,15 @@ public class StudylogController {
 
     //닉네임이랑 공부한시간(초) 받고 저장하기
     @PostMapping("/api/studylog/time")
-    public Boolean insertStudyTime(@RequestBody HashMap<String, String> params){
+    public Boolean insertStudyTime(@RequestBody HashMap<String, String> params){    // 리퀘스트바디, 해쉬맵으로 받아옴
+        //프론트에서 잘 작동됐는지 확인용 boolean
         boolean check = true;
+        //해쉬맵에서 닉네임과 공부시간을 꺼내옴
         String nickname = params.get("nickname");
         int time = Integer.parseInt(params.get("studytime"));
+        //스터디로그에 저장
         int studytime = studylogService.insertStudyTime(nickname, time);
+        //저장된값이 없으면 리턴false
         if(studytime==0){
             check = false;
         }

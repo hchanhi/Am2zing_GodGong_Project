@@ -25,18 +25,26 @@ public class StudylogService {
     UserService userService;
     //닉네임이랑 공부한시간(초) 받고 저장하기
     public Integer insertStudyTime(String nickname, int time){
+        //닉네임으로 유저 찾기
         User user = userRepository.findByNickname(nickname);
         Studylog studylog = new Studylog();
+        //공부시간저장
         studylog.setStudylogTime(time);
+        //유저저장
         studylog.setUser(user);
+        //DB에 저장
         studylogRepository.save(studylog);
+        //공부시간 리턴
         return studylog.getStudylogTime();
     }
 
     //총 공부시간
     public Integer totalTime(String nickname){
+        //닉네임으로 유저찾기
         User user = userRepository.findByNickname(nickname);
+        // 총 공부시간
         int time = studylogRepository.totalStudyTime(user.getId());
+        // 리턴
         return time;
     }
 

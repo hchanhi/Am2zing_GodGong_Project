@@ -165,7 +165,7 @@ Spring Boot의 MVC패턴과 React.js를 기반으로 만든 스터디 공유 플
   - 일기를 수정하면 갑정분석을 다시 실시합니다.
 
 <details>
-    <summary>🔽 공부일기</summary>
+    <summary>🔽 공부일기 동작 화면</summary>
 
 ![공부일기작성](https://user-images.githubusercontent.com/79136087/170863010-2976781c-aa8a-4b92-9038-51947a829ebc.gif)
 

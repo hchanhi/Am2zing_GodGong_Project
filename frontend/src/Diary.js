@@ -1,16 +1,10 @@
-
 import { useState, useEffect } from "react";
 import { isAuth, getNickName } from './jwtCheck';
 import axios from 'axios';
-
-
 import { useNavigate } from "react-router-dom";
 import {
-
     Box,
     Container,
-
-
 } from '@mui/material/';
 import './diary.css';
 import Swal from 'sweetalert2';
@@ -21,7 +15,6 @@ const Diary = () => {
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const nickName = getNickName(token);
 
-
     let today = new Date();
     let year = today.getFullYear();
     let month = today.getMonth() + 1;
@@ -30,54 +23,49 @@ const Diary = () => {
     const [state, setState] = useState({
         nickname: nickName,
         content: "",
-
     });
 
-    const navigate = useNavigate();
+    //일기 박스 상태 변경 시 이벤트
     const handleChangeState = (e) => {
         setState({
             ...state,
             [e.target.name]: e.target.value
         });
     };
+
     let body = {
         nickname: nickName,
         content: state.content
-
     };
 
+    const navigate = useNavigate();
+
+    //권한 체크
     useEffect(() => {
         if (!isAuth(token)) {
             Swal.fire({
                 confirmButtonColor: '#2fbe9f',
-
                 confirmButtonText: '확인',
-                text: '로그인 후 이용하실 수 있어요😥', // Alert 제목 
-
+                text: '로그인 후 이용하실 수 있어요😥',
             });
             navigate('/login');
         }
     }, []);
 
+    //일기 작성
     const handleSubmit = () => {
         axios
             .post('/api/diary/post', body)
-            .then(function (response) {
+            .then(function () {
                 Swal.fire({
                     confirmButtonColor: '#2fbe9f',
-
                     confirmButtonText: '확인',
-
-                    text: "일기가 작성되었습니다!😊", // Alert 내용 
+                    text: "일기가 작성되었습니다!😊",
                 }).then((result) => {
                     if (result.isConfirmed) {
                         navigate('/mypage');
                     }
-
                 });
-
-
-
             })
             .catch(function (err) {
                 console.log(err);
@@ -85,13 +73,10 @@ const Diary = () => {
                 if (err.response.status === 400) {
                     alert(err.response.data.message);
                 }
-
-
             });
-
-
-
     };
+
+    //페이지 이동
     function move() {
         navigate("/");
     }
@@ -126,6 +111,5 @@ const Diary = () => {
             </div>
         </Container>
     );
-
 };
 export default Diary;

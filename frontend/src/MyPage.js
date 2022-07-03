@@ -17,20 +17,21 @@ function MyPage(props) {
 
     let navigate = useNavigate();
     let token = JSON.parse(localStorage.getItem('accessToken'));
+
+    //기본 메뉴페이지 일기페이지로 설정
     let [menu, setMenu] = useState(2);
 
+    //메뉴 탭 변경시 컴포넌트 체인지
     let handleChange = (event, newValue) => {
         setMenu(newValue);
     };
 
+    //권한 체크
     if (!isAuth(token)) {
-
         Swal.fire({
             confirmButtonColor: '#2fbe9f',
-
             confirmButtonText: '확인',
-            text: '로그인 후 이용하실 수 있어요😥', // Alert 제목 
-
+            text: '로그인 후 이용하실 수 있어요😥',
         });
         navigate('/login');
     }

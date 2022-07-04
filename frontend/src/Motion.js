@@ -1,6 +1,6 @@
 import React from "react";
 
-  // More API functions here:
+   // More API functions here:
 // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/pose
 
 // the link to your model provided by Teachable Machine export panel

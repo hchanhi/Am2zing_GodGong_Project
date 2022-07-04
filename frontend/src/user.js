@@ -1,28 +1,18 @@
-
 import { useState, useEffect, useCallback } from "react";
 import { isAuth, getId } from './jwtCheck';
 import axios from 'axios';
-
-
 import { useNavigate } from "react-router-dom";
 import {
-
     Box,
     Container,
-
-
 } from '@mui/material/';
 import './User.css';
-
 import Swal from 'sweetalert2';
 
 const User = (props) => {
-
     const token = JSON.parse(localStorage.getItem('accessToken'));
     const userId = getId(token);
     const navigate = useNavigate();
-
-
 
     const [user, setUser] = useState([]);
     const [nic, setNick] = useState();
@@ -46,7 +36,7 @@ const User = (props) => {
     const [isNewPassword, setIsNewPassword] = useState(false);
     const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
-
+    //사용자 정보 가져오기
     const getUser = async () => {
         const json = await axios.get('/api/users/' + userId, { params: { id: userId } });
         setUser(json.data);
@@ -54,56 +44,49 @@ const User = (props) => {
         setBirth(json.data.birth);
         setsState(false);
     };
+
+    //상태 변경시 리랜더링
     useEffect(() => {
         getUser();
+        //권한 체크
         if (!isAuth(token)) {
             Swal.fire({
                 confirmButtonColor: '#2fbe9f',
-
                 confirmButtonText: '확인',
-                text: '로그인 후 이용하실 수 있어요😥', // Alert 제목 
-
+                text: '로그인 후 이용하실 수 있어요😥',
             });
             navigate('/login');
         }
     }, [state == true]);
+
     let nicBody = {
         id: userId,
         nickname: nic
-
     };
 
+    //닉네임 변경
     const handleSubmitNic = (e) => {
         e.preventDefault();
-
         const nameRegex = /^[가-힣|a-zA-Z|0-9]+$/;
-
         if (!nameRegex.test(nic) || nic.length < 1) {
             setNameMessage('올바른 닉네임을 입력해주세요!');
             setIsName(false);
         } else {
             setIsName(true);
             axios
-
                 .post('/api/user/' + userId + '/nickname', nicBody)
-
                 .then(function (response) {
                     if (response.data == false) {
                         Swal.fire({
                             confirmButtonColor: '#2fbe9f',
-
                             confirmButtonText: '확인',
-                            text: '중복된 닉네임입니다!😢', // Alert 제목 
-
+                            text: '중복된 닉네임입니다!😢',
                         });
-
                     } else {
                         Swal.fire({
                             confirmButtonColor: '#2fbe9f',
-
                             confirmButtonText: '확인',
-                            html: '닉네임이 수정되었습니다.<br>다시 로그인해주세요!😊', // Alert 제목 
-
+                            html: '닉네임이 수정되었습니다.<br>다시 로그인해주세요!😊',
                         }).then((re) => {
                             if (re.isConfirmed) {
                                 localStorage.clear();
@@ -111,26 +94,20 @@ const User = (props) => {
                                 navigate('/');
                             }
                         });
-
                     }
-
-
-
                 })
                 .catch(function (err) {
                     console.log(err);
                 });
-
         }
-
-
-
     };
+
     let birthBody = {
         id: userId,
         birth: birth
-
     };
+
+    //생년월일 변경
     const handleSubmitBirth = (e) => {
         e.preventDefault();
 
@@ -142,13 +119,11 @@ const User = (props) => {
             setIsBirth(true);
             axios
                 .post('/api/user/' + userId + '/birth', birthBody)
-                .then(function (response) {
+                .then(function () {
                     Swal.fire({
                         confirmButtonColor: '#2fbe9f',
-
                         confirmButtonText: '확인',
-                        html: '생년월일이 수정되었습니다.<br>다시 로그인해주세요!😊', // Alert 제목 
-
+                        html: '생년월일이 수정되었습니다.<br>다시 로그인해주세요!😊',
                     }).then((re) => {
                         if (re.isConfirmed) {
                             localStorage.clear();
@@ -156,28 +131,20 @@ const User = (props) => {
                             navigate('/');
                         }
                     });
-
-
-
-
                 })
                 .catch(function (err) {
                     console.log(err);
-
                 });
-
         }
-
-
-
-
     };
+
     let pasBody = {
         id: userId,
         oldPassword: oldPas,
         newPassword: newPas
-
     };
+
+    //비밀번호 변경
     const handleSubmitPas = useCallback((e) => {
         e.preventDefault();
 
@@ -185,7 +152,6 @@ const User = (props) => {
         if (!passwordRegex.test(oldPas)) {
             setPasswordOldMessage('4~20글자를 입력해주세요!');
             setIsOldPassword(false);
-
         } else if (!passwordRegex.test(newPas)) {
             setPasswordNewMessage('4~20글자를 입력해주세요!');
             setIsOldPassword(true);
@@ -205,19 +171,14 @@ const User = (props) => {
                     if (response.data == false) {
                         Swal.fire({
                             confirmButtonColor: '#2fbe9f',
-
                             confirmButtonText: '확인',
-                            text: '비밀번호가 틀렸습니다!😢', // Alert 제목 
-
+                            text: '비밀번호가 틀렸습니다!😢',
                         });
-
                     } else {
                         Swal.fire({
                             confirmButtonColor: '#2fbe9f',
-
                             confirmButtonText: '확인',
-                            html: '비밀번호가 수정되었습니다.<br>다시 로그인해주세요!😊', // Alert 제목 
-
+                            html: '비밀번호가 수정되었습니다.<br>다시 로그인해주세요!😊',
                         }).then((re) => {
                             if (re.isConfirmed) {
                                 localStorage.clear();
@@ -225,27 +186,20 @@ const User = (props) => {
                                 navigate('/');
                             }
                         });
-
                     }
-
-
                 })
                 .catch(function (err) {
                     console.log(err);
                 });
-
         }
-
-
-
     }, [oldPas, newPas, passwordConfirm]
     );
 
     let delBody = {
         id: userId,
-
-
     };
+
+    //회원탈퇴
     const handleSubmitDel = (e) => {
         e.preventDefault();
 
@@ -255,7 +209,7 @@ const User = (props) => {
             cancelButtonColor: '#fd565f',
             confirmButtonText: '확인',
             cancelButtonText: '취소',
-            text: '정말 탈퇴하시겠습니까?', // Alert 내용 
+            text: '정말 탈퇴하시겠습니까?',
         }).then((result) => {
             if (result.isConfirmed) {
                 axios
@@ -263,17 +217,13 @@ const User = (props) => {
                     .then(function (response) {
                         console.log(response.status, '성공');
                         Swal.fire({
-
                             confirmButtonColor: '#2fbe9f',
-
                             confirmButtonText: '확인',
-
-                            text: '탈퇴되었습니다!', // Alert 내용 
+                            text: '탈퇴되었습니다!',
                         }).then((re) => {
                             if (re.isConfirmed) {
                                 localStorage.clear();
                                 props.setUserNickName('');
-
                                 navigate('/');
                             }
                         });
@@ -281,76 +231,69 @@ const User = (props) => {
                     .catch(function (err) {
                         console.log(delBody);
                         console.log(err);
-
                     });
             }
-
         });
     };
-    // 닉네임
+
+    //닉네임 상태 변경
     const onChangeName = useCallback((e) => {
         const nameRegex = /^[가-힣|a-zA-Z|0-9]+$/;
         const nameCurrent = e.target.value;
         setNick(nameCurrent);
-
         if (!nameRegex.test(nameCurrent) || nameCurrent.length < 1) {
             setNameMessage('올바른 닉네임을 입력해주세요!');
             setIsName(false);
         } else {
-
             setIsName(true);
         }
     }, []);
-    // 생년월일
+
+    //생년월일 상태 변경
     const onChangeBirth = useCallback((e) => {
         const birthRegex = /^[0-9]{6}$/;
         const birthCurrent = e.target.value;
         setBirth(birthCurrent);
-
         if (!birthRegex.test(birthCurrent)) {
             setBirthMessage('생년월일을 6자리로 입력해주세요!');
             setIsBirth(false);
         } else {
-
             setIsBirth(true);
         }
     }, []);
-    // 현재 비밀번호
+
+    // 현재 비밀번호 싱태변경
     const onChangeOldPassword = useCallback((e) => {
         const passwordRegex = /^.{4,20}$/;
         const passwordOldCurrent = e.target.value;
         setOldPas(passwordOldCurrent);
-
         if (!passwordRegex.test(passwordOldCurrent)) {
             setPasswordOldMessage('4~20글자를 입력해주세요!');
             setIsOldPassword(false);
         } else {
-
             setIsOldPassword(true);
         }
     }, []);
-    // 변경 비밀번호
+
+    // 변경 비밀번호 상태변경
     const onChangeNewPassword = useCallback((e) => {
         const passwordRegex = /^.{4,20}$/;
         const passwordNewCurrent = e.target.value;
         setNewPas(passwordNewCurrent);
-
         if (!passwordRegex.test(passwordNewCurrent)) {
             setPasswordNewMessage('4~20글자를 입력해주세요!');
             setIsNewPassword(false);
         } else {
-
             setIsNewPassword(true);
         }
     }, []);
-    //비번 확인
+
+    //변경 비밀번호 확인 상태변경
     const onChangePasswordConfirm = useCallback(
         (e) => {
             const passwordConfirmCurrent = e.target.value;
             setPasswordConfirm(passwordConfirmCurrent);
-
             if (newPas === passwordConfirmCurrent) {
-
                 setIsPasswordConfirm(true);
             } else {
                 setPasswordConfirmMessage('비밀번호가 다릅니다!');
@@ -359,10 +302,9 @@ const User = (props) => {
         },
         [newPas]
     );
+
     return (<div>
-
         <Container className="UserEditor">
-
             <h2>회원정보🔎</h2>
             <br></br>
             <Box component="form" sx={{ mt: 3 }}>
@@ -374,9 +316,7 @@ const User = (props) => {
                         placeholder="작성자"
                         type="text"
                         readOnly
-
                     />
-
                 </div>
                 <h3>닉네임 수정</h3>
                 <br></br>
@@ -388,14 +328,11 @@ const User = (props) => {
                         onChange={onChangeName}
                         placeholder="닉네임"
                         type="text"
-
-
                     />
                     {<span className={`message ${isName ? 'success' : 'error'}`}>{nameMessage}</span>}
                     <div className='modify'>
                         <button onClick={handleSubmitNic}>수정하기</button>
                     </div>
-
                 </div>
                 <h3>생년월일 수정</h3>
                 <br></br>
@@ -407,14 +344,11 @@ const User = (props) => {
                         onChange={onChangeBirth}
                         placeholder="생년월일"
                         type="text"
-
-
                     />
                     <div className="modify" >
                         <button onClick={handleSubmitBirth}>수정하기</button>
                     </div>
                     {<span className={`message ${isBirth ? 'success' : 'error'}`}>{birthMessage}</span>}
-
                 </div>
                 <h3>비밀번호 수정</h3>
                 <br></br>
@@ -425,18 +359,12 @@ const User = (props) => {
                         name="old"
                         onChange={onChangeOldPassword}
                         placeholder="현재 비밀번호"
-
-
                         type="password"
-
-
-
                     />
                     {(
                         <span className={`message ${isOldPassword ? 'success' : 'error'}`}>{passwordOldMessage}</span>
                     )}
                 </div>
-
                 <div className="userFlex">
                     <label>변경 비밀번호</label>
                     <input
@@ -444,18 +372,12 @@ const User = (props) => {
                         name="new"
                         onChange={onChangeNewPassword}
                         placeholder="변경 비밀번호"
-
-
                         type="password"
-
-
-
                     />
                     {(
                         <span className={`message ${isNewPassword ? 'success' : 'error'}`}>{passwordNewMessage}</span>
                     )}
                 </div>
-
                 <div className="userFlex">
                     <label>변경 비밀번호 확인</label>
                     <input
@@ -464,8 +386,6 @@ const User = (props) => {
                         name="confirm"
                         placeholder="비밀번호 확인"
                         type="password"
-
-
                     />
                     {(
                         <span className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</span>
@@ -474,17 +394,12 @@ const User = (props) => {
                         <button onClick={handleSubmitPas}>수정하기</button>
                     </div>
                 </div>
-
             </Box>
-
-
-
             <div className="userDelBtn">
                 <button onClick={handleSubmitDel}>탈퇴하기</button>
             </div>
         </Container>
     </div>
     );
-
 };
 export default User;

@@ -1,7 +1,5 @@
-
 import React, { useState } from 'react';
 import axios from 'axios';
-
 import {
     Button,
     TextField,
@@ -14,13 +12,11 @@ import {
     Typography,
     Container,
 } from '@mui/material/';
-
 import './join.css';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-
-
+//유효성 검사
 const Register = () => {
 
     const [checked, setChecked] = useState(false);
@@ -32,40 +28,30 @@ const Register = () => {
     const [registerError, setRegisterError] = useState('');
     const navigate = useNavigate();
 
-    // 동의 체크
+    //회원가입 동의 체크
     const handleAgree = (event) => {
         setChecked(event.target.checked);
     };
 
-
-
+    //회원 가입
     const onhandlePost = async (data) => {
         const { birth, nickname, email, password } = data;
         const postData = { birth, nickname, email, password };
 
         // post
-
         await axios
             .post('/api/auth/signup', postData)
             .then(function (response) {
                 console.log(response.status, '성공');
                 Swal.fire({
                     confirmButtonColor: '#2fbe9f',
-
                     confirmButtonText: '확인',
-
-                    text: '가입이 완료되었습니다!😊', // Alert 내용 
+                    text: '가입이 완료되었습니다!😊',
                 }).then((result) => {
                     if (result.isConfirmed) {
                         navigate('/login');
                     }
-
                 });
-
-
-
-
-
             })
             .catch(function (err) {
                 console.log(err);
@@ -75,18 +61,13 @@ const Register = () => {
                 if (err.response.status === 400) {
                     Swal.fire({
                         confirmButtonColor: '#2fbe9f',
-
                         confirmButtonText: '확인',
-
-                        text: err.response.data.message, // Alert 내용 
+                        text: err.response.data.message,
                     });
-
                 }
                 setRegisterError('회원가입에 실패하였습니다. 다시한번 확인해 주세요!');
-
             });
     };
-    // useState 추가
 
     // form 전송
     const handleSubmit = (e) => {
@@ -97,14 +78,11 @@ const Register = () => {
             birth: data.get('birth'),
             nickname: data.get('nickname'),
             email: data.get('email'),
-
             password: data.get('password'),
             rePassword: data.get('rePassword'),
-
         };
         const { email, nickname, password, rePassword, birth } = joinData;
 
-        // 이메일 유효성 체크
         // 이메일 유효성 체크
         const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
         if (!emailRegex.test(email)) setEmailError('올바른 이메일 형식이 아닙니다!');
@@ -132,6 +110,7 @@ const Register = () => {
         } else {
             setNameError('');
         }
+
         // 생일 유효성 검사
         const birthRegex = /^[0-9]{6}$/;
         if (!birthRegex.test(birth)) {
@@ -139,7 +118,6 @@ const Register = () => {
         } else {
             setBirthError('');
         }
-
 
         // 회원가입 동의 체크
         if (!checked) alert('회원가입 약관에 동의해주세요!');
@@ -155,12 +133,8 @@ const Register = () => {
         }
     };
 
-
-
     return (
-
         <Container component="main" maxWidth="xs">
-
             <Box
                 sx={{
                     marginTop: 8,
@@ -173,7 +147,6 @@ const Register = () => {
                     boxShadow: ' 0 8px 20px 0 rgba(0, 0, 0, 0.15)'
                 }}
             >
-
                 <Typography component="h1" variant="h5" sx={{ mt: 3 }}>
                     회원가입
                 </Typography>
@@ -194,14 +167,11 @@ const Register = () => {
                                 />
                             </Grid>
                             <FormHelperText>{emailError}</FormHelperText>
-
-
                             <Grid item xs={12} >
                                 <TextField required fullWidth id="nickname" name="nickname" label="닉네임"
                                     error={nameError !== '' || false} />
                             </Grid>
                             <FormHelperText>{nameError}</FormHelperText>
-
                             <Grid item xs={12}>
                                 <TextField
                                     required
@@ -256,13 +226,11 @@ const Register = () => {
                         >
                             회원가입
                         </Button>
-
                     </FormControl>
                     <FormHelperText>{registerError}</FormHelperText>
                 </Box>
             </Box>
         </Container>
-
     );
 };
 export default Register;

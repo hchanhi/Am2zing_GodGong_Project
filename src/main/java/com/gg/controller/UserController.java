@@ -65,7 +65,6 @@ public class UserController {
     }
 
     // 유저 프로필
-
     @GetMapping("/users/{id}")
     public UserProfile getUserProfile(@PathVariable(value = "id") Long id) {
         User user = userRepository.findById(id)
@@ -111,7 +110,7 @@ public class UserController {
     @GetMapping("/user/passwordChange/{key}")
     public ApiResponse isPasswordUUIdValidate(@PathVariable String key) {
         ApiResponse apiResponse;
-        System.out.println("key 인증 컨트롤러 들어왔다 : " + key);
+        System.out.println("key 인증: " + key);
         try {
             if (authService.isPasswordUuidValidate(key))
                 apiResponse = new ApiResponse(true, authService.getUserEmailByCode(key));

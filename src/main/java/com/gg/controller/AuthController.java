@@ -67,9 +67,7 @@ public class AuthController {
                         loginRequest.getPassword()
                 )
         );
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         String jwt = tokenProvider.generateToken(authentication);
         //refreshToken 추가
         com.gg.domain.RefreshToken refreshToken = refreshTokenService.createRefreshToken(authentication);

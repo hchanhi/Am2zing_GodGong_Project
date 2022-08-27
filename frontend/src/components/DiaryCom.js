@@ -23,7 +23,7 @@ function DiaryCom({ diaryId, diaryContent, diarySentiment, diaryCreated, handleS
                             <h5>{diaryCreated}</h5>
                             <button className="delBtn" type="submit" onClick={() => handleSubmit(diaryId)}>❌</button></div>
                         <div className="content">
-                            <span>{diaryContent}</span>
+                            <span>{diaryContent.length > 50 ? diaryContent.substr(0, 50) + "..." : diaryContent}</span>
                         </div>
                         <div className="flex">
                             <div className="sentiment">
